@@ -25,7 +25,7 @@ type ShippingWarehouse struct {
 	Type     Currency `sql:"type:varchar(20)" json:"type" validate:"required"`
 	Region   Region   `sql:"type:varchar(20)" json:"region" validate:"required"`
 	Address  string   `sql:"type:text" json:"address" validate:"required"`
-	Status   Status   `sql:"type:integer;default(1)" description:"状态 1启用 2禁用"`
+	Status   Status   `sql:"type:integer;default(1)" description:"状态 1启用 2禁用" json:"status"`
 }
 
 type SearchShippingWarehouse struct {
