@@ -47,26 +47,7 @@ func (c *Category) AfterFind() error {
 func (c *Category) AfterSave() (err error) {
 	c.transform()
 	ruleIds := make([][]int, 0)
-	var ids []int
-	var id int
-	for _, rule := range c.PackRules {
-		ids = make([]int, 0)
-		id = 0
-		id, err = strconv.Atoi(rule.LeftRuleId)
-		if err != nil {
-			log.Error(err)
-			return errors.New("规则ID必须为数字")
-		}
-		ids = append(ids, id)
-		id = 0
-		id, err = strconv.Atoi(rule.RightRuleId)
-		if err != nil {
-			log.Error(err)
-			return errors.New("规则ID必须为数字")
-		}
-		ids = append(ids, id)
-		ruleIds = append(ruleIds, ids)
-	}
+	ruleIds, err = getRuleIds(c.PackRules)
 	err = add调用物流模块规则关联新增(int(c.ID), ruleIds)
 	if err != nil {
 		return err
@@ -105,4 +86,37 @@ func add调用物流模块规则关联新增(id int, ruleIds [][]int) (err error
 		return err
 	}
 	return nil
+}
+
+func getRuleIds(packRules []PackRule) (ruleIds [][]int, err error) {
+	ruleIds = make([][]int, 0)
+	var ids []int
+	var id int
+	for _, rule := range packRules {
+		ids = make([]int, 0)
+		if rule.LeftRuleId != "" {
+			id = 0
+			id, err = strconv.Atoi(rule.LeftRuleId)
+			if err != nil {
+				log.Error(err)
+				return ruleIds, errors.New("规则ID必须为数字")
+			}
+			ids = append(ids, id)
+		}
+
+		if rule.RightRuleId != "" {
+			id = 0
+			id, err = strconv.Atoi(rule.RightRuleId)
+			if err != nil {
+				log.Error(err)
+				return ruleIds, errors.New("规则ID必须为数字")
+			}
+			ids = append(ids, id)
+		}
+
+		if len(ids) > 0 {
+			ruleIds = append(ruleIds, ids)
+		}
+	}
+	return ruleIds, nil
 }

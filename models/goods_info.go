@@ -2,9 +2,7 @@ package models
 
 import (
 	"encoding/json"
-	"errors"
 	"github.com/jinzhu/gorm"
-	log "github.com/sirupsen/logrus"
 	"strconv"
 	"strings"
 )
@@ -78,26 +76,7 @@ func (g *GoodsInfo) BeforeSave() error {
 func (g *GoodsInfo) AfterSave() (err error) {
 	g.transform()
 	ruleIds := make([][]int, 0)
-	var ids []int
-	var id int
-	for _, rule := range g.PackRules {
-		ids = make([]int, 0)
-		id = 0
-		id, err = strconv.Atoi(rule.LeftRuleId)
-		if err != nil {
-			log.Error(err)
-			return errors.New("规则ID必须为数字")
-		}
-		ids = append(ids, id)
-		id = 0
-		id, err = strconv.Atoi(rule.RightRuleId)
-		if err != nil {
-			log.Error(err)
-			return errors.New("规则ID必须为数字")
-		}
-		ids = append(ids, id)
-		ruleIds = append(ruleIds, ids)
-	}
+	ruleIds, err = getRuleIds(g.PackRules)
 	err = add调用物流模块规则关联新增(int(g.ID), ruleIds)
 	if err != nil {
 		return err
