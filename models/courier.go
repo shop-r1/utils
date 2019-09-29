@@ -25,19 +25,16 @@ type SearchCourier struct {
 
 type CourierPackRule struct {
 	gorm.Model
-	Courier       Courier `validate:"-" json:"courier"`
-	CourierId     uint    `json:"courier_id_int"`
-	CourierNo     string  `sql:"-" json:"courier_id"`
-	No            string  `sql:"-" json:"id"`
-	Name          string  `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
-	Simple        int     `sql:"default(0)" description:"纯装数量" json:"simple"`
-	Mixed         int     `sql:"default(0)" description:"混装基数" json:"mixed"`
-	MixedCan      int     `sql:"default(0)" description:"可混装数" json:"mixed_can"`
-	MixedSum      int     `sql:"default(0)" description:"混装总数" json:"mixed_sum"`
-	PriceUnitAud  float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"单价(澳币)" json:"price_unit_aud"`
-	PriceUnitRmb  float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"单价(人民币)" json:"price_unit_rmb"`
-	PriceTotalAud float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"总价(澳币)" json:"price_total_aud"`
-	PriceTotalRmb float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"总价(人民币)" json:"price_total_rmb"`
+	Courier    Courier `validate:"-" json:"courier"`
+	CourierId  uint    `json:"courier_id_int"`
+	CourierNo  string  `sql:"-" json:"courier_id"`
+	No         string  `sql:"-" json:"id"`
+	Name       string  `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
+	Simple     int     `sql:"default(0)" description:"纯装数量" json:"simple"`
+	Mixed      int     `sql:"default(0)" description:"混装基数" json:"mixed"`
+	MixedSum   int     `sql:"default(0)" description:"混装总数" json:"mixed_sum"`
+	PriceUnit  float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"单价" json:"price_unit"`
+	PriceTotal float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"总价" json:"price_total"`
 }
 
 type SearchCourierPackRule struct {
