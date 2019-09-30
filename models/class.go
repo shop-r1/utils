@@ -10,8 +10,7 @@ type Class struct {
 	gorm.Model
 	Category        Category    `json:"category" validate:"-"`
 	No              string      `sql:"-" json:"id"`
-	CategoryId      uint        `json:"category_id_int"`
-	CategoryNo      string      `sql:"-" json:"category_id"`
+	CategoryId      string      `json:"category_id"`
 	Name            string      `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
 	Attributes      []byte      `sql:"jsonb" description:"属性分组" json:"-"`
 	AttributesArray []Attribute `sql:"-" json:"attributes"`
@@ -41,14 +40,12 @@ type SearchClass struct {
 
 func (c *Class) AfterFind() error {
 	c.No = strconv.Itoa(int(c.ID))
-	c.CategoryNo = strconv.Itoa(int(c.CategoryId))
 	_ = json.Unmarshal(c.Attributes, &c.AttributesArray)
 	return nil
 }
 
 func (c *Class) AfterSave() error {
 	c.No = strconv.Itoa(int(c.ID))
-	c.CategoryNo = strconv.Itoa(int(c.CategoryId))
 	return nil
 }
 

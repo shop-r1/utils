@@ -17,6 +17,7 @@ const (
 	TenantsService   = "go.micro.srv.tenants"
 	LogisticsService = "go.micro.srv.logistics"
 	GoodsService     = "go.micro.srv.goods"
+	MemberService    = "go.micro.srv.member"
 
 	//method
 	TenantCreate            = "Tenant.Create"
@@ -83,6 +84,18 @@ const (
 	ShippingWarehouseDelete = "ShippingWarehouse.Delete"
 	ShippingWarehouseSearch = "ShippingWarehouse.Search"
 	ShippingWarehouseRead   = "ShippingWarehouse.Read"
+	//member level
+	MemberLevelCreate = "MemberLevel.Create"
+	MemberLevelUpdate = "MemberLevel.Update"
+	MemberLevelDelete = "MemberLevel.Delete"
+	MemberLevelSearch = "MemberLevel.Search"
+	MemberLevelRead   = "MemberLevel.Read"
+	//member
+	MemberCreate = "Member.Create"
+	MemberUpdate = "Member.Update"
+	MemberDelete = "Member.Delete"
+	MemberSearch = "Member.Search"
+	MemberRead   = "Member.Read"
 )
 
 func init() {

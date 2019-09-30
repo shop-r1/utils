@@ -11,10 +11,10 @@ import (
 
 type User struct {
 	gorm.Model
-	TenantId         uint
-	Tenant           Tenant
-	RoleId           uint
-	Role             Role
+	TenantId         string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
+	Tenant           Tenant `gorm:"save_associations:false" json:"tenant" validate:"-"`
+	RoleId           string `sql:"type:char(20);index" description:"角色ID" json:"role_id"`
+	Role             Role   `gorm:"save_associations:false" json:"role" validate:"-"`
 	No               string `sql:"-" json:"id"`
 	Username         string `gorm:"type:varchar(100)" description:"用户名"`
 	Nickname         string `gorm:"type:varchar(100)" description:"昵称"`
@@ -96,7 +96,8 @@ func (u *User) generateSalt() {
 
 //验证密码
 func (u *User) Verify() bool {
-	Db.Where("username= ?", u.Username).
+	Db.Preload("Role.Tenant").
+		Where("username= ?", u.Username).
 		Where("tenant_id = ?", u.TenantId).
 		Where("status = ?", Enable).First(u)
 	return u.GetPasswordHash() == u.PasswordHash

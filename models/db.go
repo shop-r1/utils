@@ -23,15 +23,12 @@ type Condition struct {
 	Where map[string][]interface{}
 }
 
-type RecordActive interface {
-}
-
 var (
 	Db   *gorm.DB
 	Conf map[string]interface{}
 )
 
-func InitDb(logMode bool, models ...interface{}) {
+func InitDb(logMode bool, clear bool, models ...interface{}) {
 	var err error
 	err = config.Load(
 		env.NewSource(),
@@ -47,13 +44,12 @@ func InitDb(logMode bool, models ...interface{}) {
 		log.Fatal(err)
 	}
 	Db.LogMode(logMode)
+	if clear {
+		clearDb(models...)
+	}
 	Db.AutoMigrate(models...)
 }
 
-type SearchResponse struct {
-	List      []RecordActive `json:"list"`
-	Total     int            `json:"total"`
-	Page      int            `json:"page"`
-	TotalPage int            `json:"total_page"`
-	Limit     int            `json:"limit"`
+func clearDb(models ...interface{}) {
+	Db.DropTable(models...)
 }

@@ -12,8 +12,7 @@ import (
 
 type Category struct {
 	gorm.Model
-	ParentId    uint       `json:"parent_id_int"`
-	ParentNo    string     `sql:"-" json:"parent_id"`
+	ParentId    string     `json:"parent_id"`
 	No          string     `sql:"-" json:"id"`
 	Name        string     `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
 	Alias       string     `sql:"type:varchar(100)" description:"别名" json:"alias"`
@@ -71,7 +70,6 @@ func (c *Category) BeforeSave() error {
 
 func (c *Category) transform() {
 	c.No = strconv.Itoa(int(c.ID))
-	c.ParentNo = strconv.Itoa(int(c.ParentId))
 	_ = json.Unmarshal(c.PackRule, &c.PackRules)
 }
 

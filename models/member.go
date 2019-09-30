@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
@@ -11,11 +12,13 @@ import (
 
 type Member struct {
 	gorm.Model
-	RecordActive     `sql:"-"`
-	ReferrerId       int
-	No               string      `sql:"-" json:"id"`
-	Referrer         *Member     `gorm:"ForeignKey:ReferrerId" json:"referrer,omitempty"`
 	TenantId         string      `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
+	Region           Region      `sql:"type:varchar(100)" description:"地区" json:"region"`
+	ReferrerId       string      `json:"referrer_id"`
+	No               string      `sql:"-" json:"id"`
+	LevelId          string      `sql:"type:char(20);index" description:"客户等级ID" json:"level_id" validate:"required"`
+	Level            MemberLevel `gorm:"save_associations:false;ForeignKey:LevelId" json:"level"`
+	Referrer         *Member     `gorm:"save_associations:false;ForeignKey:ReferrerId" json:"referrer,omitempty"`
 	Username         string      `sql:"type:varchar(100);index" description:"用户名" json:"username"`
 	Nickname         string      `sql:"type:varchar(100);index" description:"昵称" json:"nickname"`
 	Phone            string      `sql:"type:char(20)" description:"手机号" json:"phone"`
@@ -25,43 +28,44 @@ type Member struct {
 	Salt             string      `sql:"type:varchar(20)" description:"加盐值" json:"-"`
 	RestPasswordHash string      `sql:"type:varchar(100)" description:"重置密码hash值" json:"-"`
 	Status           Status      `sql:"default(1)" description:"状态: 1 启用, 0 禁用" json:"status"`
-	Password         string      `sql:"-"` //用于暂存密码
+	Password         string      `sql:"-" json:"password,omitempty"` //用于暂存密码
 	HeadImage        string      `sql:"type:text" description:"头像" json:"head_image"`
 	Metadata         []byte      `sql:"json" description:"附加信息" json:"-"`
 	Meta             interface{} `sql:"-" json:"meta"`
 }
 
-//type SearchMember struct {
-//	List      []Member `json:"list"`
-//	Total     int      `json:"total"`
-//	Page      int      `json:"page"`
-//	TotalPage int      `json:"total_page"`
-//	Limit     int      `json:"limit"`
-//}
-
-func (u *Member) BeforeCreate() (err error) {
-	u.generateSalt()
-	u.SetPassword(u.Password)
-	return nil
+type SearchMember struct {
+	List      []Member `json:"list"`
+	Total     int      `json:"total"`
+	Page      int      `json:"page"`
+	TotalPage int      `json:"total_page"`
+	Limit     int      `json:"limit"`
 }
 
-func (u *Member) BeforeUpdate() (err error) {
+func (u *Member) BeforeSave() (err error) {
 	if u.Password != "" {
-		//修改密码
 		u.generateSalt()
 		u.SetPassword(u.Password)
 	}
-	return err
-}
-
-func (u *Member) AfterFind() (err error) {
-	u.No = strconv.Itoa(int(u.ID))
 	return nil
 }
 
 func (u *Member) AfterSave() error {
 	u.No = strconv.Itoa(int(u.ID))
+	u.Password = ""
 	return nil
+}
+
+func (u *Member) AfterFind() error {
+	u.transform()
+	return nil
+}
+
+func (u *Member) transform() {
+	u.No = strconv.Itoa(int(u.ID))
+	if len(u.Metadata) > 0 {
+		_ = json.Unmarshal(u.Metadata, &u.Meta)
+	}
 }
 
 //设置密码

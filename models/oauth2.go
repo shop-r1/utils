@@ -62,8 +62,8 @@ type IntrospectResponse struct {
 }
 
 type Related struct {
-	TenantId uint     `json:"tenant_id"`
-	RoleId   uint     `json:"role_id"`
-	UserId   uint     `json:"user_id"`
+	TenantId string   `json:"tenant_id"`
+	RoleId   string   `json:"role_id"`
+	UserId   string   `json:"user_id"`
 	Scopes   []string `json:"scopes"`
 }

@@ -10,8 +10,8 @@ import (
 
 type Role struct {
 	gorm.Model
-	TenantId    uint `json:"tenant_id"`
-	Tenant      Tenant
+	TenantId    string `json:"tenant_id"`
+	Tenant      Tenant `gorm:"save_associations:false" json:"tenant" validate:"-"`
 	No          string `sql:"-" json:"id"`
 	Name        string `gorm:"type:varchar(100)" description:"用户名"`
 	Description string `gorm:"type:text" description:"描述"`
@@ -20,7 +20,7 @@ type Role struct {
 }
 
 type SearchRole struct {
-	List      []*Role
+	List      []Role
 	Total     int
 	Page      int
 	TotalPage int

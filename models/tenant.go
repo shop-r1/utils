@@ -13,19 +13,19 @@ import (
 type Tenant struct {
 	gorm.Model
 	No             string    `sql:"-" json:"id"`
-	Name           string    `gorm:"type:varchar(100)" description:"名称"`
-	Contact        string    `gorm:"type:varchar(20)" description:"联系方式"`
-	Description    string    `gorm:"type:text" description:"描述"`
-	Secret         string    `gorm:"type:varchar(100)" description:"密钥"`
-	System         bool      `gorm:"type:boolean" description:"是否为租户系统用户"`
-	Expired        time.Time `gorm:"index:idx_expired" description:"到期时间"`
-	Status         Status    `gorm:"default(1);index:idx_status" description:"状态: 1 启用, 2 禁用"`
-	Domain         string    `gorm:"type:varchar(255);unique" description:"租户独立域名"`
+	Name           string    `gorm:"type:varchar(100)" description:"名称" json:"name"`
+	Contact        string    `gorm:"type:varchar(20)" description:"联系方式" json:"contact"`
+	Description    string    `gorm:"type:text" description:"描述" json:"description"`
+	Secret         string    `gorm:"type:varchar(100)" description:"密钥" json:"secret"`
+	System         bool      `gorm:"type:boolean" description:"是否为租户系统用户" json:"system"`
+	Expired        time.Time `gorm:"index:idx_expired" description:"到期时间" json:"expired"`
+	Status         Status    `gorm:"default(1);index:idx_status" description:"状态: 1 启用, 2 禁用" json:"status"`
+	Domain         string    `gorm:"type:varchar(255);unique" description:"租户独立域名" json:"domain"`
 	GenerateSecret bool      `gorm:"-"`
 }
 
 type SearchTenant struct {
-	List      []*Tenant
+	List      []Tenant
 	Total     int
 	Page      int
 	TotalPage int
@@ -57,7 +57,7 @@ func Init自动开户(t *Tenant, r *Role, u *User) {
 		return
 	}
 	r = &Role{
-		TenantId:    t.ID,
+		TenantId:    strconv.Itoa(int(t.ID)),
 		Name:        "管理员",
 		Description: "租户管理平台初始化角色",
 		Status:      Enable,
@@ -67,8 +67,8 @@ func Init自动开户(t *Tenant, r *Role, u *User) {
 		return
 	}
 	u = &User{
-		TenantId:    t.ID,
-		RoleId:      r.ID,
+		TenantId:    strconv.Itoa(int(t.ID)),
+		RoleId:      strconv.Itoa(int(r.ID)),
 		Username:    "admin",
 		Nickname:    "admin",
 		Description: "租户管理平台初始化用户",
