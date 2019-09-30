@@ -14,7 +14,7 @@ var (
 
 const (
 	//service
-	TenantsService   = "go.micro.srv.tenants"
+	TenantsService   = "go.micro.srv.tenant"
 	LogisticsService = "go.micro.srv.logistics"
 	GoodsService     = "go.micro.srv.goods"
 	MemberService    = "go.micro.srv.member"
