@@ -9,6 +9,7 @@ import (
 type Sender struct {
 	gorm.Model
 	No       string `sql:"-" json:"id"`
+	TenantId string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id" validate:"required"`
 	Name     string `sql:"type:varchar(100)" description:"姓名" json:"name" validate:"required"`
 	Phone    string `sql:"type:varchar(50)" description:"手机号" json:"phone" validate:"required"`
 	Country  string `sql:"type:varchar(50)" description:"国家" json:"country" validate:"required"`

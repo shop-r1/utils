@@ -12,8 +12,8 @@ type GoodsInfo struct {
 	Category      Category   `gorm:"save_associations:false" json:"category" validate:"-"`
 	Brand         Brand      `gorm:"save_associations:false" json:"brand" validate:"-"`
 	No            string     `sql:"-" json:"id"`
-	CategoryId    string     `sql:"type:char(20);index" json:"category_id_int"`
-	BrandId       string     `sql:"type:char(20);index" json:"brand_id_int"`
+	CategoryId    string     `sql:"type:char(20);index" json:"category_id"`
+	BrandId       string     `sql:"type:char(20);index" json:"brand_id"`
 	Name          string     `sql:"type:varchar(255)" description:"名称" json:"name" validate:"required"`
 	Album         string     `sql:"type:text" description:"相册" json:"album"`
 	Albums        []string   `sql:"-" description:"相册(数组)" json:"albums"`
@@ -64,12 +64,20 @@ func (g *GoodsInfo) BeforeSave() error {
 
 func (g *GoodsInfo) AfterSave() (err error) {
 	g.transform()
-	ruleIds := make([][]int, 0)
-	ruleIds, err = getRuleIds(g.PackRules)
-	err = add调用物流模块规则关联新增(int(g.ID), ruleIds)
-	if err != nil {
-		return err
+	if g.HasPackRule {
+		ruleIds := make([][]int, 0)
+		ruleIds, err = getRuleIds(g.PackRules)
+		err = add调用物流模块规则关联新增(int(g.ID), ruleIds)
+		if err != nil {
+			return err
+		}
+	} else {
+		err = add调用物流模块规则关联新增(int(g.ID), nil)
+		if err != nil {
+			return err
+		}
 	}
+
 	return nil
 }
 

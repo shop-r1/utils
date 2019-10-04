@@ -1,9 +1,10 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import "time"
 
 type CourierLink struct {
-	gorm.Model
+	ID          uint `gorm:"primary_key"`
+	CreatedAt   time.Time
 	No          string          `sql:"-" json:"id"`
 	LinkId      int             `gorm:"primary_key" json:"link_id"`
 	LeftRuleId  int             `gorm:"primary_key" json:"left_rule_id"`
