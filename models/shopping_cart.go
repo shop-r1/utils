@@ -4,6 +4,7 @@ import "github.com/jinzhu/gorm"
 
 type ShoppingCart struct {
 	gorm.Model
+	No                   string               `sql:"-" json:"id"`
 	TenantId             string               `sql:"type:char(20)" description:"租户ID" json:"tenant_id"`
 	MemberId             string               `sql:"type:char(20)" description:"客户ID" json:"member_id" validate:"required"`
 	GoodsId              string               `sql:"type:char(20)" description:"商品ID" json:"goods_id" validate:"required"`

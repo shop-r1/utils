@@ -11,11 +11,11 @@ import (
 
 type User struct {
 	gorm.Model
+	No               string `sql:"-" json:"id"`
 	TenantId         string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	Tenant           Tenant `gorm:"save_associations:false" json:"tenant" validate:"-"`
 	RoleId           string `sql:"type:char(20);index" description:"角色ID" json:"role_id"`
 	Role             Role   `gorm:"save_associations:false" json:"role" validate:"-"`
-	No               string `sql:"-" json:"id"`
 	Username         string `gorm:"type:varchar(100)" description:"用户名"`
 	Nickname         string `gorm:"type:varchar(100)" description:"昵称"`
 	Description      string `gorm:"type:text" description:"描述"`
