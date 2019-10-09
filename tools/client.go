@@ -18,6 +18,8 @@ const (
 	LogisticsService = "go.micro.srv.logistics"
 	GoodsService     = "go.micro.srv.goods"
 	MemberService    = "go.micro.srv.member"
+	UiControlService = "go.micro.srv.ui-control"
+	PaymentService   = "go.micro.srv.payment"
 
 	//method
 	TenantCreate            = "Tenant.Create"
@@ -96,6 +98,12 @@ const (
 	MemberDelete = "Member.Delete"
 	MemberSearch = "Member.Search"
 	MemberRead   = "Member.Read"
+	//ui control
+	FunctionCircleCreate = "FunctionCircle.Create"
+	FunctionCircleUpdate = "FunctionCircle.Update"
+	FunctionCircleDelete = "FunctionCircle.Delete"
+	FunctionCircleSearch = "FunctionCircle.Search"
+	FunctionCircleRead   = "FunctionCircle.Read"
 )
 
 func init() {

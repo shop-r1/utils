@@ -18,8 +18,6 @@ type Goods struct {
 	ShowCategory       ShowCategory             `gorm:"save_associations:false" json:"show_category" validate:"-"`
 	ShowCategoryId     string                   `sql:"type:char(20);index" description:"显示分类ID" json:"show_category_id"`
 	Alias              string                   `sql:"type:varchar(255)" description:"别名" json:"alias"`
-	PriceAud           float32                  `sql:"type:DECIMAL(10, 2)" description:"售价(澳币)" json:"price_aud"`
-	PriceRmb           float32                  `sql:"type:DECIMAL(10, 2)" description:"售价(人民币)" json:"price_rmb"`
 	CommissionRmb      float32                  `sql:"type:DECIMAL(10, 2)" description:"佣金(人民币)" json:"commission_rmb"`
 	BarCode            string                   `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
 	Image              string                   `sql:"type:varchar(255)" description:"图片" json:"image"`

@@ -13,7 +13,7 @@ type FunctionCircle struct {
 	No       string  `sql:"-" json:"id"`
 	TenantId string  `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	Name     string  `sql:"type:varchar(100)" description:"名称" json:"name"`
-	Album    []Media `gorm:"ForeignKey:FunctionCircleId" description:"相册" json:"album"`
+	Media    []Media `gorm:"ForeignKey:FunctionCircleId" description:"相册" json:"media"`
 	Content  string  `sql:"type:text" description:"内容" json:"content"`
 }
 
@@ -28,19 +28,17 @@ type SearchFunctionCircle struct {
 //媒体资料
 type Media struct {
 	CreatedAt        time.Time
-	ID               uint    `gorm:"primary_key"`
-	No               string  `sql:"-" json:"id"`
-	TenantId         string  `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
-	FunctionCircleId string  `sql:"type:char(20);index" description:"功能圈ID" json:"function_circle_id"`
-	BgColor          string  `sql:"type:char(50)" description:"背景颜色" json:"bg_color"`
-	BgImage          string  `sql:"type:varchar(255)" description:"背景图片" json:"bg_image"`
-	Media            string  `sql:"type:varchar(255)" description:"媒体地址" json:"media"`
-	Width            float32 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"宽" json:"width"`
-	Height           float32 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"高" json:"height"`
-	Video            bool    `description:"视频" json:"video"`
-	LinkType         string  `sql:"type:char(50)" description:"关联类型" json:"link_type"`
-	LinkId           string  `sql:"type:char(20)" description:"关联ID" json:"link_id"`
-	Url              string  `sql:"type:varchar(255)" description:"链接" json:"url"`
+	ID               uint   `gorm:"primary_key"`
+	No               string `sql:"-" json:"id"`
+	TenantId         string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
+	FunctionCircleId string `sql:"type:char(20);index" description:"功能圈ID" json:"function_circle_id"`
+	BgColor          string `sql:"type:char(50)" description:"背景颜色" json:"bg_color"`
+	BgImage          string `sql:"type:varchar(255)" description:"背景图片" json:"bg_image"`
+	Media            string `sql:"type:varchar(255)" description:"媒体地址" json:"media"`
+	Video            bool   `description:"视频" json:"video"`
+	LinkType         string `sql:"type:char(50)" description:"关联类型" json:"link_type"`
+	LinkId           string `sql:"type:char(20)" description:"关联ID" json:"link_id"`
+	Url              string `sql:"type:varchar(255)" description:"链接" json:"url"`
 }
 
 func (f *FunctionCircle) AfterSave() error {
@@ -78,9 +76,9 @@ func (f *FunctionCircle) BeforeSave(tx *gorm.DB) (err error) {
 		tx.Rollback()
 		return err
 	}
-	for index, m := range f.Album {
+	for index, m := range f.Media {
 		m.TenantId = f.TenantId
-		f.Album[index] = m
+		f.Media[index] = m
 	}
 	return nil
 }
