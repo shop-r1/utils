@@ -98,6 +98,7 @@ const (
 	MemberDelete = "Member.Delete"
 	MemberSearch = "Member.Search"
 	MemberRead   = "Member.Read"
+	//功能圈
 	//ui control
 	FunctionCircleCreate = "FunctionCircle.Create"
 	FunctionCircleUpdate = "FunctionCircle.Update"
