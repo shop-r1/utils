@@ -4,7 +4,6 @@ import (
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 	"strconv"
-	"time"
 )
 
 //功能圈
@@ -12,8 +11,9 @@ type FunctionCircle struct {
 	gorm.Model
 	No       string  `sql:"-" json:"id"`
 	TenantId string  `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
+	Type     string  `sql:"type:char(100);index" description:"类型" json:"type"`
 	Name     string  `sql:"type:varchar(100)" description:"名称" json:"name"`
-	Media    []Media `gorm:"ForeignKey:FunctionCircleId" description:"相册" json:"media"`
+	Media    []Media `gorm:"ForeignKey:FunctionCircleId;save_associations:false" description:"相册" json:"media"`
 	Content  string  `sql:"type:text" description:"内容" json:"content"`
 }
 
@@ -27,8 +27,7 @@ type SearchFunctionCircle struct {
 
 //媒体资料
 type Media struct {
-	CreatedAt        time.Time
-	ID               uint   `gorm:"primary_key"`
+	gorm.Model
 	No               string `sql:"-" json:"id"`
 	TenantId         string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	FunctionCircleId string `sql:"type:char(20);index" description:"功能圈ID" json:"function_circle_id"`
@@ -41,10 +40,10 @@ type Media struct {
 	Url              string `sql:"type:varchar(255)" description:"链接" json:"url"`
 }
 
-func (f *FunctionCircle) AfterSave() error {
-	f.transform()
-	return nil
-}
+//func (f *FunctionCircle) AfterSave() error {
+//	f.transform()
+//	return nil
+//}
 
 func (f *FunctionCircle) AfterFind() error {
 	f.transform()
@@ -69,16 +68,22 @@ func (m *Media) transform() {
 	m.No = strconv.Itoa(int(m.ID))
 }
 
-func (f *FunctionCircle) BeforeSave(tx *gorm.DB) (err error) {
+func (f *FunctionCircle) AfterSave(tx *gorm.DB) (err error) {
 	err = tx.Where("function_circle_id = ?", f.ID).Delete(&Media{}).Error
 	if err != nil {
 		log.Error(err)
-		tx.Rollback()
 		return err
 	}
 	for index, m := range f.Media {
 		m.TenantId = f.TenantId
+		m.FunctionCircleId = strconv.Itoa(int(f.ID))
+		err = tx.Create(&m).Error
+		if err != nil {
+			log.Error(err)
+			return err
+		}
 		f.Media[index] = m
 	}
+	f.transform()
 	return nil
 }
