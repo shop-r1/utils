@@ -29,6 +29,7 @@ type GoodsInfo struct {
 	PackRule      []byte     `sql:"type:json" description:"关联的物流规则ID" json:"-"`
 	QualityPeriod string     `sql:"type:varchar(50)" description:"保质期" json:"quality_period"`
 	PackRules     []PackRule `sql:"-" json:"pack_rules"`
+	Goods         *Goods     `gorm:"ForeignKey:OrderId" json:"goods,omitempty"`
 }
 
 type SearchGoodsInfo struct {

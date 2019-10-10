@@ -12,7 +12,8 @@ import (
 type Goods struct {
 	gorm.Model
 	No                 string                   `sql:"-" json:"id"`
-	TenantId           string                   `sql:"type:char(20);index" description:"租户ID" json:"-" `
+	TenantId           string                   `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
+	Used               bool                     `description:"领用" json:"-"`
 	GoodsInfoId        string                   `sql:"type:char(20);index" json:"goods_info_id" description:"商品基础信息ID"`
 	GoodsInfo          GoodsInfo                `gorm:"save_associations:false" json:"goods_info" validate:"-"`
 	ShowCategory       ShowCategory             `gorm:"save_associations:false" json:"show_category" validate:"-"`
@@ -40,6 +41,13 @@ type Goods struct {
 	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
 	HasSpecification   bool                     `description:"是否有属性" json:"has_specification"`
 	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses"`
+	Metadata           []byte                   `sql:"type:json" description:"附加信息" json:"-"`
+	Meta               interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
+}
+
+type BatchUseGoods struct {
+	ShowCategoryId string   `json:"show_category_id" validate:"required"`
+	GoodsInfoIds   []string `json:"goods_info_ids"`
 }
 
 type GoodsShippingWarehouse struct {
@@ -166,6 +174,9 @@ func (g *Goods) BeforeSave() (err error) {
 	} else {
 		g.SpecificationInfoS = nil
 	}
+	if g.Meta != nil {
+		g.Metadata, _ = json.Marshal(g.Meta)
+	}
 	return nil
 }
 
@@ -239,4 +250,5 @@ func (g *Goods) transform() {
 		_ = json.Unmarshal(g.SpecificationInfo, &g.SpecificationInfoS)
 	}
 	g.No = strconv.Itoa(int(g.ID))
+	_ = json.Unmarshal(g.Metadata, &g.Meta)
 }
