@@ -41,7 +41,7 @@ type Goods struct {
 	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
 	HasSpecification   bool                     `description:"是否有属性" json:"has_specification"`
 	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses"`
-	Metadata           []byte                   `sql:"type:json" description:"附加信息" json:"-"`
+	Metadata           []byte                   `description:"附加信息" json:"-"`
 	Meta               interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
 }
 
