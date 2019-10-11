@@ -14,6 +14,7 @@ type FunctionCircle struct {
 	Type     string  `sql:"type:char(100);index" description:"类型" json:"type"`
 	Name     string  `sql:"type:varchar(100)" description:"名称" json:"name"`
 	Media    []Media `gorm:"ForeignKey:FunctionCircleId;save_associations:false" description:"相册" json:"media"`
+	Status   Status  `sql:"default(1)" description:"状态" json:"status" validate:"required"`
 	Content  string  `sql:"type:text" description:"内容" json:"content"`
 }
 
@@ -38,6 +39,7 @@ type Media struct {
 	LinkType         string `sql:"type:char(50)" description:"关联类型" json:"link_type"`
 	LinkId           string `sql:"type:char(20)" description:"关联ID" json:"link_id"`
 	Url              string `sql:"type:varchar(255)" description:"链接" json:"url"`
+	Sort             int    `description:"排序" json:"sort"`
 }
 
 //func (f *FunctionCircle) AfterSave() error {

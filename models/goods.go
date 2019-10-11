@@ -46,7 +46,7 @@ type Goods struct {
 }
 
 type BatchUseGoods struct {
-	ShowCategoryId string   `json:"show_category_id" validate:"required"`
+	ShowCategoryId string   `json:"show_category_id"`
 	GoodsInfoIds   []string `json:"goods_info_ids"`
 }
 

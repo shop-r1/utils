@@ -15,6 +15,7 @@ type ShowCategory struct {
 	Status      Status         `sql:"type:integer;default(1);index" description:"展示状态" json:"status" validate:"required"`
 	Description string         `sql:"type:text" description:"描述" json:"description"`
 	Children    []ShowCategory `gorm:"ForeignKey:ParentId" json:"children"`
+	Sort        int            `description:"排序" json:"sort"`
 }
 
 func (s *ShowCategory) AfterSave() error {

@@ -77,7 +77,7 @@ const (
 	GoodsDelete   = "Goods.Delete"
 	GoodsSearch   = "Goods.Search"
 	GoodsRead     = "Goods.Read"
-	GoodsBatchUse = "Goods."
+	GoodsBatchUse = "Goods.BatchUse"
 	//show category
 	ShowCategoryCreate      = "ShowCategory.Create"
 	ShowCategoryUpdate      = "ShowCategory.Update"
