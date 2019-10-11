@@ -13,7 +13,7 @@ type Goods struct {
 	gorm.Model
 	No                 string                   `sql:"-" json:"id"`
 	TenantId           string                   `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
-	Used               bool                     `description:"领用" json:"-"`
+	Used               bool                     `description:"领用" json:"used"`
 	GoodsInfoId        string                   `sql:"type:char(20);index" json:"goods_info_id" description:"商品基础信息ID"`
 	GoodsInfo          GoodsInfo                `gorm:"save_associations:false" json:"goods_info" validate:"-"`
 	ShowCategory       ShowCategory             `gorm:"save_associations:false" json:"show_category" validate:"-"`
@@ -41,8 +41,19 @@ type Goods struct {
 	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
 	HasSpecification   bool                     `description:"是否有属性" json:"has_specification"`
 	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses"`
+	Warehouse          GoodsShippingWarehouse   `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouse,omitempty"`
 	Metadata           []byte                   `description:"附加信息" json:"-"`
 	Meta               interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
+	Sort               int                      `description:"排序" json:"sort"`
+}
+
+type SearchKeyword struct {
+	Name string `json:"name"`
+}
+
+type ResultKeyword struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
 type BatchUseGoods struct {
@@ -56,6 +67,7 @@ type GoodsShippingWarehouse struct {
 	WarehouseId string            `sql:"type:char(20);index" json:"warehouse_id"`
 	Warehouse   ShippingWarehouse `json:"warehouse"`
 	Price       float32           `sql:"type:DECIMAL(10, 2)" description:"售价" json:"price"`
+	Default     bool              `sql:"type:bool;index" description:"默认发货仓" json:"default"`
 }
 
 func (g *GoodsShippingWarehouse) AfterSave() error {
@@ -90,6 +102,7 @@ type GoodsSpecification struct {
 	Ratio          float32  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
 	Album          string   `sql:"type:text" description:"相册" json:"album"`
 	Inventory      int      `description:"库存" json:"inventory"`
+	Default        bool     `description:"默认规格" json:"default"`
 }
 
 func (g *GoodsSpecification) BeforeSave() error {
@@ -117,12 +130,10 @@ func (g *GoodsSpecification) transform() {
 }
 
 type SpecificationInfo struct {
-	Level         int                  `json:"level"`
-	CategoryId    string               `json:"category_id"`
-	ClassId       string               `json:"class_id"`
-	Item          string               `json:"item"`
-	Specification GoodsSpecification   `json:"specification,omitempty"`
-	Children      []*SpecificationInfo `json:"children,omitempty"`
+	Level         int                 `json:"level"`
+	Item          string              `json:"item"`
+	Specification GoodsSpecification  `json:"specification,omitempty"`
+	Children      []SpecificationInfo `json:"children,omitempty"`
 }
 
 type SearchGoods struct {
@@ -191,14 +202,15 @@ func (g *Goods) AfterSave(tx *gorm.DB) (err error) {
 }
 
 func (g *Goods) AfterCreate(tx *gorm.DB) (err error) {
-	err = g.saveLink(tx)
-	rb, _ := json.Marshal(g.SpecificationInfoS)
-	err = tx.Model(g).Update("specification_info", rb).Error
-	if err != nil {
-		log.Error(err)
-		return err
-	}
-	return err
+	//err = g.saveLink(tx)
+	//rb, _ := json.Marshal(g.SpecificationInfoS)
+	//err = tx.Model(g).Update("specification_info", rb).Error
+	//if err != nil {
+	//	log.Error(err)
+	//	return err
+	//}
+	//return err
+	return nil
 }
 
 func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
@@ -230,17 +242,31 @@ func (g *Goods) saveLink(tx *gorm.DB) (err error) {
 		log.Error(err)
 		return err
 	}
-	goodsSpecifications := make([]GoodsSpecification, 0)
-	for i, specificationInfo := range g.SpecificationInfoS {
-		//整合结构
-		gs, err := (&specificationInfo).G生成规格记录(tx, g.TenantId, strconv.Itoa(int(g.ID)), specificationInfo.Item)
-		if err != nil {
+	//规格结构整合
+	specificationInfos := make([]SpecificationInfo, 0)
+	for index, goodsSpecification := range g.Specifications {
+		arr := strings.Split(goodsSpecification.Specification, ",")
+		specificationInfos = append(specificationInfos, transformSpecification(arr, goodsSpecification))
+		goodsSpecification.TenantId = g.TenantId
+		goodsSpecification.GoodsId = strconv.Itoa(int(g.ID))
+		goodsSpecification.Default = index == 0
+		if err = tx.Create(&goodsSpecification).Error; err != nil {
 			log.Error(err)
 			return err
 		}
-		goodsSpecifications = append(goodsSpecifications, gs...)
-		g.SpecificationInfoS[i] = specificationInfo
 	}
+	g.SpecificationInfoS = specificationInfos
+	//goodsSpecifications := make([]GoodsSpecification, 0)
+	//for i, specificationInfo := range g.SpecificationInfoS {
+	//	//整合结构
+	//	gs, err := (&specificationInfo).G生成规格记录(tx, g.TenantId, strconv.Itoa(int(g.ID)), specificationInfo.Item)
+	//	if err != nil {
+	//		log.Error(err)
+	//		return err
+	//	}
+	//	goodsSpecifications = append(goodsSpecifications, gs...)
+	//	g.SpecificationInfoS[i] = specificationInfo
+	//}
 
 	return nil
 }
@@ -251,4 +277,19 @@ func (g *Goods) transform() {
 	}
 	g.No = strconv.Itoa(int(g.ID))
 	_ = json.Unmarshal(g.Metadata, &g.Meta)
+}
+
+func transformSpecification(arr []string, o GoodsSpecification) SpecificationInfo {
+	s := SpecificationInfo{}
+	for i, a := range arr {
+		s.Item = a
+		s.Level = i
+		if len(arr) > i+1 {
+			s.Children = make([]SpecificationInfo, 0)
+			s.Children = append(s.Children, transformSpecification(arr[i:], o))
+			continue
+		}
+		s.Specification = o
+	}
+	return s
 }
