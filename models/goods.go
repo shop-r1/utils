@@ -52,8 +52,8 @@ type SearchKeyword struct {
 }
 
 type ResultKeyword struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id    string `json:"id"`
+	Alias string `json:"name"`
 }
 
 type BatchUseGoods struct {
