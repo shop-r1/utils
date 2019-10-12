@@ -14,8 +14,6 @@ type FunctionCircle struct {
 	Type     string  `sql:"type:char(100);index" description:"类型" json:"type"`
 	Name     string  `sql:"type:varchar(100)" description:"名称" json:"name"`
 	Media    []Media `gorm:"ForeignKey:FunctionCircleId;save_associations:false" description:"相册" json:"media"`
-	Status   Status  `sql:"default(1)" description:"状态" json:"status" validate:"required"`
-	Content  string  `sql:"type:text" description:"内容" json:"content"`
 }
 
 type SearchFunctionCircle struct {
@@ -30,6 +28,8 @@ type SearchFunctionCircle struct {
 type Media struct {
 	gorm.Model
 	No               string `sql:"-" json:"id"`
+	Title            string `sql:"type:char(100);index" description:"类型" json:"type"`
+	Status           Status `sql:"default(1)" description:"状态" json:"status" validate:"required"`
 	TenantId         string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	FunctionCircleId string `sql:"type:char(20);index" description:"功能圈ID" json:"function_circle_id"`
 	BgColor          string `sql:"type:char(50)" description:"背景颜色" json:"bg_color"`
@@ -38,14 +38,10 @@ type Media struct {
 	Video            bool   `description:"视频" json:"video"`
 	LinkType         string `sql:"type:char(50)" description:"关联类型" json:"link_type"`
 	LinkId           string `sql:"type:char(20)" description:"关联ID" json:"link_id"`
+	Content          string `sql:"type:text" description:"内容" json:"content"`
 	Url              string `sql:"type:varchar(255)" description:"链接" json:"url"`
 	Sort             int    `description:"排序" json:"sort"`
 }
-
-//func (f *FunctionCircle) AfterSave() error {
-//	f.transform()
-//	return nil
-//}
 
 func (f *FunctionCircle) AfterFind() error {
 	f.transform()

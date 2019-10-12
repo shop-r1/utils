@@ -30,8 +30,8 @@ type Goods struct {
 	QualityPeriod      string                   `sql:"type:varchar(50)" description:"保质期" json:"quality_period"`
 	Stage              []byte                   `sql:"type:json" description:"阶段" json:"-"`
 	Stages             []int                    `sql:"-" json:"stages"`
-	Show               Status                   `sql:"type:integer;default(1)" description:"是否展示" json:"show"`
-	Status             Status                   `sql:"type:integer;default(1)" description:"状态 1 上架 2 下架" json:"status"`
+	Show               Status                   `sql:"type:integer;default(1)" description:"状态 1 上架 2 下架" json:"show"`
+	Status             Status                   `sql:"type:integer;default(1)" description:"状态 1 启用 2 禁用" json:"status"`
 	Specifications     []GoodsSpecification     `gorm:"ForeignKey:GoodsId;save_associations:false" description:"规格关联" json:"specifications"`
 	Inventory          int                      `description:"库存" json:"inventory"`
 	NeedInventory      bool                     `description:"是否需要库存" json:"need_inventory"`
@@ -40,8 +40,8 @@ type Goods struct {
 	SpecificationInfo  []byte                   `sql:"type:json" description:"规格选择参数" json:"-"`
 	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
 	HasSpecification   bool                     `description:"是否有属性" json:"has_specification"`
-	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses"`
-	Warehouse          GoodsShippingWarehouse   `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouse,omitempty"`
+	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses" validate:"-"`
+	Warehouse          GoodsShippingWarehouse   `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouse,omitempty" validate:"-"`
 	Metadata           []byte                   `description:"附加信息" json:"-"`
 	Meta               interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
 	Sort               int                      `description:"排序" json:"sort"`
@@ -187,6 +187,8 @@ func (g *Goods) BeforeSave() (err error) {
 	}
 	if g.Meta != nil {
 		g.Metadata, _ = json.Marshal(g.Meta)
+	} else {
+		g.Metadata = make([]byte, 0)
 	}
 	return nil
 }
