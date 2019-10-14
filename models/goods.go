@@ -36,15 +36,17 @@ type Goods struct {
 	Inventory          int                      `description:"库存" json:"inventory"`
 	NeedInventory      bool                     `description:"是否需要库存" json:"need_inventory"`
 	ClickNum           int                      `sql:"type:integer;default(0)" description:"点击数" json:"click_num"`
+	PriceData          []byte                   `description:"列表价格快照" json:"-"`
+	Price              map[Currency]float32     `sql:"-" description:"列表价格" json:"price"`
 	BuyNum             int                      `sql:"type:integer;default(0)" description:"购买数" json:"buy_num"`
 	SpecificationInfo  []byte                   `sql:"type:json" description:"规格选择参数" json:"-"`
 	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
 	HasSpecification   bool                     `description:"是否有属性" json:"has_specification"`
 	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses" validate:"-"`
-	Warehouse          GoodsShippingWarehouse   `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouse,omitempty" validate:"-"`
 	Metadata           []byte                   `description:"附加信息" json:"-"`
 	Meta               interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
 	Sort               int                      `description:"排序" json:"sort"`
+	Unit               string                   `sql:"type:varchar(20)" description:"包装单位" json:"unit"`
 }
 
 type SearchKeyword struct {
@@ -94,10 +96,11 @@ func (g *GoodsShippingWarehouse) transform() {
 type GoodsSpecification struct {
 	gorm.Model
 	No             string   `sql:"-" json:"id"`
+	Name           string   `sql:"type:varchar(255)" description:"规格名称" json:"name"`
 	TenantId       string   `sql:"type:char(20);index" description:"租户ID" json:"-" `
 	GoodsId        string   `sql:"type:char(20);index" description:"租户商品ID" json:"goods_id_int"`
 	BarCode        string   `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
-	Specification  string   `sql:"type:varchar(255)" description:"规格拼接" json:"-"`
+	Specification  string   `sql:"type:varchar(255)" description:"规格拼接" json:"specification"`
 	Specifications []string `sql:"-" description:"规格" json:"specifications"`
 	Ratio          float32  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
 	Album          string   `sql:"type:text" description:"相册" json:"album"`
@@ -177,18 +180,18 @@ func (g *Goods) BeforeSave() (err error) {
 	if len(g.SpecificationInfo) == 0 {
 		g.SpecificationInfo = []byte(`[]`)
 	}
-	if g.HasSpecification {
-		g.SpecificationInfo, err = json.Marshal(g.SpecificationInfoS)
-		if err != nil {
-			return fmt.Errorf("规格参数json序列户错误: %v", err)
-		}
-	} else {
-		g.SpecificationInfoS = nil
-	}
+	//if g.HasSpecification {
+	//	g.SpecificationInfo, err = json.Marshal(g.SpecificationInfoS)
+	//	if err != nil {
+	//		return fmt.Errorf("规格参数json序列户错误: %v", err)
+	//	}
+	//} else {
+	//	g.SpecificationInfoS = nil
+	//}
 	if g.Meta != nil {
 		g.Metadata, _ = json.Marshal(g.Meta)
 	} else {
-		g.Metadata = make([]byte, 0)
+		g.Metadata = []byte(`{}`)
 	}
 	return nil
 }
@@ -198,10 +201,10 @@ func (g *Goods) AfterFind() error {
 	return nil
 }
 
-func (g *Goods) AfterSave(tx *gorm.DB) (err error) {
-	g.transform()
-	return nil
-}
+//func (g *Goods) AfterSave(tx *gorm.DB) (err error) {
+//	g.transform()
+//	return nil
+//}
 
 func (g *Goods) AfterCreate(tx *gorm.DB) (err error) {
 	//err = g.saveLink(tx)
@@ -216,21 +219,52 @@ func (g *Goods) AfterCreate(tx *gorm.DB) (err error) {
 }
 
 func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
-	err = g.saveLink(tx)
-	if err != nil {
-		log.Error(err)
-		return err
-	}
-	g.SpecificationInfo, _ = json.Marshal(g.SpecificationInfoS)
-	return nil
-}
-
-func (g *Goods) saveLink(tx *gorm.DB) (err error) {
-	//保存发货仓关联
 	err = tx.Where("goods_id = ?", g.ID).Unscoped().Delete(&GoodsShippingWarehouse{}).Error
 	if err != nil {
 		return err
 	}
+	if err = tx.Where("goods_id = ?", g.ID).Unscoped().Delete(GoodsSpecification{}).Error; err != nil {
+		log.Error(err)
+		return err
+	}
+	g.Price = make(map[Currency]float32)
+	for _, warehouse := range g.Warehouses {
+		if warehouse.Default {
+			var currencies []Currency
+			err = tx.Model(&ShippingWarehouse{}).Where("id = ?", warehouse.WarehouseId).Pluck("currency", &currencies).Error
+			if err != nil {
+				log.Error(err)
+				return err
+			}
+			g.Price[currencies[0]] = warehouse.Price
+			break
+		}
+	}
+	for _, goodsSpecification := range g.Specifications {
+		if goodsSpecification.Default {
+			//提前计算列表显示价格
+			for k, v := range g.Price {
+				g.Price[k] = v * (100 + goodsSpecification.Ratio) / 100
+			}
+			break
+		}
+	}
+	g.Stage, _ = json.Marshal(g.Stages)
+	g.PriceData, _ = json.Marshal(g.Price)
+	return nil
+}
+
+//func (g *Goods) AfterUpdate(tx *gorm.DB) (err error) {
+//	err = g.saveLink(tx)
+//	if err != nil {
+//		log.Error(err)
+//		return err
+//	}
+//	return nil
+//}
+
+func (g *Goods) saveLink(tx *gorm.DB) (err error) {
+	//保存发货仓关联
 	for i, warehouse := range g.Warehouses {
 		warehouse.GoodsId = strconv.Itoa(int(g.ID))
 		err = tx.Create(&warehouse).Error
@@ -240,10 +274,6 @@ func (g *Goods) saveLink(tx *gorm.DB) (err error) {
 		g.Warehouses[i] = warehouse
 	}
 	//保存规格关联
-	if err = tx.Where("goods_id = ?", g.ID).Unscoped().Delete(GoodsSpecification{}).Error; err != nil {
-		log.Error(err)
-		return err
-	}
 	//规格结构整合
 	specificationInfos := make([]SpecificationInfo, 0)
 	for index, goodsSpecification := range g.Specifications {
@@ -278,7 +308,21 @@ func (g *Goods) transform() {
 		_ = json.Unmarshal(g.SpecificationInfo, &g.SpecificationInfoS)
 	}
 	g.No = strconv.Itoa(int(g.ID))
-	_ = json.Unmarshal(g.Metadata, &g.Meta)
+	if len(g.Metadata) > 0 {
+		_ = json.Unmarshal(g.Metadata, &g.Meta)
+	}
+	if len(g.PriceData) > 0 {
+		_ = json.Unmarshal(g.PriceData, &g.Price)
+	}
+	if len(g.Stage) > 0 {
+		_ = json.Unmarshal(g.Stage, &g.Stages)
+	}
+}
+
+func (g *Goods) unTransform() {
+	g.SpecificationInfo, _ = json.Marshal(g.SpecificationInfoS)
+	g.PriceData, _ = json.Marshal(g.Price)
+	g.Stage, _ = json.Marshal(g.Stages)
 }
 
 func transformSpecification(arr []string, o GoodsSpecification) SpecificationInfo {

@@ -11,8 +11,8 @@ type (
 )
 
 const (
-	AUD       Currency = "aud"
-	RMB       Currency = "rmb"
+	AUD       Currency = "AUD"
+	RMB       Currency = "CNY"
 	China     Region   = "china"
 	Australia Region   = "australia"
 )

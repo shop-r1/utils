@@ -33,3 +33,12 @@ func StringToUint(s string) uint {
 	}
 	return uint(id)
 }
+
+func StringToInt(s string) int {
+	id, err := strconv.Atoi(s)
+	if err != nil {
+		log.Error(err)
+		return 0
+	}
+	return id
+}

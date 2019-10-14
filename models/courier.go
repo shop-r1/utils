@@ -10,13 +10,22 @@ type Courier struct {
 	gorm.Model
 	No      string            `sql:"-" json:"id"`
 	Name    string            `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
-	Status  Status            `sql:"default(1)" description:"状态" json:"status" validate:"required"`
+	Logo    string            `sql:"type:varchar(255)" description:"logo图标" json:"logo"`
+	Status  Status            `sql:"default(1)" description:"状态" json:"status"`
 	SiteUrl string            `sql:"type:varchar(255)" description:"官网网址" json:"site_url"`
 	Method  string            `sql:"type:varchar(100)" description:"调用方法名" json:"method" validate:"required"`
 	Rules   []CourierPackRule `gorm:"ForeignKey:CourierId" json:"rules"`
 }
 
 type CourierInstall struct {
+	gorm.Model
+	No        string  `sql:"-" json:"id"`
+	Used      bool    `description:"领用" json:"used"`
+	TenantId  string  `json:"tenant_id"`
+	Courier   Courier `validate:"-" json:"courier"`
+	CourierId int     `description:"物流ID" json:"courier_id"`
+	AppKey    string  `sql:"type:varchar(50)" description:"key" json:"app_key"`
+	AppSecret string  `sql:"type:varchar(50)" description:"密钥" json:"app_secret"`
 }
 
 type SearchCourier struct {
@@ -64,6 +73,16 @@ func (c *CourierPackRule) AfterFind() error {
 }
 
 func (c *CourierPackRule) AfterSave() error {
+	c.No = strconv.Itoa(int(c.ID))
+	return nil
+}
+
+func (c *CourierInstall) AfterFind() error {
+	c.No = strconv.Itoa(int(c.ID))
+	return nil
+}
+
+func (c *CourierInstall) AfterSave() error {
 	c.No = strconv.Itoa(int(c.ID))
 	return nil
 }
