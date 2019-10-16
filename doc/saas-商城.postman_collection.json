@@ -1,0 +1,3683 @@
+{
+	"info": {
+		"_postman_id": "4a23b681-b703-4755-a6be-6bf2ca560b78",
+		"name": "saas\b商城",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "\b租户",
+			"item": [
+				{
+					"name": "登录token获取",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Telnet-Id",
+								"value": "481636789862170625",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"shop-r12345678\",\n\t\"grant_type\": \"password\",\n\t\"redirect_uri\": \"http://localhost:9090\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/auth/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"token"
+							]
+						},
+						"description": "密码单步登录"
+					},
+					"response": []
+				},
+				{
+					"name": "租户创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"测试1\",\n\t\"contact\": \"18012959562\",\n\t\"description\": \"测试\",\n\t\"system\": false,\n\t\"expired\": \"2020-01-10T00:00:00Z\",\n\t\"domain\": \"192.168.2.110:9090\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/tenants",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"tenants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "租户删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[25]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/tenants/25",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"tenants",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "租户修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"测试1\",\n\t\"contact\": \"18012959562\",\n\t\"description\": \"测试1111\",\n\t\"system\": false,\n\t\"expired\": \"2020-01-10T00:00:00Z\",\n\t\"domain\": \"localhost:9091\",\n\t\"status\":2\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/tenants/25",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"tenants",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "租户查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/tenants/490718829166460929",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"tenants",
+								"490718829166460929"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "租户查询(多个)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/tenants?page=1&limit=10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"tenants"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tenant_id\": \"490719032991612929\",\n\t\"name\": \"管理员\",\n\t\"description\": \"应用后台\",\n\t\"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/roles",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[2]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/roles/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"roles",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色删除(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[2]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/roles/delete",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"roles",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tenant_id\": 25,\n\t\"name\": \"管理员\",\n\t\"description\": \"应用后台1\",\n\t\"status\": 1,\n\t\"privilege\": {\n\t\t\"key\": \"value\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/roles/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"roles",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/roles/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"roles",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "角色查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/roles?page=1&limit=10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tenant_id\":\"490719032991612929\",\n\t\"role_id\": \"490719111254278145\",\n\t\"username\": \"admin\",\n\t\"password\": \"shop-r12345678\",\n\t\"status\": 1,\n\t\"nickname\": \"梦境1\",\n\t\"description\": \"后台用户1\",\n\t\"head_image\": \"http://b-ssl.duitang.com/uploads/item/201712/22/20171222223729_d8HCB.jpeg\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b\b用户修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tenant_id\":1,\n\t\"role_id\": 1,\n\t\"username\": \"admin\",\n\t\"password\": \"1234567890\",\n\t\"status\": 1,\n\t\"nickname\": \"梦境1\",\n\t\"description\": \"租户后台用户\",\n\t\"head_image\": \"http://b-ssl.duitang.com/uploads/item/201712/22/20171222223729_d8HCB.jpeg\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/users/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[1]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/users/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户\b查询(单个)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"%180%\",\n\t\"nickname\": \"%梦境%\",\n\t\"role_id\": [481693863308820481],\n\t\"status\": [0, 1],\n\t\"description\": \"%租户%\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/users/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/users?page=1&limit=10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户个人信息",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/user/info",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"user",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ewe\",\n\t\"status\": 1,\n\t\"site_url\": \"https://www.ewe.com.au\",\n\t\"method\": \"eweHandler\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/couriers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"couriers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[1]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/couriers/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"couriers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ewe2\",\n\t\"status\": 1,\n\t\"site_url\": \"https://www.ewe.com.au\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/couriers/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"couriers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/couriers?page=1&limit=10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"couriers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/couriers/490720599348477953",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"couriers",
+								"490720599348477953"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b国际物流打包规则新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"打包规则1\",\n\t\"courier_id\": \"490720599348477953\",\n\t\"simple\": 6,\n\t\"mixed\": 4,\n\t\"mixed_sum\": 6,\n\t\"price_unit\": 5,\n\t\"price_total\": 25,\n\t\"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/courier-pack-rules",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"courier-pack-rules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流打包规则删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[1]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/courier-pack-rules/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"courier-pack-rules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流打包规则修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"打包规则1\",\n\t\"courier_id\": \"487064754569904129\",\n\t\"simple\": 6,\n\t\"mixed\": 4,\n\t\"mixed_sum\": 6,\n\t\"price_unit\": 5,\n\t\"price_total\": 25,\n\t\"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/courier-pack-rules/490378203698757633",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"courier-pack-rules",
+								"490378203698757633"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流打包规则查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/courier-pack-rules/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"courier-pack-rules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "国际物流打包规则查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/courier-pack-rules?page=1&limit=10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"courier-pack-rules"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品品牌新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name_zh\": \"华为\",\n\t\"name_en\": \"HUAWEI\",\n\t\"logo\": \"https://www.vmall.com/favicon.ico\",\n\t\"site_url\": \"https://www.huawei.com\",\n\t\"index_img\": \"https://res.vmallres.com/pimages//sale/2018-11/WTDdguIWgNsNWtK0Q1Z3.png\",\n\t\"bg_img\": \"https://res3.vmallres.com/shopdc/pic/419b7e50-0549-4d75-b62d-f317eeae84b6.jpg\",\n\t\"description\": \"华为商城\",\n\t\"status\": 1,\n\t\"sort\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/brands",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品品牌删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[2]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/brands/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"brands",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品品牌修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name_zh\": \"华为\",\n\t\"name_en\": \"HUAWEI\",\n\t\"logo\": \"https://www.vmall.com/favicon.ico\",\n\t\"site_url\": \"https://www.huawei.com\",\n\t\"index_img\": \"https://res.vmallres.com/pimages//sale/2018-11/WTDdguIWgNsNWtK0Q1Z3.png\",\n\t\"bg_img\": \"https://res3.vmallres.com/shopdc/pic/419b7e50-0549-4d75-b62d-f317eeae84b6.jpg\",\n\t\"description\": \"华为商城\",\n\t\"status\": 1,\n\t\"sort\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/brands/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"brands",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品品牌查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/brands/494508805231771649",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"brands",
+								"494508805231771649"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b商品品牌查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/brands?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"brands"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品类别新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"parent_id\": \"0\",\n\t\"name\": \"奶粉\",\n\t\"alias\": \"奶粉\",\n\t\"description\": \"乳制品\",\n\t\"img\": \"http://cdn.home178.com/milk/m002/images/1.jpg\",\n\t\"sort\": 1,\n\t\"status\": 1,\n\t\"pack_rules\": [\n\t\t{\n\t\t\t\"courier_id\": \"490720599348477953\",\n\t\t\t\"left_rule_id\": \"490720813439221761\",\n\t\t\t\"right_rule_id\": \"490720813439221761\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品类别删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[2]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/categories/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品类别修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"parent_id\": \"0\",\n\t\"name\": \"奶粉\",\n\t\"alias\": \"奶粉\",\n\t\"description\": \"乳制品\",\n\t\"img\": \"http://cdn.home178.com/milk/m002/images/1.jpg\",\n\t\"sort\": 1,\n\t\"status\": 1,\n\t\"pack_rules\": [\n\t\t{\n\t\t\t\"courier_id\": \"490720599348477953\",\n\t\t\t\"left_rule_id\": \"490720813439221761\",\n\t\t\t\"right_rule_id\": \"490720813439221761\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/categories/491594688424771585",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"categories",
+								"491594688424771585"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品类别查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/categories?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品类别查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/categories/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品属性\b类型新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category_id\": \"487309800789737473\",\n\t\"name\": \"奶粉外观\",\n\t\"attributes\": [\n\t\t{\n\t\t\t\"name\": \"颜色\",\n\t\t\t\"items\": [\n\t\t\t\t\"红色\",\n\t\t\t\t\"粉色\"\n\t\t\t],\n\t\t\t\"select_type\": \"radio\"\n\t\t}\n\t],\n\t\"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/classes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b商品属性类型删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[2]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/classes/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"classes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b商品属性类型修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_id\": \"2\",\n    \"name\": \"婴儿奶粉2\",\n    \"attributes\": [\n        {\n            \"name\": \"奶粉生产日期\",\n            \"items\": [\n                \"近三个月\",\n                \"近六个月\"\n            ],\n            \"select_type\": \"radio\"\n        }\n    ],\n    \"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/classes/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"classes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品属性类型查询(\b多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/classes?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"classes"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品属性类型查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/classes/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"classes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品基础信息新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category_id\": \"491594688424771585\",\n\t\"brand_id\": \"491594978698166273\",\n\t\"name\": \"华为荣耀10\",\n\t\"image\": \"https://res1.vmallres.com/pimages//product/6901443272785/428_428_1543457093718mp.png\",\n\t\"video\": \"xxxxx.mp4\",\n\t\"albums\": [\n\t\t\"https://res.vmallres.com/pimages//product/6901443272778/78_78_1543457356005mp.png\",\n\t\t\"https://res.vmallres.com/pimages//product/6901443272778/group//78_78_1543457284310.jpg\",\n\t\t\"https://res.vmallres.com/pimages//product/6901443272778/group//78_78_1543457290122.jpg\"\n\t],\n\t\"description\": \"华为荣耀10手机\",\n\t\"keywords\": \"华为,手机,荣耀,huawei,shouji,rongyao\",\n\t\"bar_code\": \"xxxxxxxx(二维码)\",\n\t\"content\": \"富文本内容\",\n\t\"weight\": 168,\n\t\"base_price\": 999.0,\n\t\"has_pack_rule\": true,\n\t\"pack_rules\": [\n        {\n            \"courier_id\": \"490720599348477953\",\n            \"left_rule_id\": \"490720813439221761\",\n            \"right_rule_id\": \"490720813439221761\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/goods-infos",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"goods-infos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品基础信息删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[2]"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/goods-infos/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"goods-infos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b商品基础信息修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category_id\": \"491594688424771585\",\n\t\"brand_id\": \"491594978698166273\",\n\t\"name\": \"华为荣耀10\",\n\t\"image\": \"https://res1.vmallres.com/pimages//product/6901443272785/428_428_1543457093718mp.png\",\n\t\"video\": \"xxxxx.mp4\",\n\t\"albums\": [\n\t\t\"https://res.vmallres.com/pimages//product/6901443272778/78_78_1543457356005mp.png\",\n\t\t\"https://res.vmallres.com/pimages//product/6901443272778/group//78_78_1543457284310.jpg\",\n\t\t\"https://res.vmallres.com/pimages//product/6901443272778/group//78_78_1543457290122.jpg\"\n\t],\n\t\"description\": \"华为荣耀10手机\",\n\t\"keywords\": \"华为,手机,荣耀,huawei,shouji,rongyao\",\n\t\"bar_code\": \"xxxxxxxx(二维码)\",\n\t\"content\": \"富文本内容\",\n\t\"weight\": 168,\n\t\"base_price\": 999.0,\n\t\"has_pack_rule\": false,\n\t\"pack_rules\": [\n        {\n            \"courier_id\": \"490720599348477953\",\n            \"left_rule_id\": \"490720813439221761\",\n            \"right_rule_id\": \"490720813439221761\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/goods-infos/491596813610778625",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"goods-infos",
+								"491596813610778625"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b商品基础\b信息查询(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/goods-infos?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"goods-infos"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品基础信息查询(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/goods-infos/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"goods-infos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "上传公共文件",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/files/upload",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"files",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增支付方式",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"royalpay支付宝\",\n\t\"logo\": \"xxx.png\",\n\t\"method\": \"royalpayAlia\",\n\t\"status\": 1,\n\t\"site_url\": \"https://www.royalpay.com.au\",\n\t\"type\": \"online\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/payments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改支付方式",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"royalpay支付宝\",\n\t\"logo\": \"xxxx.png\",\n\t\"method\": \"royalpayAlia\",\n\t\"status\": 1,\n\t\"site_url\": \"https://www.royalpay.com.au\",\n\t\"type\": \"online\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/payments/495063334827524097",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"payments",
+								"495063334827524097"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询支付方式(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/payments/495063334827524097",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"payments",
+								"495063334827524097"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询支付方式(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/tenant/v1/payments?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tenant",
+								"v1",
+								"payments"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "应用后台",
+			"item": [
+				{
+					"name": "上传公共文件",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJleHAiOjE1Njg2MDg0MDUsImlhdCI6MTU2ODUyMjAwNSwicmVsYXRlZCI6IntcInRlbmFudF9pZFwiOjEsXCJyb2xlX2lkXCI6MSxcInVzZXJfaWRcIjoxLFwic2NvcGVzXCI6bnVsbH0ifQ.b9PUWYUklmKHhf9eWmC3H5FieCTkwR6OrfVTPMoJI5o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9090/tenant/v1/files/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"tenant",
+								"v1",
+								"files",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建显示分类",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"测试分类-1\",\n\t\"image\": \"xxxxx.png\",\n\t\"parent_id\": \"0\",\n\t\"status\": 1,\n\t\"description\": \"测试分类xxxx\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/show-categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"show-categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除显示分类",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"488960388798971905\"\n]"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/show-categories/488960388798971905",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"show-categories",
+								"488960388798971905"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改显示分类",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"测试分类1\",\n\t\"image\": \"xxxxx.png\",\n\t\"parent_id\": \"488749283210592257\",\n\t\"status\": 1,\n\t\"description\": \"测试分类xxxx\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/show-categories/488960388798971905",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"show-categories",
+								"488960388798971905"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询显示分类(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/show-categories/488960388798971905",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"show-categories",
+								"488960388798971905"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询显示分类(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/show-categories?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"show-categories"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建\b发货仓库",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"澳洲仓库\",\n\t\"currency\": \"AUD\",\n\t\"region\": \"australia\",\n\t\"address\": \"澳洲墨尔本\",\n\t\"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/shipping-warehouses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"shipping-warehouses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除发货仓",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\"488955509545435137\"\n]"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/shipping-warehouses/488843585204387841",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"shipping-warehouses",
+								"488843585204387841"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改发货仓",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"澳洲仓库\",\n\t\"type\": \"aud\",\n\t\"region\": \"australia\",\n\t\"address\": \"澳洲墨尔本1\",\n\t\"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/shipping-warehouses/488843585204387841",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"shipping-warehouses",
+								"488843585204387841"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询发货仓(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/shipping-warehouses/488843585204387841",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"shipping-warehouses",
+								"488843585204387841"
+							]
+						},
+						"description": "只能查看本租户下发货仓"
+					},
+					"response": []
+				},
+				{
+					"name": "查询发货仓(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/shipping-warehouses?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"shipping-warehouses"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建商品",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"goods_info_id\": \"487311070122246145\",\n\t\"show_category_id\": \"488749283210592257\",\n\t\"alias\": \"测试商品\",\n\t\"commission_rmb\": 1,\n\t\"bar_code\": \"122222212121212\",\n\t\"image\": \"xxxx.png\",\n\t\"albums\": [\n\t\t\"1.png\",\n\t\t\"2,png\"\n\t],\n\t\"video\": \"xxxx.mp4\",\n\t\"content\": \"富文本\",\n\t\"description\": \"描述\",\n\t\"quality_period\": \"三个月(保质期)\",\n\t\"mini_num\": 1,\n\t\"show\": 1,\n\t\"status\": 1,\n\t\"inventory\": 1000,\n\t\"has_specification\": true,\n\t\"specification_infos\": [\n\t\t{\n\t\t\t\"level\": 0,\n\t\t\t\"class_id\": \"488750683988852737\",\n\t\t\t\"item\": \"近三个月\",\n\t\t\t\"specification\": null,\n\t\t\t\"chidren\": [\n\t\t\t\t{\n\t\t\t\t\t\"level\": 1,\n\t\t\t\t\t\"class_id\": \"488752300585680897\",\n\t\t\t\t\t\"item\": \"红色\",\n\t\t\t\t\t\"specification\": {\n\t\t\t\t\t\t\"bar_code\": \"xxxxx\",\n\t\t\t\t\t\t\"price\": 10,\n\t\t\t\t\t\t\"album\": \"xxxx.png\",\n\t\t\t\t\t\t\"inventory\": 10000\n\t\t\t\t\t},\n\t\t\t\t\t\"children\": null\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"level\": 1,\n\t\t\t\t\t\"class_id\": \"488752300585680897\",\n\t\t\t\t\t\"item\": \"粉色\",\n\t\t\t\t\t\"specification\": {\n\t\t\t\t\t\t\"bar_code\": \"xxxxx\",\n\t\t\t\t\t\t\"price\": 10,\n\t\t\t\t\t\t\"album\": \"xxxx.png\",\n\t\t\t\t\t\t\"inventory\": 500\n\t\t\t\t\t},\n\t\t\t\t\t\"children\": null\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/goods",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"goods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改商品",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"show_category_id\": \"494668760980422657\",\n    \"parent_show_category_id\": \"494644780476923905\",\n    \"alias\": \"测试商品\",\n    \"weight\": 1,\n    \"unit\": \"1\",\n    \"image\": \"xxxx.png\",\n    \"video\": \"xxxx.mp4\",\n    \"need_inventory\": true,\n    \"description\": \"描述\",\n    \"bar_code\": \"122222212121212\",\n    \"content\": \"<p>富文本</p>\",\n    \"sort\": 0,\n    \"albums\": [\n        \"https://shop-r1-public.oss-cn-hongkong.aliyuncs.com//491830300941320193/ee408029-d5a3-41ae-95d9-46a0faa82f0a.png\"\n    ],\n    \"stages\": [\n        1,\n        3\n    ],\n    \"warehouses\": [\n        {\n            \"warehouse_id\": \"494631334989791233\",\n            \"name\": \"墨尔本仓库\",\n            \"price\": 1,\n            \"unit\": \"AUD\",\n            \"default\": true,\n            \"member_level_price\": [\n            \t{\n            \t\t\"id\": \"495071855925624833\",\n            \t\t\"price\": 2\n            \t}\n            ]\n        }\n    ],\n    \"specifications\": [\n        {\n            \"specification\": \"S,红\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\",\n            \"default\": true\n        },\n        {\n            \"specification\": \"M,红\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"L,红\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"Xl,红\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"S,白\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"M,白\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"L,白\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"Xl,白\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"S,蓝\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"M,蓝\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"L,蓝\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        },\n        {\n            \"specification\": \"Xl,蓝\",\n            \"ratio\": 0,\n            \"inventory\": 0,\n            \"album\": \"active\",\n            \"bar_code\": \"\"\n        }\n    ],\n    \"has_specification\": true,\n    \"metadata\": {\n        \"key\": \"value\"\n    },\n    \"payment_ids\": [\n    \t\"495063335206027265\"\n    ],\n    \"status\": 1,\n    \"show\": 1\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/goods/494492882987188220",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"goods",
+								"494492882987188220"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询商品(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/goods",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"goods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建会员\b等级",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"b1\",\n\t\"has_market\": true,\n\t\"payment_ids\": [\n\t\t\"495063335206027265\"\n\t],\n\t\"custom\": false,\n\t\"ratio\": 0.01\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/member-levels",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"member-levels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除会员等级",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"490447587636969473\"\n]"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/member-levels/490447587636969473",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"member-levels",
+								"490447587636969473"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改会员等级",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"b1\",\n\t\"has_market\": true,\n\t\"pay_ids\": [\n\t\t\"111111\",\n\t\t\"222222\"\n\t],\n\t\"ratio\": 0.01\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/member-levels/490395573861122049",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"member-levels",
+								"490395573861122049"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b查询会员等级(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/member-levels?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"member-levels"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b\b查询会员等级(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/member-levels/490395573861122049",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"member-levels",
+								"490395573861122049"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建\b客户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"level_id\": \"490395573861122049\",\n\t\"username\": \"linwenxiang2\",\n\t\"nickname\": \"梦境\",\n\t\"phone\": \"18012959561\",\n\t\"description\": \"测试账号\",\n\t\"password\": \"123456\",\n\t\"meta\": {\n\t\t\"key\": \"value\",\n\t\t\"array\": [\"111\", \"222\"]\n\t},\n\t\"status\": 1,\n\t\"referrer_id\": \"490465688392499201\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/members",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除客户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"490478569334571009\"\n]"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/members/490478569334571009",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"members",
+								"490478569334571009"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改客户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"level_id\": \"490395573861122049\",\n\t\"username\": \"linwenxiang2\",\n\t\"nickname\": \"梦境\",\n\t\"phone\": \"18012959561\",\n\t\"description\": \"测试账号\",\n\t\"password\": \"123456\",\n\t\"meta\": {\n\t\t\"key\": \"value\",\n\t\t\"array\": [\"111\", \"222\"]\n\t},\n\t\"status\": 1,\n\t\"referrer_id\":\"490458942554865665\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/members/490468641299169281",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"members",
+								"490468641299169281"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b查询客户(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/members?limit=10&page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"members"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建功能圈",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"测试功能圈\",\n\t\"type\": \"功能圈类型(前端自己定关键字)\",\n\t\"content\": \"富文本\",\n\t\"media\": [\n\t\t{\n\t\t\t\"bg_color\": \"red\",\n\t\t\t\"bg_image\": \"xxxx.png\",\n\t\t\t\"media\": \"xxxxx.mp4\",\n\t\t\t\"video\": true,\n\t\t\t\"link_type\": \"show_category\",\n\t\t\t\"link_id\": \"492942730679451649\",\n\t\t\t\"url\": \"外部链接\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/function-circles",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"function-circles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询\b客户(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/members/490468641299169281",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"members",
+								"490468641299169281"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改功能圈",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"type\": \"功能圈类型(前端自己定关键字)\",\n        \"name\": \"测试功能圈\",\n        \"media\": [\n            {\n                \"bg_color\": \"red\",\n                \"bg_image\": \"xxxx.png\",\n                \"media\": \"xxxxx.mp4\",\n                \"video\": true,\n                \"link_type\": \"show_category\",\n                \"link_id\": \"492942730679451649\",\n                \"url\": \"\"\n            }\n        ],\n        \"content\": \"富文本\"\n    }"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/function-circles/493290519439507457",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"function-circles",
+								"493290519439507457"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询功能圈(多个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/function-circles",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"function-circles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询功能圈(单个)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/function-circles/493290519439507457",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"function-circles",
+								"493290519439507457"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除功能圈",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/function-circles/493295804323463169",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"function-circles",
+								"493295804323463169"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "安装\b物流方式",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/courier-installs/494783309335822337",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"courier-installs",
+								"494783309335822337"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改已安装物流",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"app_key\": \"test-key\",\n\t\"app_secret\": \"test-secret\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/courier-installs/494783309335822337",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"courier-installs",
+								"494783309335822337"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "卸载物流方式",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/courier-installs/494783309335822337",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"courier-installs",
+								"494783309335822337"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "所有物流方式查询(\b安装和未安装)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/courier-installs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"courier-installs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\b安装支付方式",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/payment-installs/495063335206027265",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"payment-installs",
+								"495063335206027265"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询所有支付方式(安装和未安装)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/payment-installs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"payment-installs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "卸载支付方式",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app-admin/v1/payment-installs/495063335206027265",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app-admin",
+								"v1",
+								"payment-installs",
+								"495063335206027265"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "应用前台",
+			"item": [
+				{
+					"name": "所有功能圈接口",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app/v1/function-circles",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app",
+								"v1",
+								"function-circles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "顶级分类列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app/v1/show-categories?order[sort]=desc&exact[parent_id]=0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app",
+								"v1",
+								"show-categories"
+							],
+							"query": [
+								{
+									"key": "order[sort]",
+									"value": "desc"
+								},
+								{
+									"key": "exact[parent_id]",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据商品名称搜索",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app/v1/goods/keyword?name=测试",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app",
+								"v1",
+								"goods",
+								"keyword"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "测试"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "商品列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app/v1/goods",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app",
+								"v1",
+								"goods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "顶级分类下\b商品(6\b个)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/app/v1/show-categories/parent/goods",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"app",
+								"v1",
+								"show-categories",
+								"parent",
+								"goods"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
