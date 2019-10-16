@@ -12,7 +12,7 @@ type MemberLevel struct {
 	TenantId        string   `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	Name            string   `sql:"type:varchar(100);index" description:"用户名" json:"name" validate:"required"`
 	HasMarket       bool     `description:"可以开店" json:"has_market"`
-	Custom          bool     `description:"c端客户" json:"custom"`
+	ChangeCourier   bool     `description:"可以选择物流" json:"change_courier"`
 	PaymentIds      string   `sql:"type:text" description:"可用的支付方式" json:"-"`
 	PaymentIdsArray []string `sql:"-" json:"payment_ids"`
 	Ratio           float32  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
