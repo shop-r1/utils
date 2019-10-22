@@ -1,15 +1,16 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 //收藏夹
 type Collection struct {
-	gorm.Model
-	No                   string `sql:"-" json:"id"`
-	TenantId             string `sql:"type:varchar(20)" description:"租户ID" json:"-"`
-	MemberId             string `sql:"type:varchar(20)" description:"客户ID" json:"member_id"`
-	GoodsId              string `sql:"type:varchar(20)" description:"商品ID" json:"goods_id"`
-	GoodsSpecificationId string `sql:"type:varchar(20)" description:"商品规格ID" json:"goods_specification_id"`
+	TenantId  string `sql:"type:varchar(20);primary_key" description:"租户ID" json:"-"`
+	MemberId  string `sql:"type:varchar(20);primary_key" description:"客户ID" json:"member_id"`
+	GoodsId   string `sql:"type:varchar(20);primary_key" description:"商品ID" json:"goods_id"`
+	Goods     Goods  `gorm:"save_associations:false" json:"goods" validate:"-"`
+	CreatedAt time.Time
 }
 
 type SearchCollection struct {

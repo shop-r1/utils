@@ -17,8 +17,8 @@ type Member struct {
 	ReferrerId       string      `json:"referrer_id"`
 	No               string      `sql:"-" json:"id"`
 	LevelId          string      `sql:"type:char(20);index" description:"客户等级ID" json:"level_id" validate:"required"`
-	Level            MemberLevel `gorm:"save_associations:false;ForeignKey:LevelId" json:"level"`
-	Referrer         *Member     `gorm:"save_associations:false;ForeignKey:ReferrerId" json:"referrer,omitempty"`
+	Level            MemberLevel `gorm:"save_associations:false;ForeignKey:LevelId" json:"level" validate:"-"`
+	Referrer         *Member     `gorm:"save_associations:false;ForeignKey:ReferrerId" json:"referrer,omitempty" validate:"-"`
 	Username         string      `sql:"type:varchar(100);index" description:"用户名" json:"username"`
 	Nickname         string      `sql:"type:varchar(100);index" description:"昵称" json:"nickname"`
 	Phone            string      `sql:"type:char(20)" description:"手机号" json:"phone"`

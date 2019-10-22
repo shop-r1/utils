@@ -23,6 +23,11 @@ type Condition struct {
 	Where map[string][]interface{}
 }
 
+type BatchSelected struct {
+	Select int
+	Cancel int
+}
+
 var (
 	Db   *gorm.DB
 	Conf map[string]interface{}

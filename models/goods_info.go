@@ -9,25 +9,26 @@ import (
 
 type GoodsInfo struct {
 	gorm.Model
-	Category    Category   `gorm:"save_associations:false" json:"category" validate:"-"`
-	Brand       Brand      `gorm:"save_associations:false" json:"brand" validate:"-"`
-	No          string     `sql:"-" json:"id"`
-	CategoryId  string     `sql:"type:char(20);index" json:"category_id"`
-	BrandId     string     `sql:"type:char(20);index" json:"brand_id"`
-	Name        string     `sql:"type:varchar(255)" description:"名称" json:"name" validate:"required"`
-	Album       string     `sql:"type:text" description:"相册" json:"album"`
-	Albums      []string   `sql:"-" description:"相册(数组)" json:"albums"`
-	Description string     `sql:"type:text" description:"描述" json:"description"`
-	Image       string     `sql:"type:varchar(255)" description:"图片" json:"image"`
-	Video       string     `sql:"type:varchar(255)" description:"视频" json:"video"`
-	Keywords    string     `sql:"type:varchar(255)" description:"关键字" json:"keywords"`
-	BarCode     string     `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
-	Content     string     `sql:"type:text" description:"详情内容" json:"content"`
-	Weight      int        `sql:"type:integer;default(0)" description:"重量" json:"weight" validate:"required"`
-	HasPackRule bool       `description:"有打包规则" json:"has_pack_rule"`
-	PackRule    []byte     `sql:"type:json" description:"关联的物流规则ID" json:"-"`
-	PackRules   []PackRule `sql:"-" json:"pack_rules"`
-	Unit        string     `sql:"type:varchar(20)" description:"包装单位" json:"unit"`
+	Category         Category   `gorm:"save_associations:false" json:"category" validate:"-"`
+	Brand            Brand      `gorm:"save_associations:false" json:"brand" validate:"-"`
+	No               string     `sql:"-" json:"id"`
+	CategoryId       string     `sql:"type:char(20);index" json:"category_id"`
+	ParentCategoryId string     `sql:"type:char(20);index" json:"parent_category_id"`
+	BrandId          string     `sql:"type:char(20);index" json:"brand_id"`
+	Name             string     `sql:"type:varchar(255)" description:"名称" json:"name" validate:"required"`
+	Album            string     `sql:"type:text" description:"相册" json:"album"`
+	Albums           []string   `sql:"-" description:"相册(数组)" json:"albums"`
+	Description      string     `sql:"type:text" description:"描述" json:"description"`
+	Image            string     `sql:"type:varchar(255)" description:"图片" json:"image"`
+	Video            string     `sql:"type:varchar(255)" description:"视频" json:"video"`
+	Keywords         string     `sql:"type:varchar(255)" description:"关键字" json:"keywords"`
+	BarCode          string     `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
+	Content          string     `sql:"type:text" description:"详情内容" json:"content"`
+	Weight           int        `sql:"type:integer;default(0)" description:"重量" json:"weight" validate:"required"`
+	HasPackRule      bool       `description:"有打包规则" json:"has_pack_rule"`
+	PackRule         []byte     `sql:"type:json" description:"关联的物流规则ID" json:"-"`
+	PackRules        []PackRule `sql:"-" json:"pack_rules"`
+	Unit             string     `sql:"type:varchar(20)" description:"包装单位" json:"unit"`
 }
 
 type SearchGoodsInfo struct {
@@ -76,7 +77,6 @@ func (g *GoodsInfo) AfterSave() (err error) {
 			return err
 		}
 	}
-
 	return nil
 }
 
@@ -87,5 +87,6 @@ func (g *GoodsInfo) transform() {
 	} else {
 		g.Albums = strings.Split(g.Album, ",")
 	}
-	g.PackRule, _ = json.Marshal(g.PackRules)
+	_ = json.Unmarshal(g.PackRule, &g.PackRules)
+	//g.PackRule, _ = json.Marshal(g.PackRules)
 }

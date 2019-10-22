@@ -12,16 +12,17 @@ import (
 
 type Category struct {
 	gorm.Model
-	ParentId    string     `json:"parent_id"`
-	No          string     `sql:"-" json:"id"`
-	Name        string     `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
-	Alias       string     `sql:"type:varchar(100)" description:"别名" json:"alias"`
-	Description string     `sql:"text" description:"描述" json:"description"`
-	Sort        int        `sql:"default(0)" description:"排序" json:"sort"`
-	Img         string     `sql:"type:varchar(255)" description:"图片" json:"img"`
-	Tag         string     `sql:"type:varchar(255)" description:"商品标签" json:"tag"`
-	PackRule    []byte     `sql:"type:json" description:"关联的物流规则ID" json:"-"`
-	PackRules   []PackRule `sql:"-" json:"pack_rules"`
+	ParentId    string         `json:"parent_id"`
+	No          string         `sql:"-" json:"id"`
+	Name        string         `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
+	Alias       string         `sql:"type:varchar(100)" description:"别名" json:"alias"`
+	Description string         `sql:"text" description:"描述" json:"description"`
+	Sort        int            `sql:"default(0)" description:"排序" json:"sort"`
+	Img         string         `sql:"type:varchar(255)" description:"图片" json:"img"`
+	Tag         string         `sql:"type:varchar(255)" description:"商品标签" json:"tag"`
+	PackRule    []byte         `sql:"type:json" description:"关联的物流规则ID" json:"-"`
+	PackRules   []PackRule     `sql:"-" json:"pack_rules"`
+	Children    []ShowCategory `gorm:"ForeignKey:ParentId" json:"children"`
 }
 
 type PackRule struct {

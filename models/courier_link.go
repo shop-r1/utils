@@ -17,3 +17,18 @@ type ObjectLinkCourier struct {
 	Id      int     `json:"id"`
 	RuleIds [][]int `json:"rule_ids"`
 }
+
+type GeneratePack struct {
+	GoodsId          string `json:"goods_id"`
+	ParentCategoryId string `json:"parent_category_id"`
+	CategoryId       string `json:"category_id"`
+	CourierId        string `json:"courier_id"`
+	Weight           int    `json:"weight"`
+	Quantity         int    `json:"quantity"`
+}
+
+type UnitPack struct {
+	Pack   []GeneratePack `json:"pack"`
+	Weight int            `json:"weight"`
+	Price  float32        `json:"price"`
+}

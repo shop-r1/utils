@@ -19,8 +19,10 @@ const (
 )
 
 type WarehouseCourier struct {
-	Id      string `json:"id"`
-	Default bool   `json:"default"`
+	Id        string `json:"id"`
+	CourierId string `json:"courier_id"`
+	Name      string `json:"name"`
+	Default   bool   `json:"default"`
 }
 
 //发货仓
@@ -34,6 +36,7 @@ type ShippingWarehouse struct {
 	Address      string             `sql:"type:text" description:"真实地址" json:"address" validate:"required"`
 	MaxAmount    int                `sql:"type:integer;default(0)" description:"包裹最大金额" json:"max_amount"`
 	Status       Status             `sql:"type:integer;default(1)" description:"状态 1启用 2禁用" json:"status"`
+	GetSelf      bool               `description:"自提" json:"get_self"`
 	Couriers     []WarehouseCourier `sql:"-" description:"关联物流" json:"couriers"`
 	CouriersData []byte             `sql:"type:json" json:"-"`
 }
@@ -56,13 +59,14 @@ func (s *ShippingWarehouse) AfterFind() error {
 	return nil
 }
 
-func (s ShippingWarehouse) BeforeSave() error {
+func (s *ShippingWarehouse) BeforeSave() error {
 	s.unTransform()
 	return nil
 }
 
 func (s *ShippingWarehouse) transform() {
 	s.No = strconv.Itoa(int(s.ID))
+	_ = json.Unmarshal(s.CouriersData, &s.Couriers)
 }
 
 func (s *ShippingWarehouse) unTransform() {
