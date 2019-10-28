@@ -9,14 +9,14 @@ import (
 type Sender struct {
 	gorm.Model
 	No       string `sql:"-" json:"id"`
-	TenantId string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id" validate:"required"`
+	TenantId string `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
+	MemberId string `sql:"type:char(20);index" description:"客户ID" json:"member_id"`
 	Name     string `sql:"type:varchar(100)" description:"姓名" json:"name" validate:"required"`
 	Phone    string `sql:"type:varchar(50)" description:"手机号" json:"phone" validate:"required"`
-	Country  string `sql:"type:varchar(50)" description:"国家" json:"country" validate:"required"`
-	Province string `sql:"type:varchar(50)" description:"省份" json:"province" validate:"required"`
-	City     string `sql:"type:varchar(50)" description:"市" json:"city" validate:"required"`
-	Area     string `sql:"type:varchar(50)" description:"区" json:"area"`
-	Address  string `sql:"type:varchar(255)" description:"详细地址" json:"address" validate:"required"`
+	Country  string `sql:"type:varchar(50)" description:"国家" json:"country"`
+	Province string `sql:"type:varchar(50)" description:"省份" json:"province"`
+	City     string `sql:"type:varchar(50)" description:"市" json:"city"`
+	Address  string `sql:"type:varchar(255)" description:"详细地址" json:"address"`
 	Tag      string `sql:"type:varchar(100)" description:"地址标签" json:"tag"`
 	Default  bool   `description:"默认地址" json:"default"`
 }

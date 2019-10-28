@@ -49,13 +49,15 @@ func (p *Payment) AfterFind() error {
 
 type PaymentInstall struct {
 	gorm.Model
-	No        string  `sql:"-" json:"id"`
-	Used      bool    `description:"安装" json:"used"`
-	TenantId  string  `sql:"type:char(20)" description:"租户ID" json:"tenant_id" validate:"required"`
-	PaymentId int     `sql:"type:integer;index" json:"payment_id" validate:"required"`
-	Payment   Payment `gorm:"ForeignKey:PaymentId;save_associations:false" json:"payment" validate:"-"`
-	AppKey    string  `sql:"type:varchar(50)" description:"app key 三方" json:"app_key"`
-	AppSecret string  `sql:"type:varchar(100)" description:"app secret 三方" json:"app_secret"`
+	No          string  `sql:"-" json:"id"`
+	Used        bool    `description:"安装" json:"used"`
+	TenantId    string  `sql:"type:char(20)" description:"租户ID" json:"tenant_id"`
+	PaymentId   int     `sql:"type:integer;index" json:"payment_id"`
+	Payment     Payment `gorm:"ForeignKey:PaymentId;save_associations:false" json:"payment" validate:"-"`
+	AppKey      string  `sql:"type:varchar(50)" description:"app key 三方" json:"app_key"`
+	AppSecret   string  `sql:"type:varchar(100)" description:"app secret 三方" json:"app_secret"`
+	Image       string  `sql:"type:text" description:"凭证支付所需图片" json:"image"`
+	Description string  `sql:"text" description:"描述" json:"description"`
 }
 
 func (p *PaymentInstall) transform() {

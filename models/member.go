@@ -13,7 +13,7 @@ import (
 type Member struct {
 	gorm.Model
 	TenantId         string      `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
-	Region           Region      `sql:"type:varchar(100)" description:"地区" json:"region"`
+	Region           string      `sql:"type:varchar(100)" description:"地区" json:"region"`
 	ReferrerId       string      `json:"referrer_id"`
 	No               string      `sql:"-" json:"id"`
 	LevelId          string      `sql:"type:char(20);index" description:"客户等级ID" json:"level_id" validate:"required"`
@@ -24,6 +24,7 @@ type Member struct {
 	Phone            string      `sql:"type:char(20)" description:"手机号" json:"phone"`
 	Description      string      `sql:"type:text" description:"描述" json:"description"`
 	OpenId           string      `sql:"type:varchar(100)" description:"三方登录openid" json:"open_id"`
+	UnionId          string      `sql:"type:varchar(100)" description:"三方登录unionid" json:"union_id"`
 	PasswordHash     string      `sql:"type:varchar(100)" description:"密码hash值" json:"-"`
 	Salt             string      `sql:"type:varchar(20)" description:"加盐值" json:"-"`
 	RestPasswordHash string      `sql:"type:varchar(100)" description:"重置密码hash值" json:"-"`
@@ -32,6 +33,8 @@ type Member struct {
 	HeadImage        string      `sql:"type:text" description:"头像" json:"head_image"`
 	Metadata         []byte      `sql:"json" description:"附加信息" json:"-"`
 	Meta             interface{} `sql:"-" json:"meta"`
+	Address          string      `sql:"type:varchar(100)" description:"用户地址" json:"address"`
+	Sex              int         `json:"sex"` // 用户的性别, 值为1时是男性, 值为2时是女性, 值为0时是未知
 }
 
 type SearchMember struct {

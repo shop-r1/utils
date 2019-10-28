@@ -20,6 +20,7 @@ const (
 	MemberService    = "go.micro.srv.member"
 	UiControlService = "go.micro.srv.ui-control"
 	PaymentService   = "go.micro.srv.payment"
+	OrderService     = "go.micro.srv.order"
 
 	//method
 	TenantCreate       = "Tenant.Create"
@@ -27,6 +28,7 @@ const (
 	TenantDelete       = "Tenant.Delete"
 	TenantRead         = "Tenant.Read"
 	TenantSearch       = "Tenant.Search"
+	TenantReadById     = "Tenant.ReadById"
 	TenantReadByDomain = "Tenant.ReadByDomain"
 	Oauth2Token        = "Oauth2.Token"
 	Oauth2Introspect   = "Oauth2.Introspect"
@@ -52,18 +54,23 @@ const (
 	CourierInstallUninstall = "CourierInstall.Uninstall"
 	CourierInstallSearch    = "CourierInstall.Search"
 	CourierInstallRead      = "CourierInstall.Read"
-	//courier
+	//payment
 	PaymentCreate = "Payment.Create"
 	PaymentUpdate = "Payment.Update"
 	PaymentDelete = "Payment.Delete"
 	PaymentSearch = "Payment.Search"
 	PaymentRead   = "Payment.Read"
-	//courier install
+	//payment install
 	PaymentInstallInstall   = "PaymentInstall.Install"
 	PaymentInstallUpdate    = "PaymentInstall.Update"
 	PaymentInstallUninstall = "PaymentInstall.Uninstall"
 	PaymentInstallSearch    = "PaymentInstall.Search"
 	PaymentInstallRead      = "PaymentInstall.Read"
+	//payment order
+	PaymentOrderCreate   = "PaymentOrder.Create"
+	PaymentOrderUpdate   = "PaymentOrder.Update"
+	PaymentOrderCallback = "PaymentOrder.Callback"
+	PaymentOrderRead     = "PaymentOrder.Read"
 
 	CourierLinkCreateBatch  = "CourierLink.CreateBatch"
 	CourierLinkGeneratePack = "CourierLink.GeneratePack"
@@ -136,11 +143,26 @@ const (
 	MemberLevelSearch = "MemberLevel.Search"
 	MemberLevelRead   = "MemberLevel.Read"
 	//member
-	MemberCreate = "Member.Create"
-	MemberUpdate = "Member.Update"
-	MemberDelete = "Member.Delete"
-	MemberSearch = "Member.Search"
-	MemberRead   = "Member.Read"
+	MemberCreate       = "Member.Create"
+	MemberUpdate       = "Member.Update"
+	MemberDelete       = "Member.Delete"
+	MemberSearch       = "Member.Search"
+	MemberRead         = "Member.Read"
+	MemberReadByOpenId = "Member.ReadByOpenId"
+	MemberRegistry     = "Member.Registry"
+	//sender
+	SenderCreate = "Sender.Create"
+	SenderUpdate = "Sender.Update"
+	SenderDelete = "Sender.Delete"
+	SenderSearch = "Sender.Search"
+	SenderRead   = "Sender.Read"
+	//consignee
+	ConsigneeCreate      = "Consignee.Create"
+	ConsigneeUpdate      = "Consignee.Update"
+	ConsigneeDelete      = "Consignee.Delete"
+	ConsigneeSearch      = "Consignee.Search"
+	ConsigneeRead        = "Consignee.Read"
+	ConsigneeReadDefault = "Consignee.ReadDefault"
 	//功能圈
 	//ui control
 	FunctionCircleCreate = "FunctionCircle.Create"
@@ -148,6 +170,20 @@ const (
 	FunctionCircleDelete = "FunctionCircle.Delete"
 	FunctionCircleSearch = "FunctionCircle.Search"
 	FunctionCircleRead   = "FunctionCircle.Read"
+	//订单
+	OrderAppCreate        = "OrderApp.Create"
+	OrderAppUpdate        = "OrderApp.Update"
+	OrderAppDelete        = "OrderApp.Delete"
+	OrderAppSearch        = "OrderApp.Search"
+	OrderAppRead          = "OrderApp.Read"
+	OrderAppReadStatus    = "OrderApp.ReadStatus"
+	OrderAppUpdateSuccess = "OrderApp.UpdateSuccess"
+	//后台订单
+	OrderCreate = "Order.Create"
+	OrderUpdate = "Order.Update"
+	OrderDelete = "Order.Delete"
+	OrderSearch = "Order.Search"
+	OrderRead   = "Order.Read"
 )
 
 func init() {
