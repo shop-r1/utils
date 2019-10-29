@@ -130,7 +130,7 @@ type GoodsSpecification struct {
 	Ratio          float32  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
 	Album          string   `sql:"type:text" description:"相册" json:"album"`
 	Inventory      int      `description:"库存" json:"inventory"`
-	Default        bool     `description:"默认规格" json:"default"`
+	DefaultSelect  bool     `sql:"column:default_select" description:"默认规格" json:"default"`
 }
 
 func (g *GoodsSpecification) BeforeSave() error {
@@ -254,7 +254,7 @@ func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
 	}
 	//g.Price = make(map[Currency]float32)
 	//for _, warehouse := range g.Warehouses {
-	//	if warehouse.Default {
+	//	if warehouse.DefaultSelect {
 	//		var currencies []Currency
 	//		err = tx.Model(&ShippingWarehouse{}).Where("id = ?", warehouse.WarehouseId).Pluck("currency", &currencies).Error
 	//		if err != nil {
@@ -266,7 +266,7 @@ func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
 	//	}
 	//}
 	//for _, goodsSpecification := range g.Specifications {
-	//	if goodsSpecification.Default {
+	//	if goodsSpecification.DefaultSelect {
 	//		//提前计算列表显示价格
 	//		for k, v := range g.Price {
 	//			g.Price[k] = v * (100 + goodsSpecification.Ratio) / 100
@@ -308,7 +308,7 @@ func (g *Goods) saveLink(tx *gorm.DB) (err error) {
 		specificationInfos = append(specificationInfos, transformSpecification(arr, goodsSpecification))
 		goodsSpecification.TenantId = g.TenantId
 		goodsSpecification.GoodsId = strconv.Itoa(int(g.ID))
-		goodsSpecification.Default = index == 0
+		goodsSpecification.DefaultSelect = index == 0
 		if err = tx.Create(&goodsSpecification).Error; err != nil {
 			log.Error(err)
 			return err
