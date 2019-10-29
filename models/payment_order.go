@@ -9,7 +9,7 @@ import (
 type PaymentStatus string
 
 const (
-	PaymentPadding PaymentStatus = "padding"
+	PaymentPending PaymentStatus = "pending"
 	PaymentSuccess PaymentStatus = "success"
 	PaymentAlready PaymentStatus = "already" //客户已付款
 	PaymentFailed  PaymentStatus = "failed"
