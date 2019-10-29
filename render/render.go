@@ -5,7 +5,7 @@
 package render
 
 import (
-	"github.com/lwnmengjing/utils/errors"
+	"github.com/micro/go-micro/errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -76,5 +76,15 @@ func Success(c *gin.Context) {
 }
 
 func MicroParse(c *gin.Context, message string) {
-	c.JSON(http.StatusOK, errors.Parse(message))
+	err := errors.Parse(message)
+	if err.Code == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"id":     err.Id,
+			"code":   500,
+			"detail": err.Detail,
+			"status": err.Status,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, err)
 }
