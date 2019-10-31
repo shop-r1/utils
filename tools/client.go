@@ -173,7 +173,7 @@ const (
 	FunctionCircleRead   = "FunctionCircle.Read"
 	//订单
 	OrderAppCreate        = "OrderApp.Create"
-	OrderAppUpdate        = "OrderApp.Update"
+	OrderAppUpdateStatus  = "OrderApp.UpdateStatus"
 	OrderAppDelete        = "OrderApp.Delete"
 	OrderAppSearch        = "OrderApp.Search"
 	OrderAppRead          = "OrderApp.Read"
