@@ -81,7 +81,7 @@ type MemberLevelPrice struct {
 }
 
 type GoodsShippingWarehouse struct {
-	gorm.Model
+	Id                   string             `gorm:"type:char(40);primary_key" json:"id"`
 	GoodsId              string             `sql:"type:char(20);index" json:"goods_id"`
 	WarehouseId          string             `sql:"type:char(20);index" json:"warehouse_id"`
 	Warehouse            ShippingWarehouse  `json:"warehouse"`
