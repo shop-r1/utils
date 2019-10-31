@@ -3,11 +3,18 @@ package tools
 import "github.com/shop-r1/royalpay"
 
 var PaymentMethod = map[string]func(key, secret, image, orderId string, body *royalpay.Body) (*royalpay.Result, error){
-	"RoyalPayWechat": RoyalPay,
+	"RoyalPayWechat": RoyalPayWechat,
+	"RoyalPayAlipay": RoyalPayAliapay,
 	"WechatVoucher":  Voucher,
 }
 
-func RoyalPay(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
+func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
+	pay := royalpay.NewPay(key, secret)
+	body.Channel = royalpay.Wechat
+	return pay.QrcodeOrder(orderId, body)
+}
+
+func RoyalPayAliapay(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
 	pay := royalpay.NewPay(key, secret)
 	body.Channel = royalpay.Wechat
 	return pay.QrcodeOrder(orderId, body)
