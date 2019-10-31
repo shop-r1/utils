@@ -88,7 +88,7 @@ type GoodsShippingWarehouse struct {
 	MemberLevelPrice     []MemberLevelPrice `sql:"-" description:"会员级别价格" json:"member_level_price"`
 	MemberLevelPriceData []byte             `sql:"type:json" json:"-"`
 	Price                float64            `sql:"type:DECIMAL(10, 2)" description:"基本售价" json:"price"`
-	Default              bool               `sql:"type:bool;index" description:"默认发货仓" json:"default"`
+	Init                 bool               `sql:"type:bool;index" description:"默认发货仓" json:"default"`
 }
 
 func (g *GoodsShippingWarehouse) AfterSave() error {
