@@ -24,6 +24,7 @@ type ObjectLinkCourier struct {
 }
 
 type GeneratePack struct {
+	GetSelf          bool               `json:"get_self"`
 	Alias            string             `json:"alias"`
 	Image            string             `json:"image"`
 	GoodsId          string             `json:"goods_id"`
