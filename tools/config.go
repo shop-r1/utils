@@ -65,7 +65,7 @@ type Currency struct {
 	CurrencyTName string      `json:"currencyT_Name"`
 	CurrencyFD    json.Number `json:"currencyFD"`
 	Exchange      json.Number `json:"exchange"`
-	Result        float32     `json:"result,string"`
+	Result        float64     `json:"result,string"`
 	UpdateTime    time.Time   `json:"updateTime"`
 }
 

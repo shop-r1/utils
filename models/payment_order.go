@@ -24,11 +24,11 @@ type PaymentOrder struct {
 	PaymentInstallId string         `sql:"type:char(20);index" description:"支付ID" json:"payment_install_id" validate:"required"`
 	PaymentInstall   PaymentInstall `gorm:"ForeignKey:PaymentInstallId;save_associations:false" json:"payment_install" validate:"-"`
 	Method           string         `sql:"type:varchar(20)" description:"支付方法" json:"method"`
-	Overage          float32        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"使用余额" json:"overage"`
+	Overage          float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"使用余额" json:"overage"`
 	Currency         Currency       `sql:"type:char(10)" description:"币种" json:"currency"`
-	Gold             float32        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
-	OrderFee         float32        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单金额" json:"order_fee"`
-	RealFee          float32        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款金额" json:"real_fee"`
+	Gold             float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
+	OrderFee         float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单金额" json:"order_fee"`
+	RealFee          float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款金额" json:"real_fee"`
 	PayUrl           string         `sql:"type:text" description:"付款链接" json:"pay_url"`
 	Redirect         string         `sql:"type:text" description:"付款后跳转" json:"redirect"`
 	Token            string         `sql:"type:varchar(100)" description:"回调验证" json:"-"`

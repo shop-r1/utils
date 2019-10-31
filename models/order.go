@@ -35,15 +35,15 @@ type Order struct {
 	SenderId        string               `sql:"type:char(20);index" description:"寄件人ID" json:"sender_id"`
 	SenderData      string               `sql:"type:text" description:"寄件人快照" json:"-"`
 	Sender          Sender               `sql:"-" description:"寄件人快照结构体" json:"sender" validate:"-"`
-	Money           float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款总金额" json:"money"`
+	Money           float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款总金额" json:"money"`
 	Currency        Currency             `sql:"type:varchar(20)" description:"币种" json:"currency"`
-	Overage         float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"使用余额" json:"overage"`
-	Gold            float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
-	CourierPrice    float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"快递费" json:"courier_price"`
-	GoodsPrice      float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品总价" json:"goods_price"`
-	Price           float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单总价" json:"price_old"`
-	PriceMap        map[Currency]float32 `sql:"-" json:"price"`
-	ReduceFee       float32              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"减免金额" json:"reduce_fee"`
+	Overage         float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"使用余额" json:"overage"`
+	Gold            float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
+	CourierPrice    float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"快递费" json:"courier_price"`
+	GoodsPrice      float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品总价" json:"goods_price"`
+	Price           float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单总价" json:"price_old"`
+	PriceMap        map[Currency]float64 `sql:"-" json:"price"`
+	ReduceFee       float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"减免金额" json:"reduce_fee"`
 	WarehouseId     string               `sql:"type:char(20);index" description:"发货仓ID" json:"warehouse_id"`
 	OrderGoods      []OrderGoods         `gorm:"ForeignKey:OrderId;save_associations:false" description:"商品关联" json:"goods" validate:"-"`
 	OrderUnitPacks  []OrderUnitPack      `gorm:"ForeignKey:OrderId;save_associations:false" description:"包裹关联" json:"packs" validate:"-"`

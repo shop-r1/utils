@@ -13,7 +13,7 @@ type OrderGoods struct {
 	GoodsId                string              `sql:"type:char(20);index" description:"商品ID" json:"goods_id"`
 	GoodsSpecId            string              `sql:"type:char(20);index" description:"商品规格ID" json:"goods_specification_id"`
 	Quantity               int                 `sql:"type:integer" description:"数量" json:"quantity"`
-	Price                  float32             `sql:"type:DECIMAL(10, 2);default(0.00)" description:"价格" json:"price"`
+	Price                  float64             `sql:"type:DECIMAL(10, 2);default(0.00)" description:"价格" json:"price"`
 	GoodsData              []byte              `sql:"type:json" description:"商品快照" json:"-"`
 	Goods                  *Goods              `sql:"-" description:"商品快照结构体" json:"goods"`
 	GoodsSpecificationData []byte              `sql:"type:json" description:"商品规格快照" json:"-"`

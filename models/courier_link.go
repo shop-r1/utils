@@ -32,9 +32,9 @@ type GeneratePack struct {
 	CategoryId       string             `json:"category_id"`
 	CourierId        string             `json:"courier_id"`
 	Weight           int                `json:"weight"`
-	Price            float32            `json:"price"`
+	Price            float64            `json:"price"`
 	Meta             map[string]int     `json:"meta"`
-	MetaPrice        map[string]float32 `json:"meta_price"`
+	MetaPrice        map[string]float64 `json:"meta_price"`
 	Quantity         int                `json:"quantity"`
 }
 
@@ -45,8 +45,8 @@ type OrderUnitPack struct {
 	Pack         []GeneratePack `sql:"-" json:"pack"`
 	PackData     []byte         `sql:"type:json" json:"-"`
 	Weight       int            `json:"weight"`
-	GoodsPrice   float32        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品价格" json:"goods_price"`
-	CourierPrice float32        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"运费" json:"courier_price"`
+	GoodsPrice   float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品价格" json:"goods_price"`
+	CourierPrice float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"运费" json:"courier_price"`
 	Currency     Currency       `json:"currency"`
 	CourierId    string         `sql:"type:char(20);index" description:"物流ID" json:"courier_id"`
 	CourierName  string         `sql:"type:varchar(100)" description:"物流名称" json:"courier_name"`

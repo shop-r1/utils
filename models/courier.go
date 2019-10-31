@@ -26,7 +26,7 @@ type CourierInstall struct {
 	CourierId int     `description:"物流ID" json:"courier_id"`
 	AppKey    string  `sql:"type:varchar(50)" description:"key" json:"app_key"`
 	AppSecret string  `sql:"type:varchar(50)" description:"密钥" json:"app_secret"`
-	MaxAmount float32 `sql:"type:DECIMAL(10, 2)" description:"最大打包金额" json:"max_amount"`
+	MaxAmount float64 `sql:"type:DECIMAL(10, 2)" description:"最大打包金额" json:"max_amount"`
 }
 
 type SearchCourier struct {
@@ -46,8 +46,8 @@ type CourierPackRule struct {
 	Simple     int     `sql:"default(0)" description:"纯装数量" json:"simple"`
 	Mixed      int     `sql:"default(0)" description:"混装基数" json:"mixed"`
 	MixedSum   int     `sql:"default(0)" description:"混装总数" json:"mixed_sum"`
-	PriceUnit  float32 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"单价" json:"price_unit"`
-	PriceTotal float32 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"总价" json:"price_total"`
+	PriceUnit  float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"单价" json:"price_unit"`
+	PriceTotal float64 `sql:"type:DECIMAL(10, 2);default(0.00)" description:"总价" json:"price_total"`
 }
 
 type SearchCourierPackRule struct {

@@ -20,7 +20,7 @@ type Goods struct {
 	ShowCategoryId       string               `sql:"type:char(20);index" description:"显示分类ID" json:"show_category_id"`
 	ParentShowCategoryId string               `sql:"type:char(20);index" description:"顶级显示分类ID" json:"parent_show_category_id"`
 	Alias                string               `sql:"type:varchar(255)" description:"别名" json:"alias"`
-	CommissionRmb        float32              `sql:"type:DECIMAL(10, 2)" description:"佣金(人民币)" json:"commission_rmb"`
+	CommissionRmb        float64              `sql:"type:DECIMAL(10, 2)" description:"佣金(人民币)" json:"commission_rmb"`
 	BarCode              string               `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
 	Image                string               `sql:"type:varchar(255)" description:"图片" json:"image"`
 	Album                string               `sql:"type:text" description:"相册" json:"album"`
@@ -38,7 +38,7 @@ type Goods struct {
 	NeedInventory        bool                 `description:"是否需要库存" json:"need_inventory"`
 	ClickNum             int                  `sql:"type:integer;default(0)" description:"点击数" json:"click_num"`
 	//PriceData            []byte                   `description:"列表价格快照" json:"-"`
-	//Price                map[Currency]float32     `sql:"-" description:"列表价格" json:"price"`
+	//Price                map[Currency]float64     `sql:"-" description:"列表价格" json:"price"`
 	BuyNum             int                      `sql:"type:integer;default(0)" description:"购买数" json:"buy_num"`
 	SpecificationInfo  []byte                   `sql:"type:json" description:"规格选择参数" json:"-"`
 	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
@@ -77,7 +77,7 @@ type CheckInventory struct {
 
 type MemberLevelPrice struct {
 	Id    string  `json:"id"`
-	Price float32 `json:"price"`
+	Price float64 `json:"price"`
 }
 
 type GoodsShippingWarehouse struct {
@@ -87,7 +87,7 @@ type GoodsShippingWarehouse struct {
 	Warehouse            ShippingWarehouse  `json:"warehouse"`
 	MemberLevelPrice     []MemberLevelPrice `sql:"-" description:"会员级别价格" json:"member_level_price"`
 	MemberLevelPriceData []byte             `sql:"type:json" json:"-"`
-	Price                float32            `sql:"type:DECIMAL(10, 2)" description:"基本售价" json:"price"`
+	Price                float64            `sql:"type:DECIMAL(10, 2)" description:"基本售价" json:"price"`
 	Default              bool               `sql:"type:bool;index" description:"默认发货仓" json:"default"`
 }
 
@@ -127,7 +127,7 @@ type GoodsSpecification struct {
 	BarCode        string   `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
 	Specification  string   `sql:"type:varchar(255)" description:"规格拼接" json:"specification"`
 	Specifications []string `sql:"-" description:"规格" json:"specifications"`
-	Ratio          float32  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
+	Ratio          float64  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
 	Album          string   `sql:"type:text" description:"相册" json:"album"`
 	Inventory      int      `description:"库存" json:"inventory"`
 	DefaultSelect  bool     `sql:"column:default_select" description:"默认规格" json:"default"`
@@ -252,7 +252,7 @@ func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
 		log.Error(err)
 		return err
 	}
-	//g.Price = make(map[Currency]float32)
+	//g.Price = make(map[Currency]float64)
 	//for _, warehouse := range g.Warehouses {
 	//	if warehouse.DefaultSelect {
 	//		var currencies []Currency

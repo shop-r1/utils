@@ -24,7 +24,7 @@ type OrderPack struct {
 	CourierId  string     `sql:"type:char(20);index" description:"物流ID" json:"courier_id"`
 	Name       string     `sql:"type:varchar(100)" description:"物流名称" json:"name"`
 	CourierNo  string     `sql:"type:char(50);index" description:"物流单号" json:"courier_no"`
-	CourierFee float32    `sql:"type:DECIMAL(10, 2);default(0.00)" description:"快递费" json:"courier_fee"`
+	CourierFee float64    `sql:"type:DECIMAL(10, 2);default(0.00)" description:"快递费" json:"courier_fee"`
 	SendStatus SendStatus `sql:"type:char(20);index" description:"发货状态" json:"send_status"`
 }
 

@@ -15,7 +15,7 @@ type MemberLevel struct {
 	ChangeCourier   bool     `description:"可以选择物流" json:"change_courier"`
 	PaymentIds      string   `sql:"type:text" description:"可用的支付方式" json:"-"`
 	PaymentIdsArray []string `sql:"-" json:"payment_ids"`
-	Ratio           float32  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
+	Ratio           float64  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
 	Init            bool     `description:"用户注册默认等级" json:"default"`
 }
 
