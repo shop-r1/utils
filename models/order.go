@@ -44,7 +44,7 @@ type Order struct {
 	Price           float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单总价" json:"price_old"`
 	PriceMap        map[Currency]float64 `sql:"-" json:"price"`
 	ReduceFee       float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"减免金额" json:"reduce_fee"`
-	WarehouseId     string               `sql:"type:char(20);index" description:"发货仓ID" json:"warehouse_id"`
+	WarehouseId     string               `sql:"type:char(40);index" description:"发货仓ID" json:"warehouse_id"`
 	OrderGoods      []OrderGoods         `gorm:"ForeignKey:OrderId;save_associations:false" description:"商品关联" json:"goods" validate:"-"`
 	OrderUnitPacks  []OrderUnitPack      `gorm:"ForeignKey:OrderId;save_associations:false" description:"包裹关联" json:"packs" validate:"-"`
 	GetSelf         bool                 `description:"自提" json:"get_self"`

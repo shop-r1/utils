@@ -67,10 +67,11 @@ const (
 	PaymentInstallSearch    = "PaymentInstall.Search"
 	PaymentInstallRead      = "PaymentInstall.Read"
 	//payment order
-	PaymentOrderCreate   = "PaymentOrder.Create"
-	PaymentOrderUpdate   = "PaymentOrder.Update"
-	PaymentOrderCallback = "PaymentOrder.Callback"
-	PaymentOrderRead     = "PaymentOrder.Read"
+	PaymentOrderCreate        = "PaymentOrder.Create"
+	PaymentOrderUpdate        = "PaymentOrder.Update"
+	PaymentOrderCallback      = "PaymentOrder.Callback"
+	PaymentOrderRead          = "PaymentOrder.Read"
+	PaymentOrderReadByOrderId = "PaymentOrder.ReadByOrderId"
 
 	CourierLinkCreateBatch  = "CourierLink.CreateBatch"
 	CourierLinkGeneratePack = "CourierLink.GeneratePack"
