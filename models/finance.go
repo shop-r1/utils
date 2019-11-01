@@ -31,6 +31,7 @@ type FinanceLog struct {
 	Old         float64     `sql:"type:DECIMAL(10, 2);default(0.00)" description:"变动前数" json:"old"`
 	Change      float64     `sql:"type:DECIMAL(10, 2);default(0.00)" description:"变动数" json:"change"`
 	Freeze      float64     `sql:"type:DECIMAL(10, 2);default(0.00)" description:"冻结数" json:"freeze"`
+	Remark      string      `sql:"type:text" description:"备注" json:"remark"`
 	CreatedAt   time.Time
 }
 

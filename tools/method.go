@@ -6,6 +6,7 @@ var PaymentMethod = map[string]func(key, secret, image, orderId string, body *ro
 	"RoyalPayWechat": RoyalPayWechat,
 	"RoyalPayAlipay": RoyalPayAliapay,
 	"WechatVoucher":  Voucher,
+	"Overage":        Overage,
 }
 
 func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
@@ -26,6 +27,14 @@ func Voucher(key, secret, image, orderId string, body *royalpay.Body) (result *r
 		OrderId:    orderId,
 		QrcodeImg:  image,
 		CodeUrl:    image,
+	}
+	return result, nil
+}
+
+func Overage(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
+	result = &royalpay.Result{
+		ReturnCode: "SUCCESS",
+		OrderId:    orderId,
 	}
 	return result, nil
 }
