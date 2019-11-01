@@ -15,14 +15,14 @@ const (
 
 type Payment struct {
 	gorm.Model
-	No          string  `sql:"-" json:"id"`
-	Logo        string  `sql:"type:varchar(255)" description:"logo图标" json:"logo"`
-	Name        string  `sql:"type:varchar(100)" description:"支付模版" json:"name" validate:"required"`
-	Method      string  `sql:"type:varchar(100)" description:"调用方法名" json:"method" validate:"required"`
-	Status      Status  `sql:"type:integer;default(1)" description:"状态" json:"status" validate:"required"`
-	SiteUrl     string  `sql:"type:varchar(255)" description:"官网网址" json:"site_url"`
-	Type        PayType `sql:"type:char(20);index" description:"类型" json:"type"`
-	Description string  `sql:"text" description:"描述" json:"description"`
+	No          string            `sql:"-" json:"id"`
+	Logo        string            `sql:"type:varchar(255)" description:"logo图标" json:"logo"`
+	Name        string            `sql:"type:varchar(100)" description:"支付模版" json:"name" validate:"required"`
+	Method      PaymentMethodType `sql:"type:varchar(100)" description:"调用方法名" json:"method" validate:"required"`
+	Status      Status            `sql:"type:integer;default(1)" description:"状态" json:"status" validate:"required"`
+	SiteUrl     string            `sql:"type:varchar(255)" description:"官网网址" json:"site_url"`
+	Type        PayType           `sql:"type:char(20);index" description:"类型" json:"type"`
+	Description string            `sql:"text" description:"描述" json:"description"`
 }
 
 type SearchPayment struct {

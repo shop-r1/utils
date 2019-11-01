@@ -17,6 +17,15 @@ const (
 	Disable
 )
 
+type PaymentMethodType string
+
+const (
+	MethodRoyalPayWechat PaymentMethodType = "RoyalPayWechat"
+	MethodRoyalPayAlipay PaymentMethodType = "RoyalPayAlipay"
+	MethodWechatVoucher  PaymentMethodType = "WechatVoucher"
+	MethodOverage        PaymentMethodType = "Overage"
+)
+
 type Condition struct {
 	Limit int
 	Page  int
