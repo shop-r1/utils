@@ -72,6 +72,17 @@ const (
 	PaymentOrderCallback      = "PaymentOrder.Callback"
 	PaymentOrderRead          = "PaymentOrder.Read"
 	PaymentOrderReadByOrderId = "PaymentOrder.ReadByOrderId"
+	//finance
+	FinanceCreate                 = "Finance.Create"
+	FinanceChangeOverage          = "Finance.ChangeOverage"
+	FinanceFreezeOverage          = "Finance.FreezeOverage"
+	FinanceDeductionFreezeOverage = "Finance.DeductionFreezeOverage"
+	FinanceChangeGold             = "Finance.ChangeGold"
+	FinanceFreezeGold             = "Finance.FreezeGold"
+	FinanceDeductionFreezeGold    = "Finance.DeductionFreezeGold"
+	FinanceRead                   = "Finance.Read"
+	FinanceSearch                 = "Finance.Search"
+	FinanceSearchLog              = "Finance.SearchLog"
 
 	CourierLinkCreateBatch  = "CourierLink.CreateBatch"
 	CourierLinkGeneratePack = "CourierLink.GeneratePack"
