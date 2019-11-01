@@ -29,6 +29,7 @@ type PaymentOrder struct {
 	Gold             float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
 	OrderFee         float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单金额" json:"order_fee"`
 	RealFee          float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款金额" json:"real_fee"`
+	AudToCny         float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"汇率" json:"aud_to_cny"`
 	PayUrl           string         `sql:"type:text" description:"付款链接" json:"pay_url"`
 	Redirect         string         `sql:"type:text" description:"付款后跳转" json:"redirect"`
 	Token            string         `sql:"type:varchar(100)" description:"回调验证" json:"-"`
