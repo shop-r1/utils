@@ -134,6 +134,7 @@ const (
 	ShoppingCartCheck          = "ShoppingCart.Check"
 	ShoppingCartCheckWarehouse = "ShoppingCart.CheckWarehouse"
 	ShoppingCartDelete         = "ShoppingCart.Delete"
+	ShoppingCartDeleteSeleted  = "ShoppingCart.DeleteSelected"
 	ShoppingCartList           = "ShoppingCart.List"
 	//show category
 	ShowCategoryCreate          = "ShowCategory.Create"
