@@ -23,36 +23,37 @@ const (
 
 type Order struct {
 	gorm.Model
-	No              string               `sql:"-" json:"id"`
-	TenantId        string               `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
-	MemberId        string               `sql:"type:char(20)" description:"客户ID" json:"member_id"`
-	CourierId       string               `sql:"type:char(20)" description:"物流ID" json:"courier_id"`
-	OrderPayId      string               `sql:"type:char(20)" description:"支付订单ID" json:"order_pay_id"`
-	OrderStatus     OrderStatus          `sql:"type:char(20);index" description:"订单状态" json:"order_status"`
-	ConsigneeId     string               `sql:"type:char(20);index" description:"收件人ID" json:"consignee_id"`
-	ConsigneeData   string               `sql:"type:text" description:"收件人快照" json:"-"`
-	Consignee       Consignee            `sql:"-" description:"收件人快照结构体" json:"consignee" validate:"-"`
-	SenderId        string               `sql:"type:char(20);index" description:"寄件人ID" json:"sender_id"`
-	SenderData      string               `sql:"type:text" description:"寄件人快照" json:"-"`
-	Sender          Sender               `sql:"-" description:"寄件人快照结构体" json:"sender" validate:"-"`
-	Money           float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款总金额" json:"money"`
-	Currency        Currency             `sql:"type:varchar(20)" description:"币种" json:"currency"`
-	Overage         float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"使用余额" json:"overage"`
-	Gold            float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
-	CourierPrice    float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"快递费" json:"courier_price"`
-	GoodsPrice      float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品总价" json:"goods_price"`
-	Price           float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单总价" json:"price_old"`
-	PriceMap        map[Currency]float64 `sql:"-" json:"price"`
-	ReduceFee       float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"减免金额" json:"reduce_fee"`
-	WarehouseId     string               `sql:"type:char(40);index" description:"发货仓ID" json:"warehouse_id"`
-	OrderGoods      []OrderGoods         `gorm:"ForeignKey:OrderId;save_associations:false" description:"商品关联" json:"goods" validate:"-"`
-	OrderUnitPacks  []OrderUnitPack      `gorm:"ForeignKey:OrderId;save_associations:false" description:"包裹关联" json:"packs" validate:"-"`
-	GetSelf         bool                 `description:"自提" json:"get_self"`
-	PaymentIds      string               `sql:"type:text" description:"可用的支付方式" json:"-"`
-	PaymentIdsArray []string             `sql:"-" json:"payment_ids"`
-	Remark          string               `sql:"type:text" description:"备注" json:"remark"`
-	GoodsName       string               `sql:"type:text" description:"所有商品名称(搜索用)" json:"goods_name"`
-	Channel         int                  `sql:"type:integer;index" description:"订单来源渠道 0:商城在线下单 1:后台下单" json:"channel"`
+	No               string               `sql:"-" json:"id"`
+	TenantId         string               `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
+	MemberId         string               `sql:"type:char(20)" description:"客户ID" json:"member_id"`
+	CourierId        string               `sql:"type:char(20)" description:"物流ID" json:"courier_id"`
+	CourierInstallId string               `sql:"type:char(20)" description:"安装的物流ID" json:"courier_install_id"`
+	OrderPayId       string               `sql:"type:char(20)" description:"支付订单ID" json:"order_pay_id"`
+	OrderStatus      OrderStatus          `sql:"type:char(20);index" description:"订单状态" json:"order_status"`
+	ConsigneeId      string               `sql:"type:char(20);index" description:"收件人ID" json:"consignee_id"`
+	ConsigneeData    string               `sql:"type:text" description:"收件人快照" json:"-"`
+	Consignee        Consignee            `sql:"-" description:"收件人快照结构体" json:"consignee" validate:"-"`
+	SenderId         string               `sql:"type:char(20);index" description:"寄件人ID" json:"sender_id"`
+	SenderData       string               `sql:"type:text" description:"寄件人快照" json:"-"`
+	Sender           Sender               `sql:"-" description:"寄件人快照结构体" json:"sender" validate:"-"`
+	Money            float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"付款总金额" json:"money"`
+	Currency         Currency             `sql:"type:varchar(20)" description:"币种" json:"currency"`
+	Overage          float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"使用余额" json:"overage"`
+	Gold             float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"金币" json:"gold"`
+	CourierPrice     float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"快递费" json:"courier_price"`
+	GoodsPrice       float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品总价" json:"goods_price"`
+	Price            float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"订单总价" json:"price_old"`
+	PriceMap         map[Currency]float64 `sql:"-" json:"price"`
+	ReduceFee        float64              `sql:"type:DECIMAL(10, 2);default(0.00)" description:"减免金额" json:"reduce_fee"`
+	WarehouseId      string               `sql:"type:char(40);index" description:"发货仓ID" json:"warehouse_id"`
+	OrderGoods       []OrderGoods         `gorm:"ForeignKey:OrderId;save_associations:false" description:"商品关联" json:"goods" validate:"-"`
+	OrderUnitPacks   []OrderUnitPack      `gorm:"ForeignKey:OrderId;save_associations:false" description:"包裹关联" json:"packs" validate:"-"`
+	GetSelf          bool                 `description:"自提" json:"get_self"`
+	PaymentIds       string               `sql:"type:text" description:"可用的支付方式" json:"-"`
+	PaymentIdsArray  []string             `sql:"-" json:"payment_ids"`
+	Remark           string               `sql:"type:text" description:"备注" json:"remark"`
+	GoodsName        string               `sql:"type:text" description:"所有商品名称(搜索用)" json:"goods_name"`
+	Channel          int                  `sql:"type:integer;index" description:"订单来源渠道 0:商城在线下单 1:后台下单" json:"channel"`
 }
 
 type SearchOrder struct {
@@ -102,6 +103,12 @@ func (e *Order) AfterCreate(tx *gorm.DB) (err error) {
 		p.OrderId = strconv.Itoa(int(e.ID))
 		p.TenantId = e.TenantId
 		p.MemberId = e.MemberId
+		if p.CourierInstallId == "" {
+			p.CourierInstallId = e.CourierInstallId
+		}
+		if p.CourierId == "" {
+			p.CourierId = e.CourierId
+		}
 		err = tx.Create(&p).Error
 		if err != nil {
 			return err
