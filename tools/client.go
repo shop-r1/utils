@@ -197,6 +197,7 @@ const (
 	OrderSearch     = "Order.Search"
 	OrderRead       = "Order.Read"
 	OrderUpdatePack = "Order.UpdatePack"
+	OrderBatchShip  = "Order.BatchShip"
 )
 
 func init() {
