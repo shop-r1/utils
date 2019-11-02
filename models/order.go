@@ -99,6 +99,8 @@ func (e *Order) AfterCreate(tx *gorm.DB) (err error) {
 	}
 	for i, p := range e.OrderUnitPacks {
 		p.OrderId = strconv.Itoa(int(e.ID))
+		p.TenantId = e.TenantId
+		p.MemberId = e.MemberId
 		err = tx.Create(&p).Error
 		if err != nil {
 			return err

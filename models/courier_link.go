@@ -41,6 +41,8 @@ type GeneratePack struct {
 type OrderUnitPack struct {
 	gorm.Model
 	No           string         `sql:"-" json:"id"`
+	TenantId     string         `sql:"type:char(20);index" description:"租户ID" json:"tenant_id,omitempty"`
+	MemberId     string         `sql:"type:char(20)" description:"客户ID" json:"member_id,omitempty"`
 	OrderId      string         `sql:"type:char(20);index" description:"订单ID" json:"order_id"`
 	Pack         []GeneratePack `sql:"-" json:"pack"`
 	PackData     []byte         `sql:"type:json" json:"-"`
@@ -52,6 +54,8 @@ type OrderUnitPack struct {
 	CourierName  string         `sql:"type:varchar(100)" description:"物流名称" json:"courier_name"`
 	CourierNo    string         `sql:"type:varchar(100)" description:"物流单号" json:"courier_no"`
 	Method       string         `sql:"type:char(20)" description:"物流方法" json:"method"`
+	Remark       string         `sql:"type:text" description:"备注" json:"remark"`
+	SendStatus   SendStatus     `sql:"type:char(20);index" description:"发货状态" json:"send_status"`
 }
 
 func (e *OrderUnitPack) BeforeSave() error {
