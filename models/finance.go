@@ -17,6 +17,7 @@ const (
 	Reimburse        FromType    = 5
 	WithdrawFreeze   FromType    = 6 //提现冻结
 	WithdrawUnfreeze FromType    = 7 //提现取消解冻
+	CancelRecharge   FromType    = 8
 )
 
 type Finance struct {
