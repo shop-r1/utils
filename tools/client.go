@@ -191,11 +191,12 @@ const (
 	OrderAppReadStatus    = "OrderApp.ReadStatus"
 	OrderAppUpdateSuccess = "OrderApp.UpdateSuccess"
 	//后台订单
-	OrderCreate = "Order.Create"
-	OrderUpdate = "Order.Update"
-	OrderDelete = "Order.Delete"
-	OrderSearch = "Order.Search"
-	OrderRead   = "Order.Read"
+	OrderCreate     = "Order.Create"
+	OrderUpdate     = "Order.Update"
+	OrderDelete     = "Order.Delete"
+	OrderSearch     = "Order.Search"
+	OrderRead       = "Order.Read"
+	OrderUpdatePack = "Order.UpdatePack"
 )
 
 func init() {
