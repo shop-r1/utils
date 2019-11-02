@@ -8,13 +8,15 @@ type FinanceType int
 type FromType int
 
 const (
-	Overage   FinanceType = 1
-	Gold      FinanceType = 2
-	Recharge  FromType    = 1
-	Consume   FromType    = 2
-	Withdraw  FromType    = 3
-	Reward    FromType    = 4
-	Reimburse FromType    = 5
+	Overage          FinanceType = 1
+	Gold             FinanceType = 2
+	Recharge         FromType    = 1
+	Consume          FromType    = 2
+	Withdraw         FromType    = 3
+	Reward           FromType    = 4
+	Reimburse        FromType    = 5
+	WithdrawFreeze   FromType    = 6 //提现冻结
+	WithdrawUnfreeze FromType    = 7 //提现取消解冻
 )
 
 type Finance struct {
