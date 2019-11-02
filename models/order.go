@@ -52,6 +52,7 @@ type Order struct {
 	PaymentIdsArray []string             `sql:"-" json:"payment_ids"`
 	Remark          string               `sql:"type:text" description:"备注" json:"remark"`
 	GoodsName       string               `sql:"type:text" description:"所有商品名称(搜索用)" json:"goods_name"`
+	Channel         int                  `sql:"type:integer;index" description:"订单来源渠道 0:商城在线下单 1:后台下单" json:"channel"`
 }
 
 type SearchOrder struct {
