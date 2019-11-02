@@ -34,6 +34,9 @@ type Finance struct {
 type FinanceLog struct {
 	ID          uint        `gorm:"primary_key"`
 	MemberId    string      `gorm:"primary_key;type:char(20);index" description:"会员ID" json:"member_id"`
+	Username    string      `sql:"type:varchar(100)" description:"充值时的用户名" json:"username"`
+	Nickname    string      `sql:"type:varchar(100)" description:"充值时的昵称" json:"nickname"`
+	Phone       string      `sql:"type:varchar(20)" description:"充值时的手机号" json:"phone"`
 	TenantId    string      `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	FinanceType FinanceType `sql:"type:integer;index" description:"日志类型 1:余额变动, 2:金豆变动" json:"finance_type"`
 	FromType    FromType    `sql:"type:integer;index" description:"来源类型 1:充值, 2:消费 3:提现 4:奖励 5:退款" json:"finance_type"`
