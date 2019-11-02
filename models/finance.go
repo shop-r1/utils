@@ -5,10 +5,16 @@ import (
 )
 
 type FinanceType int
+type FromType int
 
 const (
-	Overage FinanceType = 1
-	Gold    FinanceType = 2
+	Overage   FinanceType = 1
+	Gold      FinanceType = 2
+	Recharge  FromType    = 1
+	Consume   FromType    = 2
+	Withdraw  FromType    = 3
+	Reward    FromType    = 4
+	Reimburse FromType    = 5
 )
 
 type Finance struct {
@@ -28,6 +34,7 @@ type FinanceLog struct {
 	MemberId    string      `gorm:"primary_key;type:char(20);index" description:"会员ID" json:"member_id"`
 	TenantId    string      `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	FinanceType FinanceType `sql:"type:integer;index" description:"日志类型 1:余额变动, 2:金豆变动" json:"finance_type"`
+	FromType    FromType    `sql:"type:integer;index" description:"来源类型 1:充值, 2:消费 3:提现 4:奖励 5:退款" json:"finance_type"`
 	Old         float64     `sql:"type:DECIMAL(10, 2);default(0.00)" description:"变动前数" json:"old"`
 	Change      float64     `sql:"type:DECIMAL(10, 2);default(0.00)" description:"变动数" json:"change"`
 	Freeze      float64     `sql:"type:DECIMAL(10, 2);default(0.00)" description:"冻结数" json:"freeze"`
