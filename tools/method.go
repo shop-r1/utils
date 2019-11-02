@@ -2,14 +2,13 @@ package tools
 
 import (
 	"github.com/shop-r1/royalpay"
-	"github.com/shop-r1/utils/models"
 )
 
-var PaymentMethod = map[models.PaymentMethodType]func(key, secret, image, orderId string, body *royalpay.Body) (*royalpay.Result, error){
-	models.MethodRoyalPayWechat: RoyalPayWechat,
-	models.MethodRoyalPayAlipay: RoyalPayAliapay,
-	models.MethodWechatVoucher:  Voucher,
-	models.MethodOverage:        Overage,
+var PaymentMethod = map[string]func(key, secret, image, orderId string, body *royalpay.Body) (*royalpay.Result, error){
+	"RoyalPayWechat": RoyalPayWechat,
+	"RoyalPayAlipay": RoyalPayAliapay,
+	"WechatVoucher":  Voucher,
+	"Overage":        Overage,
 }
 
 func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
