@@ -191,6 +191,8 @@ const (
 	OrderAppRead          = "OrderApp.Read"
 	OrderAppReadStatus    = "OrderApp.ReadStatus"
 	OrderAppUpdateSuccess = "OrderApp.UpdateSuccess"
+	//订单包裹
+	OrderUnitPackRead = "OrderUnitPack.Read"
 	//后台订单
 	OrderCreate     = "Order.Create"
 	OrderUpdate     = "Order.Update"
