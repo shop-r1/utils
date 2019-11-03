@@ -16,7 +16,7 @@ type ShoppingCart struct {
 	GoodsSpecification   GoodsSpecification     `gorm:"save_associations:false" json:"goods_specification" validate:"-"`
 	WarehouseId          string                 `sql:"type:char(40)" description:"发货仓关联ID" json:"warehouse_id" validate:"required"`
 	Warehouse            GoodsShippingWarehouse `gorm:"save_associations:false" json:"warehouse" validate:"-"`
-	PackSpecification    int                    `sql:"type:integer;default(1)" description:"包装规格(默认1)" json:"pack_specification" validate:"required"`
+	PackSpecification    int                    `sql:"type:integer;default(1)" description:"包装规格(默认1)" json:"pack_specification"`
 	Quantity             int                    `sql:"type:integer;default(1)" description:"数量" json:"quantity" validate:"required"`
 	Selected             bool                   `description:"选中" json:"selected"`
 	CreatedAt            time.Time
