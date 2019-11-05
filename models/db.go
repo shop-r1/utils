@@ -33,8 +33,8 @@ type Condition struct {
 }
 
 type BatchSelected struct {
-	Select int
-	Cancel int
+	Select string
+	Cancel string
 }
 
 var (
