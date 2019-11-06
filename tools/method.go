@@ -22,6 +22,9 @@ func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (re
 }
 
 func RoyalPayAliapay(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
+	if key == "" || secret == "" {
+		return nil, errors.New("商家对该支付方式未配置")
+	}
 	pay := royalpay.NewPay(key, secret)
 	body.Channel = royalpay.Wechat
 	return pay.QrcodeOrder(orderId, body)
