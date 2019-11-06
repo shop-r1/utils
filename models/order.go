@@ -51,6 +51,7 @@ type Order struct {
 	GetSelf          bool                 `description:"自提" json:"get_self"`
 	PaymentIds       string               `sql:"type:text" description:"可用的支付方式" json:"-"`
 	PaymentIdsArray  []string             `sql:"-" json:"payment_ids"`
+	PaymentName      string               `sql:"type:varchar(100)" description:"付款方式" json:"payment_name"`
 	Remark           string               `sql:"type:text" description:"前台备注" json:"remark"`
 	Description      string               `sql:"type:text" description:"后台备注" json:"description"`
 	GoodsName        string               `sql:"type:text" description:"所有商品名称(搜索用)" json:"goods_name"`
