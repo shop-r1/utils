@@ -201,6 +201,7 @@ const (
 	OrderRead       = "Order.Read"
 	OrderUpdatePack = "Order.UpdatePack"
 	OrderBatchShip  = "Order.BatchShip"
+	OrderCountGroup = "Order.CountGroup"
 )
 
 func init() {
