@@ -59,6 +59,11 @@ type Order struct {
 	Channel          int                  `sql:"type:integer;index" description:"订单来源渠道 0:商城在线下单 1:后台下单" json:"channel"`
 }
 
+type OrderGroup struct {
+	WarehouseId string `json:"warehouse_id"`
+	Amount      int    `json:"amount"`
+}
+
 type SearchOrder struct {
 	List      []Order `json:"list"`
 	Total     int     `json:"total"`
