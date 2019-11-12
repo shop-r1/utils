@@ -26,6 +26,7 @@ type Order struct {
 	No               string               `sql:"-" json:"id"`
 	TenantId         string               `sql:"type:char(20);index" description:"租户ID" json:"tenant_id"`
 	MemberId         string               `sql:"type:char(20)" description:"客户ID" json:"member_id"`
+	Member           *Member              `sql:"-" description:"客户" json:"member,omitempty"`
 	CourierId        string               `sql:"type:char(20)" description:"物流ID" json:"courier_id"`
 	CourierInstallId string               `sql:"type:char(20)" description:"安装的物流ID" json:"courier_install_id"`
 	OrderPayId       string               `sql:"type:char(20)" description:"支付订单ID" json:"order_pay_id"`
