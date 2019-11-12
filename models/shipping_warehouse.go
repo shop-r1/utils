@@ -37,6 +37,7 @@ type ShippingWarehouse struct {
 	MaxAmount    int                `sql:"type:integer;default(0)" description:"包裹最大金额" json:"max_amount"`
 	Status       Status             `sql:"type:integer;default(1)" description:"状态 1启用 2禁用" json:"status"`
 	GetSelf      bool               `description:"自提" json:"get_self"`
+	NeedIdCard   bool               `description:"需要身份证照片必传" json:"need_id_card"`
 	Couriers     []WarehouseCourier `sql:"-" description:"关联物流" json:"couriers"`
 	CouriersData []byte             `sql:"type:json" json:"-"`
 }
