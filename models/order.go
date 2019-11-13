@@ -60,9 +60,8 @@ type Order struct {
 }
 
 type OrderGroup struct {
-	GoodsWarehouseId string             `json:"goods_warehouse_id"`
-	Warehouse        *ShippingWarehouse `json:"warehouse"`
-	Amount           int                `json:"amount"`
+	WarehouseId string `json:"warehouse_id"`
+	Amount      int    `json:"amount"`
 }
 
 type SearchOrder struct {
