@@ -152,6 +152,7 @@ const (
 	//member level
 	MemberLevelCreate = "MemberLevel.Create"
 	MemberLevelUpdate = "MemberLevel.Update"
+	MemberLevelPatch  = "MemberLevel.Patch"
 	MemberLevelDelete = "MemberLevel.Delete"
 	MemberLevelSearch = "MemberLevel.Search"
 	MemberLevelRead   = "MemberLevel.Read"
