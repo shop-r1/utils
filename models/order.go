@@ -19,6 +19,7 @@ const (
 	OrderRefund     OrderStatus = "refund"      //退款
 	OrderCanceled   OrderStatus = "canceled"    //取消
 	OrderCompleted  OrderStatus = "completed"   //已完成
+	OrderAbolished  OrderStatus = "abolished"   //已作废
 )
 
 type Order struct {
