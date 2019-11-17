@@ -16,6 +16,7 @@ type CourierLink struct {
 	RightRuleId int             `gorm:"primary_key" json:"right_rule_id"`
 	LeftRule    CourierPackRule `gorm:"save_associations:false"`
 	RightRule   CourierPackRule `gorm:"save_associations:false"`
+	ObjectIds   string          `sql:"type:text" description:""`
 }
 
 type ObjectLinkCourier struct {

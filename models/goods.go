@@ -7,6 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Goods struct {
@@ -51,6 +52,7 @@ type Goods struct {
 	CustomPay          bool                     `description:"是否自定义支付方式" json:"custom_pay"`
 	PaymentIds         string                   `sql:"type:text" description:"可用的支付方式" json:"-"`
 	PaymentIdsArray    []string                 `sql:"-" json:"payment_ids"`
+	ToppedAt           time.Time                `description:"置顶时间"`
 }
 
 type SearchKeyword struct {
