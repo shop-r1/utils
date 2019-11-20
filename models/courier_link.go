@@ -67,7 +67,9 @@ type OrderUnitPack struct {
 	Pack             []GeneratePack `sql:"-" json:"pack"`
 	PackData         []byte         `sql:"type:json" json:"-"`
 	Weight           int            `json:"weight"`
+	NetWeight        int            `description:"净重" json:"net_weight"`
 	GoodsPrice       float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"商品价格" json:"goods_price"`
+	NetPrice         float64        `sql:"-" json:"net_price"`
 	CourierPrice     float64        `sql:"type:DECIMAL(10, 2);default(0.00)" description:"运费" json:"courier_price"`
 	Currency         Currency       `json:"currency"`
 	CourierId        string         `sql:"type:char(20);index" description:"物流ID" json:"courier_id"`
