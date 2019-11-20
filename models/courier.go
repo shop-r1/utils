@@ -22,11 +22,12 @@ type CourierInstall struct {
 	No        string  `sql:"-" json:"id"`
 	Used      bool    `description:"领用" json:"used"`
 	TenantId  string  `json:"tenant_id"`
-	Courier   Courier `validate:"-" json:"courier" validate:"-"`
+	Courier   Courier `json:"courier" validate:"-"`
 	CourierId int     `description:"物流ID" json:"courier_id"`
 	AppKey    string  `sql:"type:varchar(50)" description:"key" json:"app_key"`
 	AppSecret string  `sql:"type:varchar(50)" description:"密钥" json:"app_secret"`
 	MaxAmount float64 `sql:"type:DECIMAL(10, 2)" description:"最大打包金额" json:"max_amount"`
+	MaxWeight int     `description:"包裹最大重量" json:"max_weight"`
 }
 
 type SearchCourier struct {

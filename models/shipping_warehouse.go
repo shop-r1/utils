@@ -34,8 +34,6 @@ type ShippingWarehouse struct {
 	Currency     Currency           `sql:"type:varchar(20)" description:"币种" json:"currency" validate:"required"`
 	Region       Region             `sql:"type:varchar(20)" description:"地区" json:"region" validate:"required"`
 	Address      string             `sql:"type:text" description:"真实地址" json:"address" validate:"required"`
-	MaxAmount    float64            `sql:"type:DECIMAL(10, 2);default(0.00)" description:"包裹最大金额" json:"max_amount"`
-	MaxWeight    int                `sql:"type:DECIMAL(10, 2);default(0.00)" description:"包裹最大重量" json:"max_weight"`
 	Status       Status             `sql:"type:integer;default(1)" description:"状态 1启用 2禁用" json:"status"`
 	GetSelf      bool               `description:"自提" json:"get_self"`
 	NeedIdCard   bool               `description:"需要身份证照片必传" json:"need_id_card"`
