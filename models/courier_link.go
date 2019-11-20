@@ -54,8 +54,6 @@ type GeneratePack struct {
 	Meta             map[string]int     `json:"meta"`
 	MetaPrice        map[string]float64 `json:"meta_price"`
 	Quantity         int                `json:"quantity"`
-	MaxAmount        float64            `json:"max_amount,omitempty"`
-	MaxWeight        int                `json:"max_weight,omitempty"`
 }
 
 type OrderUnitPack struct {
