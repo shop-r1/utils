@@ -48,6 +48,7 @@ type GeneratePack struct {
 	ParentCategoryId string             `json:"parent_category_id"`
 	CategoryId       string             `json:"category_id"`
 	CourierId        string             `json:"courier_id"`
+	CourierInstallId string             `json:"courier_install_id"`
 	Weight           int                `json:"weight"`
 	Price            float64            `json:"price"`
 	PackPrice        float64            `json:"price"`
@@ -76,6 +77,8 @@ type OrderUnitPack struct {
 	CourierNo        string         `sql:"type:varchar(100)" description:"物流单号" json:"courier_no"`
 	Method           string         `sql:"type:char(20)" description:"物流方法" json:"method"`
 	Remark           string         `sql:"type:text" description:"备注" json:"remark"`
+	Mixed            int            `sql:"-" json:"-"`
+	SubMixed         int            `sql:"-" json:"-"`
 	SendStatus       SendStatus     `sql:"type:char(20);index" description:"发货状态" json:"send_status"`
 }
 
