@@ -4,19 +4,35 @@ import (
 	"encoding/json"
 	"github.com/jinzhu/gorm"
 	"strconv"
+	"strings"
 	"time"
 )
 
 type CourierLink struct {
-	ID          uint `gorm:"primary_key"`
-	CreatedAt   time.Time
-	No          string          `sql:"-" json:"id"`
-	LinkId      int             `gorm:"primary_key" json:"link_id"`
-	LeftRuleId  int             `gorm:"primary_key" json:"left_rule_id"`
-	RightRuleId int             `gorm:"primary_key" json:"right_rule_id"`
-	LeftRule    CourierPackRule `gorm:"save_associations:false"`
-	RightRule   CourierPackRule `gorm:"save_associations:false"`
-	ObjectIds   string          `sql:"type:text" description:""`
+	ID            uint            `gorm:"primary_key"`
+	No            string          `sql:"-" json:"id"`
+	LinkId        int             `gorm:"primary_key" json:"link_id"`
+	LeftRuleId    int             `gorm:"primary_key" json:"left_rule_id"`
+	RightRuleId   int             `gorm:"primary_key" json:"right_rule_id"`
+	LeftRule      CourierPackRule `gorm:"save_associations:false"`
+	RightRule     CourierPackRule `gorm:"save_associations:false"`
+	ObjectIdsData string          `sql:"type:text" description:"可以混装的分类ID"`
+	ObjectIds     []string        `sql:"-"`
+	CreatedAt     time.Time
+}
+
+func (e *CourierLink) BeforeSave() error {
+	if len(e.ObjectIds) > 0 {
+		e.ObjectIdsData = strings.Join(e.ObjectIds, ",")
+	}
+	return nil
+}
+
+func (e *CourierLink) AfterFind() error {
+	if len(e.ObjectIdsData) > 0 {
+		e.ObjectIds = strings.Split(e.ObjectIdsData, ",")
+	}
+	return nil
 }
 
 type ObjectLinkCourier struct {
@@ -34,9 +50,12 @@ type GeneratePack struct {
 	CourierId        string             `json:"courier_id"`
 	Weight           int                `json:"weight"`
 	Price            float64            `json:"price"`
+	PackPrice        float64            `json:"price"`
 	Meta             map[string]int     `json:"meta"`
 	MetaPrice        map[string]float64 `json:"meta_price"`
 	Quantity         int                `json:"quantity"`
+	MaxAmount        float64            `json:"max_amount,omitempty"`
+	MaxWeight        int                `json:"max_weight,omitempty"`
 }
 
 type OrderUnitPack struct {

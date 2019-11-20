@@ -26,9 +26,10 @@ type Category struct {
 }
 
 type PackRule struct {
-	CourierId   string `json:"courier_id"`
-	LeftRuleId  string `json:"left_rule_id"`
-	RightRuleId string `json:"right_rule_id"`
+	CourierId   string   `json:"courier_id"`
+	LeftRuleId  string   `json:"left_rule_id"`
+	RightRuleId string   `json:"right_rule_id"`
+	ObjectIds   []string `json:"object_ids"`
 }
 
 type SearchCategory struct {
