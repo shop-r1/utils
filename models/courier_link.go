@@ -51,7 +51,7 @@ type GeneratePack struct {
 	CourierInstallId string             `json:"courier_install_id"`
 	Weight           int                `json:"weight"`
 	Price            float64            `json:"price"`
-	PackPrice        float64            `json:"price"`
+	PackPrice        float64            `json:"pack_price"`
 	Meta             map[string]int     `json:"meta"`
 	MetaPrice        map[string]float64 `json:"meta_price"`
 	Quantity         int                `json:"quantity"`
