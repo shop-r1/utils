@@ -27,7 +27,7 @@ func RoyalPayAliapay(key, secret, image, orderId string, body *royalpay.Body) (r
 	}
 	pay := royalpay.NewPay(key, secret)
 	body.Channel = royalpay.Alipay
-	return pay.QrcodeOrder(orderId, body)
+	return pay.QrcodeNativeOrder(orderId, body)
 }
 
 func Voucher(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
