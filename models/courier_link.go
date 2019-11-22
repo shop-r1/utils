@@ -13,9 +13,7 @@ type CourierLink struct {
 	No            string          `sql:"-" json:"id"`
 	LinkId        int             `gorm:"primary_key" json:"link_id"`
 	LeftRuleId    int             `gorm:"primary_key" json:"left_rule_id"`
-	RightRuleId   int             `gorm:"primary_key" json:"right_rule_id"`
 	LeftRule      CourierPackRule `gorm:"save_associations:false"`
-	RightRule     CourierPackRule `gorm:"save_associations:false"`
 	ObjectIdsData string          `sql:"type:text" description:"可以混装的分类ID"`
 	ObjectIds     []string        `sql:"-"`
 	CreatedAt     time.Time
