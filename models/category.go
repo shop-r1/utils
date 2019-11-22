@@ -104,14 +104,16 @@ func getRuleIds(packRules []PackRule) (ruleIds [][]int, err error) {
 			ids = append(ids, id)
 		}
 
-		if rule.RightRuleId != "" {
-			id = 0
-			id, err = strconv.Atoi(rule.RightRuleId)
-			if err != nil {
-				log.Error(err)
-				return ruleIds, errors.New("规则ID必须为数字")
+		if len(rule.ObjectIds) > 0 {
+			for _, objectId := range rule.ObjectIds {
+				id = 0
+				id, err = strconv.Atoi(objectId)
+				if err != nil {
+					log.Error(err)
+					return ruleIds, errors.New("可混装对象ID必须为数字")
+				}
+				ids = append(ids, id)
 			}
-			ids = append(ids, id)
 		}
 
 		if len(ids) > 0 {
