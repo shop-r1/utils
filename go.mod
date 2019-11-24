@@ -9,7 +9,7 @@ require (
 	github.com/go-playground/universal-translator v0.16.0
 	github.com/jinzhu/gorm v1.9.11
 	github.com/micro/go-micro v1.14.0
-	github.com/shop-r1/royalpay v0.0.0-20191025060631-0f5156a2b7d9
+	github.com/shop-r1/royalpay v0.0.0-20191124132152-7d300d162b36
 	github.com/sirupsen/logrus v1.4.2
 	golang.org/x/crypto v0.0.0-20191029031824-8986dd9e96cf
 	gopkg.in/go-playground/validator.v9 v9.30.0

@@ -18,7 +18,11 @@ func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (re
 	}
 	pay := royalpay.NewPay(key, secret)
 	body.Channel = royalpay.Wechat
-	return pay.QrcodeOrder(orderId, body)
+	result, e = pay.QrcodeOrder(orderId, body)
+	if e == nil && len(body.Redirect) > 10 {
+		result.CodeUrl = pay.Redirect(result.CodeUrl, body.Redirect)
+	}
+	return result, e
 }
 
 func RoyalPayAliapay(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
