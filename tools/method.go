@@ -18,7 +18,7 @@ func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (re
 	}
 	pay := royalpay.NewPay(key, secret)
 	body.Channel = royalpay.Wechat
-	return pay.QrcodeOrder(orderId, body)
+	return pay.QrcodeNativeOrder(orderId, body)
 }
 
 func RoyalPayAliapay(key, secret, image, orderId string, body *royalpay.Body) (result *royalpay.Result, e error) {
