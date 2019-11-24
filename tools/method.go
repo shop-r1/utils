@@ -20,7 +20,7 @@ func RoyalPayWechat(key, secret, image, orderId string, body *royalpay.Body) (re
 	body.Channel = royalpay.Wechat
 	result, e = pay.QrcodeOrder(orderId, body)
 	if e == nil && len(body.Redirect) > 10 {
-		result.CodeUrl = pay.Redirect(result.CodeUrl, body.Redirect)
+		result.CodeUrl = pay.Redirect(result.PayUrl, body.Redirect)
 	}
 	return result, e
 }
