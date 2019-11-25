@@ -323,8 +323,8 @@ github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQD
 github.com/sacloud/libsacloud v1.26.1/go.mod h1:79ZwATmHLIFZIMd7sxA3LwzVy/B77uj3LDoToVTxDoQ=
 github.com/satori/go.uuid v1.2.0/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
-github.com/shop-r1/royalpay v0.0.0-20191124132152-7d300d162b36 h1:2XiQRX8SOckitb2s0nZOgO3DNSjlWPv6D4d54WZR1/Q=
-github.com/shop-r1/royalpay v0.0.0-20191124132152-7d300d162b36/go.mod h1:sN+9hgUIjaYcmsk11OcqniOp/7xzCL3iOv2IShBYHbY=
+github.com/shop-r1/royalpay v0.0.0-20191124142945-25218306ce3a h1:Wfshigu0QjklEWt0NFSWiy3txmjOzsNWCN8X9NqxVYQ=
+github.com/shop-r1/royalpay v0.0.0-20191124142945-25218306ce3a/go.mod h1:sN+9hgUIjaYcmsk11OcqniOp/7xzCL3iOv2IShBYHbY=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/sirupsen/logrus v1.4.1/go.mod h1:ni0Sbl8bgC9z8RoU9G6nDWqqs/fq4eDPysMBDgk/93Q=
