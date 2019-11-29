@@ -74,7 +74,7 @@ func SandPayAliapay(key, secret, image, orderId string, body *royalpay.Body) (re
 	sandPay := &sandpay.SandPay{
 		Config: sandpay.Client.Config,
 	}
-	gotResp, err := sandPay.OrderPay(params)
+	gotResp, err := sandPay.OrderPayQrAlipay(params)
 	if err != nil {
 		return nil, err
 	}
