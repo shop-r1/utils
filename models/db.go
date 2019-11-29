@@ -18,12 +18,16 @@ const (
 )
 
 type PaymentMethodType string
+type LinkType string
 
 const (
-	MethodRoyalPayWechat PaymentMethodType = "RoyalPayWechat"
-	MethodRoyalPayAlipay PaymentMethodType = "RoyalPayAlipay"
-	MethodWechatVoucher  PaymentMethodType = "WechatVoucher"
-	MethodOverage        PaymentMethodType = "Overage"
+	MethodRoyalPayWechat   PaymentMethodType = "RoyalPayWechat"
+	MethodRoyalPayAlipay   PaymentMethodType = "RoyalPayAlipay"
+	MethodWechatVoucher    PaymentMethodType = "WechatVoucher"
+	MethodOverage          PaymentMethodType = "Overage"
+	LinkShowCategoryParent LinkType          = "ShowCategoryParent"
+	LinkShowCategory       LinkType          = "ShowCategory"
+	LinkGoods              LinkType          = "Goods"
 )
 
 type Condition struct {
