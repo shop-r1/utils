@@ -42,14 +42,15 @@ func WechatOfficial(key, secret, appId, image, orderId string, body *royalpay.Bo
 	timeStamp := strconv.Itoa(int(time.Now().Unix()))
 	nonceStr := strconv.Itoa(int(time.Now().UnixNano()))
 	signType := core.SignType_MD5
-	paySign := core.JsapiSign(appId, timeStamp, nonceStr, resp.PrepayId, signType, secret)
+	pack := "prepay_id=" + resp.PrepayId
+	paySign := core.JsapiSign(appId, timeStamp, nonceStr, pack, signType, secret)
 	result = &royalpay.Result{}
 
 	result.Params = map[string]interface{}{
 		"appId":     appId,
 		"timeStamp": timeStamp,
 		"nonceStr":  nonceStr,
-		"package":   "prepay_id=" + resp.PrepayId,
+		"package":   pack,
 		"signType":  signType,
 		"paySign":   paySign,
 	}
