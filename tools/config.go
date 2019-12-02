@@ -65,7 +65,9 @@ func InitConf() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	AppConf = &AppConfigs{}
+	AppConf = &AppConfigs{
+		configs: make(map[string]AppConfig),
+	}
 	var appConfig AppConfig
 	for k := range appMap {
 		err = config.Get("app", k).Scan(&appConfig)
