@@ -9,23 +9,72 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"sync"
 	"time"
 )
 
 var (
-	Conf map[string]interface{}
+	Conf    map[string]interface{}
+	AppConf *AppConfigs
 )
 
-func InitConf() {
-	var err error
-	err = config.Load(
+type AppConfigs struct {
+	configs map[string]AppConfig
+	mutex   sync.Mutex
+}
+
+type AppConfig struct {
+	Wx                Wx   `yaml:"wx"`
+	GetSelfSkipVerify bool `yaml:"getSelfSkipVerify"`
+}
+
+func (e *AppConfigs) GetAppConfig(tenantId string) AppConfig {
+	e.mutex.Lock()
+	defer e.mutex.Unlock()
+	return e.configs[tenantId]
+}
+
+func (e *AppConfigs) SetAppConfig(tenantId string, appConfig AppConfig) {
+	e.mutex.Lock()
+	defer e.mutex.Unlock()
+	e.configs[tenantId] = appConfig
+}
+
+type Wx struct {
+	AppId     string `yaml:"appId"`
+	AppSecret string `yaml:"appSecret"`
+	MchId     string `yaml:"mchId"`
+	ApiKey    string `yaml:"apiKey"`
+}
+
+func initConf() error {
+	return config.Load(
 		env.NewSource(),
 		file.NewSource(file.WithPath("conf/app.yml")),
 	)
+}
+
+func InitConf() {
+	err := initConf()
 	if err != nil {
 		log.Fatal(err)
 	}
 	Conf = config.Map()
+	appMap := make(map[string]interface{})
+	err = config.Get("app").Scan(&appMap)
+	if err != nil {
+		log.Fatal(err)
+	}
+	AppConf = &AppConfigs{}
+	var appConfig AppConfig
+	for k := range appMap {
+		err = config.Get("app", k).Scan(&appConfig)
+		if err != nil {
+			log.Fatal(err)
+		}
+		AppConf.SetAppConfig(k, appConfig)
+		appConfig = AppConfig{}
+	}
 }
 
 //func GetGlobalConfig() (conf interface{}, err error) {
