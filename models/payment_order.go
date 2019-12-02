@@ -39,7 +39,7 @@ type PaymentOrder struct {
 	VoucherData      []byte            `sql:"type:json" description:"付款凭证" json:"-"`
 	VoucherImages    []string          `sql:"-" description:"付款凭证" json:"voucher_images"`
 	Remark           string            `sql:"type:text" description:"付款备注" json:"remark"`
-	WxParams         interface{}       `sql:"-" json:"wx_params"`
+	Params           interface{}       `sql:"-" json:"params"`
 }
 
 func (e *PaymentOrder) BeforeCreate() error {
