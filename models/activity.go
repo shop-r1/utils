@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"github.com/jinzhu/gorm"
+	"strings"
 	"time"
 )
 
@@ -17,17 +18,19 @@ const (
 
 type Activity struct {
 	gorm.Model
-	Links        []ActivityLink `gorm:"ForeignKey:ActivityId;save_associations:false" json:"links"`
-	Name         string         `sql:"type:varchar(100)" description:"活动名称" json:"name"`
-	Description  string         `sql:"type:text" description:"描述" json:"description"`
-	IndexImg     string         `sql:"type:varchar(255)" description:"大图专区" json:"index_img"`
-	BgImg        string         `sql:"type:varchar(255)" description:"背景图" json:"bg_img"`
-	Status       Status         `sql:"integer;default(1)" description:"状态" json:"status" validate:"required"`
-	Start        time.Time      `sql:"index" description:"开始时间" json:"start"`
-	End          time.Time      `sql:"index" description:"结束时间" json:"end"`
-	ActivityType ActivityType   `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
-	Extend       interface{}    `sql:"-" description:"活动扩展字段" json:"extend"`
-	ExtendData   []byte         `sql:"type:json" description:"活动扩展数据字段" json:"extend_data"`
+	Links              []ActivityLink `gorm:"ForeignKey:ActivityId;save_associations:false" json:"links"`
+	Name               string         `sql:"type:varchar(100)" description:"活动名称" json:"name"`
+	Description        string         `sql:"type:text" description:"描述" json:"description"`
+	IndexImg           string         `sql:"type:varchar(255)" description:"大图专区" json:"index_img"`
+	BgImg              string         `sql:"type:varchar(255)" description:"背景图" json:"bg_img"`
+	Status             Status         `sql:"integer;default(1)" description:"状态" json:"status" validate:"required"`
+	Start              time.Time      `sql:"index" description:"开始时间" json:"start"`
+	End                time.Time      `sql:"index" description:"结束时间" json:"end"`
+	ActivityType       ActivityType   `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
+	Extend             interface{}    `sql:"-" description:"活动扩展字段" json:"extend"`
+	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"extend_data"`
+	MemberLevelIds     []string       `sql:"-" description:"可参加的客户等级ID集" json:"member_level_ids"`
+	MemberLevelIdsData string         `sql:"type:text" description:"可参加的客户等级ID集" json:"-"`
 }
 
 type ExtendFullReduction struct {
@@ -54,6 +57,9 @@ type ActivityLink struct {
 
 func (e *Activity) BeforeSave() (err error) {
 	e.ExtendData, err = json.Marshal(e.Extend)
+	if len(e.MemberLevelIds) > 0 {
+		e.MemberLevelIdsData = strings.Join(e.MemberLevelIds, ",")
+	}
 	return err
 }
 
@@ -73,6 +79,9 @@ func (e *Activity) BeforeFind() (err error) {
 	err = json.Unmarshal(e.ExtendData, &e.Extend)
 	if err != nil {
 		return err
+	}
+	if len(e.MemberLevelIdsData) > 0 {
+		e.MemberLevelIds = strings.Split(e.MemberLevelIdsData, ",")
 	}
 	return nil
 }
