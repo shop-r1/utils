@@ -32,7 +32,7 @@ type Activity struct {
 	End                time.Time      `sql:"index" description:"结束时间" json:"end"`
 	ActivityType       ActivityType   `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
 	Extend             ExtendActivity `sql:"-" description:"活动扩展字段" json:"extend"`
-	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"extend_data"`
+	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"-"`
 	MemberLevelIds     []string       `sql:"-" description:"可参加的客户等级ID集" json:"member_level_ids"`
 	MemberLevelIdsData string         `sql:"type:text" description:"可参加的客户等级ID集" json:"-"`
 }
