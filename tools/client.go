@@ -203,6 +203,11 @@ const (
 	OrderUpdatePack = "Order.UpdatePack"
 	OrderBatchShip  = "Order.BatchShip"
 	OrderCountGroup = "Order.CountGroup"
+	//活动
+	ActivityCreate = "Activity.Create"
+	ActivityUpdate = "Activity.Update"
+	ActivityDelete = "Activity.Delete"
+	ActivitySearch = "Activity.Search"
 )
 
 func init() {
