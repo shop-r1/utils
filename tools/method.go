@@ -159,7 +159,7 @@ func SandPayWechat(key, secret, appId, image, orderId string, body *royalpay.Bod
 	sandPay := &sandpay.SandPay{
 		Config: sandpay.Client.Config,
 	}
-	gotResp, err := sandPay.OrderPayQrAlipay(payParams)
+	gotResp, err := sandPay.OrderPayQr(payParams)
 	if err != nil {
 		return nil, err
 	}
