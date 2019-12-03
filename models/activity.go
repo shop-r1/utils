@@ -80,7 +80,7 @@ func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
 	return nil
 }
 
-func (e *Activity) BeforeFind() (err error) {
+func (e *Activity) AfterFind() (err error) {
 	e.No = strconv.Itoa(int(e.ID))
 	err = json.Unmarshal(e.ExtendData, &e.Extend)
 	if err != nil {
@@ -89,6 +89,11 @@ func (e *Activity) BeforeFind() (err error) {
 	if len(e.MemberLevelIdsData) > 0 {
 		e.MemberLevelIds = strings.Split(e.MemberLevelIdsData, ",")
 	}
+	return nil
+}
+
+func (e *ActivityLink) AfterFind() (err error) {
+	e.No = strconv.Itoa(int(e.ID))
 	return nil
 }
 
