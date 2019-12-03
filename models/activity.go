@@ -50,7 +50,7 @@ type ActivityLink struct {
 	Activity     *Activity    `gorm:"save_associations:false" json:"activity" validate:"-"`
 	LinkType     LinkType     `sql:"type:varchar(50);index" description:"关联类型" json:"link_type"`
 	ActivityType ActivityType `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
-	LinkId       json.Number  `sql:"type:integer;index" description:"关联ID" json:"link_id"`
+	LinkId       string       `sql:"type:char(20);index" description:"关联ID" json:"link_id"`
 	CreatedAt    time.Time
 }
 
