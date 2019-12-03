@@ -60,6 +60,10 @@ func (e *Activity) BeforeSave() (err error) {
 }
 
 func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
+	err = tx.Where("activity_id = ?", e.ID).Delete(&ActivityLink{}).Error
+	if err != nil {
+		return err
+	}
 	for _, l := range e.Links {
 		l.ActivityId = int(e.ID)
 		l.ActivityType = e.ActivityType
