@@ -28,19 +28,13 @@ type Activity struct {
 	Start              time.Time      `sql:"index" description:"开始时间" json:"start"`
 	End                time.Time      `sql:"index" description:"结束时间" json:"end"`
 	ActivityType       ActivityType   `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
-	Extend             interface{}    `sql:"-" description:"活动扩展字段" json:"extend"`
+	Extend             ExtendActivity `sql:"-" description:"活动扩展字段" json:"extend"`
 	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"extend_data"`
 	MemberLevelIds     []string       `sql:"-" description:"可参加的客户等级ID集" json:"member_level_ids"`
 	MemberLevelIdsData string         `sql:"type:text" description:"可参加的客户等级ID集" json:"-"`
 }
 
-type ExtendFullReduction struct {
-	EnoughPrice    float64 `description:"满足金额" json:"enough_price"`
-	EnoughQuantity int     `description:"满足数量" json:"enough_quantity"`
-	Reduce         float64 `description:"减免金额" json:"reduce"`
-}
-
-type ExtendFullGift struct {
+type ExtendActivity struct {
 	EnoughPrice    float64 `description:"满足金额" json:"enough_price"`
 	EnoughQuantity int     `description:"满足数量" json:"enough_quantity"`
 	Reduce         float64 `description:"减免金额" json:"reduce"`
