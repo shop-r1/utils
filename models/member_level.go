@@ -17,6 +17,7 @@ type MemberLevel struct {
 	PaymentIdsArray []string `sql:"-" json:"payment_ids"`
 	Ratio           float64  `sql:"type:DECIMAL(10, 2)" description:"价格浮动比例" json:"ratio"`
 	Init            bool     `description:"用户注册默认等级" json:"default"`
+	Status          Status   `sql:"type:integer;default(1)" description:"状态 1 启用 2 禁用" json:"status"`
 }
 
 type SearchMemberLevel struct {
