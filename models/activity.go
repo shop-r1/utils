@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"github.com/jinzhu/gorm"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -18,6 +19,7 @@ const (
 
 type Activity struct {
 	gorm.Model
+	No                 string         `sql:"-" json:"id"`
 	TenantId           string         `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
 	Links              []ActivityLink `gorm:"ForeignKey:ActivityId;save_associations:false" json:"links"`
 	Name               string         `sql:"type:varchar(100)" description:"活动名称" json:"name"`
@@ -42,6 +44,7 @@ type ExtendActivity struct {
 
 type ActivityLink struct {
 	ID           uint         `gorm:"primary_key"`
+	No           string       `sql:"-" json:"id"`
 	TenantId     string       `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
 	ActivityId   int          `sql:"index" description:"活动ID" json:"activity_id"`
 	Activity     *Activity    `gorm:"save_associations:false" json:"activity" validate:"-"`
@@ -77,6 +80,7 @@ func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
 }
 
 func (e *Activity) BeforeFind() (err error) {
+	e.No = strconv.Itoa(int(e.ID))
 	err = json.Unmarshal(e.ExtendData, &e.Extend)
 	if err != nil {
 		return err
