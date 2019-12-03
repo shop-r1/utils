@@ -18,6 +18,7 @@ var PaymentMethod = map[string]func(key, secret, appId, image, orderId string, b
 	"WechatVoucher":  Voucher,
 	"Overage":        Overage,
 	"SandPayAliapay": SandPayAliapay,
+	"SandPayWechat":  SandPayWechat,
 	"WechatOfficial": WechatOfficial,
 }
 
@@ -94,7 +95,7 @@ func SandPayAliapay(key, secret, appId, image, orderId string, body *royalpay.Bo
 		FrontUrl:        body.Redirect,
 	}
 	payParams := params.OrderPayParams{
-		OrderNo:     strconv.Itoa(int(time.Now().UnixNano())),
+		OrderNo:     orderId,
 		TotalAmount: body.Price,
 		Subject:     body.Description,
 		Body:        body.Description + string(body.Price),
@@ -104,6 +105,51 @@ func SandPayAliapay(key, secret, appId, image, orderId string, body *royalpay.Bo
 		PayExtra: params.PayExtraWeiChat{
 			SubAppId: "xxx",
 			OpenId:   "xxx",
+		},
+	}
+	e = spay.LoadCertInfo(&sandpay.Client.Config)
+	if e != nil {
+		return nil, e
+	}
+	sandPay := &sandpay.SandPay{
+		Config: sandpay.Client.Config,
+	}
+	gotResp, err := sandPay.OrderPayQrAlipay(payParams)
+	if err != nil {
+		return nil, err
+	}
+	result = &royalpay.Result{
+		OrderId: gotResp.Body.OrderCode,
+		CodeUrl: gotResp.Body.QrCode,
+	}
+	return result, nil
+}
+
+func SandPayWechat(key, secret, appId, image, orderId string, body *royalpay.Body, params1 ...string) (result *royalpay.Result, e error) {
+	if key == "" {
+		return nil, errors.New("商家对该支付方式未配置")
+	}
+	sandpay.Client.Config = spay.Config{
+		Version:         "1.0",
+		MerId:           key,
+		PrivatePath:     "certs/server.key", //私钥文件
+		CertPath:        "certs/server.crt", //公钥文件
+		EncryptCertPath: "certs/sand.cer",   //导出的公钥文件
+		ApiHost:         "https://cashier.sandpay.com.cn",
+		NotifyUrl:       body.NotifyUrl,
+		FrontUrl:        body.Redirect,
+	}
+	payParams := params.OrderPayParams{
+		OrderNo:     orderId,
+		TotalAmount: body.Price,
+		Subject:     body.Description,
+		Body:        body.Description + string(body.Price),
+		TxnTimeOut:  time.Now().Add(24 * time.Hour).Format("20060102150405"),
+		ClientIp:    "127.0.0.1",
+		PayMode:     params.PayModWeiXinMp,
+		PayExtra: params.PayExtraWeiChat{
+			SubAppId: appId,
+			OpenId:   body.Operator,
 		},
 	}
 	e = spay.LoadCertInfo(&sandpay.Client.Config)
