@@ -8,7 +8,6 @@ import (
 	"github.com/shop-r1/sandpay"
 	spay "github.com/shop-r1/sandpay/pay"
 	"github.com/shop-r1/sandpay/pay/params"
-	"gopkg.in/ffmt.v1"
 	"strconv"
 	"time"
 )
@@ -140,7 +139,6 @@ func SandPayWechat(key, secret, appId, image, orderId string, body *royalpay.Bod
 		NotifyUrl:       body.NotifyUrl,
 		FrontUrl:        body.Redirect,
 	}
-	ffmt.P(sandpay.Client.Config)
 	payParams := params.OrderPayParams{
 		OrderNo:     orderId,
 		TotalAmount: body.Price,

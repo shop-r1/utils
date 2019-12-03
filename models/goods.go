@@ -2,7 +2,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 	"strconv"
@@ -180,7 +179,6 @@ func (s *SpecificationInfo) G生成规格记录(tx *gorm.DB, tenantId, goodsId s
 	if len(s.Children) > 0 {
 		for _, ss := range s.Children {
 			s := append(specifications, ss.Item)
-			fmt.Println(s)
 			g, err := ss.G生成规格记录(tx, tenantId, goodsId, s...)
 			if err != nil {
 				log.Error(err)
