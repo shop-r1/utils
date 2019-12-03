@@ -207,6 +207,7 @@ const (
 	ActivityCreate = "Activity.Create"
 	ActivityUpdate = "Activity.Update"
 	ActivityDelete = "Activity.Delete"
+	ActivityRead   = "Activity.Read"
 	ActivitySearch = "Activity.Search"
 )
 
