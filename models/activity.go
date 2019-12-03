@@ -18,6 +18,7 @@ const (
 
 type Activity struct {
 	gorm.Model
+	TenantId           string         `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
 	Links              []ActivityLink `gorm:"ForeignKey:ActivityId;save_associations:false" json:"links"`
 	Name               string         `sql:"type:varchar(100)" description:"活动名称" json:"name"`
 	Description        string         `sql:"type:text" description:"描述" json:"description"`
@@ -47,6 +48,7 @@ type ExtendFullGift struct {
 
 type ActivityLink struct {
 	ID           uint         `gorm:"primary_key"`
+	TenantId     string       `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
 	ActivityId   int          `sql:"index" description:"活动ID" json:"activity_id"`
 	Activity     Activity     `gorm:"save_associations:false" json:"activity" validate:"-"`
 	LinkType     LinkType     `sql:"type:varchar(50);index" description:"关联类型" json:"link_type"`
