@@ -68,7 +68,7 @@ func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
 	if err != nil {
 		return err
 	}
-	for _, l := range e.Links {
+	for i, l := range e.Links {
 		l.ActivityId = int(e.ID)
 		l.ActivityType = e.ActivityType
 		l.TenantId = e.TenantId
@@ -76,6 +76,7 @@ func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
 		if err != nil {
 			return err
 		}
+		e.Links[i] = l
 	}
 	return nil
 }
