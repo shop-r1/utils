@@ -69,6 +69,7 @@ func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
 	for _, l := range e.Links {
 		l.ActivityId = int(e.ID)
 		l.ActivityType = e.ActivityType
+		l.TenantId = e.TenantId
 		err = tx.Create(&l).Error
 		if err != nil {
 			return err
