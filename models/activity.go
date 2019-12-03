@@ -44,7 +44,7 @@ type ActivityLink struct {
 	ID           uint         `gorm:"primary_key"`
 	TenantId     string       `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
 	ActivityId   int          `sql:"index" description:"活动ID" json:"activity_id"`
-	Activity     Activity     `gorm:"save_associations:false" json:"activity" validate:"-"`
+	Activity     *Activity    `gorm:"save_associations:false" json:"activity" validate:"-"`
 	LinkType     LinkType     `sql:"type:varchar(50);index" description:"关联类型" json:"link_type"`
 	ActivityType ActivityType `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
 	LinkId       int          `sql:"index" description:"关联ID" json:"link_id"`
@@ -85,4 +85,12 @@ func (e *Activity) BeforeFind() (err error) {
 		e.MemberLevelIds = strings.Split(e.MemberLevelIdsData, ",")
 	}
 	return nil
+}
+
+type SearchActivity struct {
+	List      []Activity `json:"list"`
+	Total     int        `json:"total"`
+	Page      int        `json:"page"`
+	TotalPage int        `json:"total_page"`
+	Limit     int        `json:"limit"`
 }
