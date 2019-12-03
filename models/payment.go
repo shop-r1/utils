@@ -57,6 +57,7 @@ type PaymentInstall struct {
 	AppKey      string  `sql:"type:varchar(50)" description:"app key 三方" json:"app_key"`
 	AppSecret   string  `sql:"type:varchar(100)" description:"app secret 三方" json:"app_secret"`
 	Image       string  `sql:"type:text" description:"凭证支付所需图片" json:"image"`
+	Sort        int     `description:"排序" json:"sort"`
 	Description string  `sql:"text" description:"描述" json:"description"`
 }
 
