@@ -15,6 +15,7 @@ type Goods struct {
 	TenantId             string               `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
 	CategoryId           string               `sql:"type:char(20);index" json:"category_id"`
 	ParentCategoryId     string               `sql:"type:char(20);index" json:"parent_category_id"`
+	BrandId              string               `sql:"type:char(20);index" json:"brand_id"`
 	Used                 bool                 `description:"领用" json:"used"`
 	GoodsInfoId          string               `sql:"type:char(20);index" json:"goods_info_id" description:"商品基础信息ID"`
 	GoodsInfo            GoodsInfo            `gorm:"save_associations:false" json:"goods_info" validate:"-"`
