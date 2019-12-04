@@ -40,6 +40,7 @@ type Activity struct {
 }
 
 type ExtendActivity struct {
+	ExtendType     int     `description:"参数类型" json:"extend_type"`
 	EnoughPrice    float64 `description:"满足金额" json:"enough_price"`
 	EnoughQuantity int     `description:"满足数量" json:"enough_quantity"`
 	Reduce         float64 `description:"减免金额" json:"reduce"`
