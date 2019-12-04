@@ -204,11 +204,12 @@ const (
 	OrderBatchShip  = "Order.BatchShip"
 	OrderCountGroup = "Order.CountGroup"
 	//活动
-	ActivityCreate = "Activity.Create"
-	ActivityUpdate = "Activity.Update"
-	ActivityDelete = "Activity.Delete"
-	ActivityRead   = "Activity.Read"
-	ActivitySearch = "Activity.Search"
+	ActivityCreate     = "Activity.Create"
+	ActivityUpdate     = "Activity.Update"
+	ActivityDelete     = "Activity.Delete"
+	ActivityRead       = "Activity.Read"
+	ActivitySearch     = "Activity.Search"
+	ActivityEnableLink = "Activity.EnableLink"
 )
 
 func init() {
