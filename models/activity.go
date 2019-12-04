@@ -27,9 +27,9 @@ type Activity struct {
 	IndexImg           string         `sql:"type:varchar(255)" description:"大图专区" json:"index_img"`
 	BgImg              string         `sql:"type:varchar(255)" description:"背景图" json:"bg_img"`
 	Status             Status         `sql:"integer;default(1)" description:"状态" json:"status" validate:"required"`
-	Start              time.Time      `sql:"index" description:"开始时间" json:"start"`
+	StartAt            time.Time      `sql:"index" description:"开始时间" json:"start"`
+	EndAt              time.Time      `sql:"index" description:"结束时间" json:"end"`
 	Sort               int            `description:"排序" json:"sort"`
-	End                time.Time      `sql:"index" description:"结束时间" json:"end"`
 	ActivityType       ActivityType   `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
 	Extend             ExtendActivity `sql:"-" description:"活动扩展字段" json:"extend"`
 	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"-"`
