@@ -35,6 +35,8 @@ type Activity struct {
 	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"-"`
 	MemberLevelIds     []string       `sql:"-" description:"可参加的客户等级ID集" json:"member_level_ids"`
 	MemberLevelIdsData string         `sql:"type:text" description:"可参加的客户等级ID集" json:"-"`
+	WarehouseIds       []string       `sql:"-" description:"发货仓ID集" json:"warehouse_ids"`
+	WarehouseIdsData   string         `sql:"type:text" description:"发货仓ID集" json:"-"`
 }
 
 type ExtendActivity struct {
@@ -59,6 +61,9 @@ func (e *Activity) BeforeSave() (err error) {
 	e.ExtendData, err = json.Marshal(e.Extend)
 	if len(e.MemberLevelIds) > 0 {
 		e.MemberLevelIdsData = strings.Join(e.MemberLevelIds, ",")
+	}
+	if len(e.WarehouseIds) > 0 {
+		e.WarehouseIdsData = strings.Join(e.WarehouseIds, ",")
 	}
 	return err
 }
@@ -89,6 +94,9 @@ func (e *Activity) AfterFind() (err error) {
 	}
 	if len(e.MemberLevelIdsData) > 0 {
 		e.MemberLevelIds = strings.Split(e.MemberLevelIdsData, ",")
+	}
+	if len(e.WarehouseIdsData) > 0 {
+		e.WarehouseIds = strings.Split(e.WarehouseIdsData, ",")
 	}
 	return nil
 }
