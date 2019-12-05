@@ -21,6 +21,7 @@ type Goods struct {
 	GoodsInfo            GoodsInfo            `gorm:"save_associations:false" json:"goods_info" validate:"-"`
 	ShowCategory         ShowCategory         `gorm:"save_associations:false" json:"show_category" validate:"-"`
 	ShowCategoryId       string               `sql:"type:char(20);index" description:"显示分类ID" json:"show_category_id"`
+	ParentShowCategory   ShowCategory         `gorm:"save_associations:false" json:"parent_show_category" validate:"-"`
 	ParentShowCategoryId string               `sql:"type:char(20);index" description:"顶级显示分类ID" json:"parent_show_category_id"`
 	Alias                string               `sql:"type:varchar(255)" description:"别名" json:"alias"`
 	CommissionRmb        float64              `sql:"type:DECIMAL(10, 2)" description:"佣金(人民币)" json:"commission_rmb"`
