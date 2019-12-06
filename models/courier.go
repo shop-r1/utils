@@ -22,15 +22,16 @@ type Courier struct {
 
 type CourierTemplate struct {
 	gorm.Model
-	No             string   `sql:"-" json:"id"`
-	Courier        Courier  `json:"courier" validate:"-"`
-	CourierId      int      `description:"物流ID" json:"courier_id"`
-	Name           string   `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
-	FirstWeight    int      `description:"首重" json:"first_weight"`
-	FirstPrice     float64  `sql:"type:DECIMAL(10, 2)" description:"首重价格" json:"first_price"`
-	ContinuedPrice float64  `sql:"type:DECIMAL(10, 2)" description:"续重价格" json:"continued_price"`
-	CodeData       string   `sql:"type:text" description:"区域" json:"-"`
-	Code           []string `sql:"-" description:"区域集" json:"code"`
+	TenantId         string         `json:"tenant_id"`
+	No               string         `sql:"-" json:"id"`
+	CourierInstall   CourierInstall `json:"courier_install" validate:"-"`
+	CourierInstallId int            `description:"安装的物流ID" json:"courier_install_id"`
+	Name             string         `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
+	FirstWeight      int            `description:"首重" json:"first_weight"`
+	FirstPrice       float64        `sql:"type:DECIMAL(10, 2)" description:"首重价格" json:"first_price"`
+	ContinuedPrice   float64        `sql:"type:DECIMAL(10, 2)" description:"续重价格" json:"continued_price"`
+	CodeData         string         `sql:"type:text" description:"区域" json:"-"`
+	Code             []string       `sql:"-" description:"区域集" json:"code"`
 }
 
 func (e *CourierTemplate) BeforeSave() error {
@@ -79,6 +80,7 @@ type CourierInstall struct {
 	CourierId int     `description:"物流ID" json:"courier_id"`
 	AppKey    string  `sql:"type:varchar(50)" description:"key" json:"app_key"`
 	AppSecret string  `sql:"type:varchar(50)" description:"密钥" json:"app_secret"`
+	Region    Region  `sql:"type:varchar(20)" description:"地区" json:"region" validate:"required"`
 	MaxAmount float64 `sql:"type:DECIMAL(10, 2)" description:"最大打包金额" json:"max_amount"`
 	MaxWeight int     `description:"包裹最大重量" json:"max_weight"`
 }
