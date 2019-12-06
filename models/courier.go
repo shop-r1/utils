@@ -34,6 +34,14 @@ type CourierTemplate struct {
 	Code             []string       `sql:"-" description:"区域集" json:"code"`
 }
 
+type SearchCourierTemplate struct {
+	List      []CourierTemplate `json:"list"`
+	Total     int               `json:"total"`
+	Page      int               `json:"page"`
+	TotalPage int               `json:"total_page"`
+	Limit     int               `json:"limit"`
+}
+
 func (e *CourierTemplate) BeforeSave() error {
 	if len(e.Code) > 0 {
 		if len(e.Code) > 1 {
