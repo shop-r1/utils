@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"strconv"
+	"strings"
 )
 
 //国际版物流
@@ -28,8 +29,45 @@ type CourierTemplate struct {
 	FirstWeight    int      `description:"首重" json:"first_weight"`
 	FirstPrice     float64  `sql:"type:DECIMAL(10, 2)" description:"首重价格" json:"first_price"`
 	ContinuedPrice float64  `sql:"type:DECIMAL(10, 2)" description:"续重价格" json:"continued_price"`
-	CodeData       string   `sql:"type:varchar(100)" description:"区域" json:"code"`
+	CodeData       string   `sql:"type:text" description:"区域" json:"-"`
 	Code           []string `sql:"-" description:"区域集" json:"code"`
+}
+
+func (e *CourierTemplate) BeforeSave() error {
+	if len(e.Code) > 0 {
+		if len(e.Code) > 1 {
+			//去重
+			codeMap := make(map[string]int)
+			var all bool
+			for _, c := range e.Code {
+				if c == "中国" {
+					all = true
+					break
+				}
+				codeMap[c] = 1
+			}
+			if all {
+				e.CodeData = "中国"
+			} else {
+				e.Code = make([]string, 0)
+				for k := range codeMap {
+					e.Code = append(e.Code, k)
+				}
+			}
+		}
+		e.CodeData = strings.Join(e.Code, ",")
+	}
+	return nil
+}
+
+func (e *CourierTemplate) AfterFind() error {
+	e.No = strconv.Itoa(int(e.ID))
+	if e.CodeData != "" {
+		e.Code = strings.Split(e.CodeData, ",")
+	} else {
+		e.Code = make([]string, 0)
+	}
+	return nil
 }
 
 type CourierInstall struct {
