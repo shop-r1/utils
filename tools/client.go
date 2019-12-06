@@ -54,6 +54,12 @@ const (
 	CourierInstallUninstall = "CourierInstall.Uninstall"
 	CourierInstallSearch    = "CourierInstall.Search"
 	CourierInstallRead      = "CourierInstall.Read"
+	//courier template
+	CourierTempalteCreate = "CourierTemplate.Create"
+	CourierTemplateUpdate = "CourierTemplate.Update"
+	CourierTemplateDelete = "CourierTemplate.Delete"
+	CourierTemplateSearch = "CourierTemplate.Search"
+	CourierTemplateRead   = "CourierTemplate.Read"
 	//payment
 	PaymentCreate = "Payment.Create"
 	PaymentUpdate = "Payment.Update"
