@@ -6,6 +6,7 @@ import (
 )
 
 //国际版物流
+//20191206兼容国内物流
 type Courier struct {
 	gorm.Model
 	No      string            `sql:"-" json:"id"`
@@ -13,8 +14,22 @@ type Courier struct {
 	Logo    string            `sql:"type:varchar(255)" description:"logo图标" json:"logo"`
 	Status  Status            `sql:"default(1)" description:"状态" json:"status"`
 	SiteUrl string            `sql:"type:varchar(255)" description:"官网网址" json:"site_url"`
+	Region  Region            `sql:"type:varchar(20)" description:"地区" json:"region" validate:"required"`
 	Method  string            `sql:"type:varchar(100)" description:"调用方法名" json:"method" validate:"required"`
 	Rules   []CourierPackRule `gorm:"ForeignKey:CourierId" json:"rules"`
+}
+
+type CourierTemplate struct {
+	gorm.Model
+	No             string   `sql:"-" json:"id"`
+	Courier        Courier  `json:"courier" validate:"-"`
+	CourierId      int      `description:"物流ID" json:"courier_id"`
+	Name           string   `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
+	FirstWeight    int      `description:"首重" json:"first_weight"`
+	FirstPrice     float64  `sql:"type:DECIMAL(10, 2)" description:"首重价格" json:"first_price"`
+	ContinuedPrice float64  `sql:"type:DECIMAL(10, 2)" description:"续重价格" json:"continued_price"`
+	CodeData       string   `sql:"type:varchar(100)" description:"区域" json:"code"`
+	Code           []string `sql:"-" description:"区域集" json:"code"`
 }
 
 type CourierInstall struct {
