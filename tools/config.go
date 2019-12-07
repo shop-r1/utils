@@ -45,6 +45,7 @@ type Wx struct {
 	AppSecret string `yaml:"appSecret"`
 	MchId     string `yaml:"mchId"`
 	ApiKey    string `yaml:"apiKey"`
+	LoginHost string `yaml:"loginHost"`
 }
 
 func initConf() error {
