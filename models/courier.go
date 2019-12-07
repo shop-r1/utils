@@ -15,17 +15,17 @@ type Courier struct {
 	Logo    string            `sql:"type:varchar(255)" description:"logo图标" json:"logo"`
 	Status  Status            `sql:"default(1)" description:"状态" json:"status"`
 	SiteUrl string            `sql:"type:varchar(255)" description:"官网网址" json:"site_url"`
-	Region  Region            `sql:"type:varchar(20)" description:"地区" json:"region" validate:"required"`
+	Region  Region            `sql:"type:varchar(20);index" description:"地区" json:"region" validate:"required"`
 	Method  string            `sql:"type:varchar(100)" description:"调用方法名" json:"method" validate:"required"`
 	Rules   []CourierPackRule `gorm:"ForeignKey:CourierId" json:"rules"`
 }
 
 type CourierTemplate struct {
 	gorm.Model
-	TenantId         string         `json:"tenant_id"`
+	TenantId         string         `sql:"type:varchar(20);index" json:"tenant_id"`
 	No               string         `sql:"-" json:"id"`
 	CourierInstall   CourierInstall `json:"courier_install" validate:"-"`
-	CourierInstallId int            `description:"安装的物流ID" json:"courier_install_id"`
+	CourierInstallId string         `sql:"type:varchar(20);index" description:"安装的物流ID" json:"courier_install_id"`
 	Name             string         `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
 	FirstWeight      int            `description:"首重" json:"first_weight"`
 	FirstPrice       float64        `sql:"type:DECIMAL(10, 2)" description:"首重价格" json:"first_price"`
@@ -83,7 +83,7 @@ type CourierInstall struct {
 	gorm.Model
 	No        string  `sql:"-" json:"id"`
 	Used      bool    `description:"领用" json:"used"`
-	TenantId  string  `json:"tenant_id"`
+	TenantId  string  `sql:"type:varchar(20);index" json:"tenant_id"`
 	Courier   Courier `json:"courier" validate:"-"`
 	CourierId int     `description:"物流ID" json:"courier_id"`
 	AppKey    string  `sql:"type:varchar(50)" description:"key" json:"app_key"`
@@ -104,7 +104,7 @@ type SearchCourier struct {
 type CourierPackRule struct {
 	gorm.Model
 	Courier    Courier `validate:"-" json:"courier"`
-	CourierId  string  `json:"courier_id"`
+	CourierId  string  `sql:"type:varchar(20);index" json:"courier_id"`
 	No         string  `sql:"-" json:"id"`
 	Name       string  `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
 	Simple     int     `sql:"default(0)" description:"纯装数量" json:"simple"`
