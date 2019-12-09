@@ -39,20 +39,22 @@ type ObjectLinkCourier struct {
 }
 
 type GeneratePack struct {
-	GetSelf          bool               `json:"get_self"`
-	Alias            string             `json:"alias"`
-	Image            string             `json:"image"`
-	GoodsId          string             `json:"goods_id"`
-	ParentCategoryId string             `json:"parent_category_id"`
-	CategoryId       string             `json:"category_id"`
-	CourierId        string             `json:"courier_id"`
-	CourierInstallId string             `json:"courier_install_id"`
-	Weight           int                `json:"weight"`
-	Price            float64            `json:"price"`
-	PackPrice        float64            `json:"pack_price"`
-	Meta             map[string]int     `json:"meta"`
-	MetaPrice        map[string]float64 `json:"meta_price"`
-	Quantity         int                `json:"quantity"`
+	GetSelf              bool               `json:"get_self"`
+	Alias                string             `json:"alias"`
+	Image                string             `json:"image"`
+	GoodsId              string             `json:"goods_id"`
+	ParentCategoryId     string             `json:"parent_category_id"`
+	CategoryId           string             `json:"category_id"`
+	ParentShowCategoryId string             `json:"parent_show_category_id"`
+	ShowCategoryId       string             `json:"show_category_id"`
+	CourierId            string             `json:"courier_id"`
+	CourierInstallId     string             `json:"courier_install_id"`
+	Weight               int                `json:"weight"`
+	Price                float64            `json:"price"`
+	PackPrice            float64            `json:"pack_price"`
+	Meta                 map[string]int     `json:"meta"`
+	MetaPrice            map[string]float64 `json:"meta_price"`
+	Quantity             int                `json:"quantity"`
 }
 
 type OrderUnitPack struct {
