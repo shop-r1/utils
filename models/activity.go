@@ -55,6 +55,8 @@ type ActivityLink struct {
 	LinkType     LinkType     `sql:"type:varchar(50);index" description:"关联类型" json:"link_type"`
 	ActivityType ActivityType `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
 	LinkId       string       `sql:"type:char(20);index" description:"关联ID" json:"link_id"`
+	Name         string       `sql:"type:varchar(100)" description:"名称" json:"name"`
+	Image        string       `sql:"type:varchar(255)" description:"图片" json:"image"`
 	CreatedAt    time.Time
 }
 
