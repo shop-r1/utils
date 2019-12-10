@@ -216,7 +216,7 @@ const (
 	ActivityRead       = "Activity.Read"
 	ActivitySearch     = "Activity.Search"
 	ActivityEnableLink = "Activity.EnableLink"
-	ActivitySearchLink = "Activity.SearchLink"
+	ActivityGoodsLink  = "Activity.GoodsLink"
 )
 
 func init() {
