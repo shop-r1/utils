@@ -88,6 +88,7 @@ type CourierInstall struct {
 	CourierId int     `description:"物流ID" json:"courier_id"`
 	AppKey    string  `sql:"type:varchar(50)" description:"key" json:"app_key"`
 	AppSecret string  `sql:"type:varchar(50)" description:"密钥" json:"app_secret"`
+	Prefix    string  `sql:"type:varchar(50)" description:"物流号前缀" json:"prefix"`
 	Region    Region  `sql:"type:varchar(20)" description:"地区" json:"region" validate:"required"`
 	MaxAmount float64 `sql:"type:DECIMAL(10, 2)" description:"最大打包金额" json:"max_amount"`
 	MaxWeight int     `description:"包裹最大重量" json:"max_weight"`
