@@ -13,6 +13,14 @@ type SystemConfig struct {
 	Metadata []byte                 `sql:"type:json" description:"数据集合" json:"-"`
 }
 
+type SearchSystemConfig struct {
+	List      []SystemConfig `json:"list"`
+	Total     int            `json:"total"`
+	Page      int            `json:"page"`
+	TotalPage int            `json:"total_page"`
+	Limit     int            `json:"limit"`
+}
+
 func (e *SystemConfig) BeforeSave() (err error) {
 	if len(e.Meta) == 0 || e.Meta == nil {
 		e.Metadata = []byte(`{}`)
