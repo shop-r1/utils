@@ -11,7 +11,7 @@ type ShowCategory struct {
 	TenantId    string         `sql:"type:char(20);index" description:"租户ID" json:"-"`
 	Name        string         `sql:"type:varchar(100)" description:"名称" json:"name" validate:"required"`
 	Image       string         `json:"image"`
-	Parent      *ShowCategory  `gorm:"ForeignKey:ParentId" json:"parent"`
+	Parent      *ShowCategory  `gorm:"save_associations:false" json:"parent"`
 	ParentId    string         `sql:"type:char(20);index" json:"parent_id" description:"父级ID"`
 	Status      Status         `sql:"type:integer;default(1);index" description:"展示状态" json:"status" validate:"required"`
 	Description string         `sql:"type:text" description:"描述" json:"description"`
