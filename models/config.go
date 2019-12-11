@@ -33,7 +33,7 @@ func (e *SystemConfig) BeforeSave() (err error) {
 	return nil
 }
 
-func (e *SystemConfig) BeforeFind() (err error) {
+func (e *SystemConfig) AfterFind() (err error) {
 	err = json.Unmarshal(e.Metadata, &e.Meta)
 	return nil
 }
