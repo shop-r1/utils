@@ -42,6 +42,11 @@ const (
 	UserDelete         = "User.Delete"
 	UserRead           = "User.Read"
 	UserSearch         = "User.Search"
+	ConfigCreate       = "Config.Create"
+	ConfigUpdate       = "Config.Update"
+	ConfigDelete       = "Config.Delete"
+	ConfigRead         = "Config.Read"
+	ConfigSearch       = "Config.Search"
 	//courier
 	CourierCreate = "Courier.Create"
 	CourierUpdate = "Courier.Update"
