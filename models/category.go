@@ -63,6 +63,13 @@ func (c *Category) BeforeSave() error {
 		c.ID = uint(id)
 	}
 	if len(c.PackRules) > 0 && len(c.PackRule) == 0 {
+		packRules := c.PackRules
+		c.PackRules = make([]PackRule, 0)
+		for _, packRule := range packRules {
+			if packRule.CourierId != "" && packRule.LeftRuleId != "" {
+				c.PackRules = append(c.PackRules, packRule)
+			}
+		}
 		c.PackRule, _ = json.Marshal(c.PackRules)
 	} else if len(c.PackRule) == 0 {
 		c.PackRule = []byte(`[]`)
