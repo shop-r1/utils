@@ -70,6 +70,8 @@ type GoodsAssemble struct {
 	GoodsId     int       `sql:"type:integer;index" json:"goods_id" description:"商品ID"`
 	GoodsInfoId int       `sql:"type:integer;index" json:"goods_info_id" description:"商品基础信息ID"`
 	GoodsInfo   GoodsInfo `gorm:"save_associations:false" json:"goods_info" validate:"-"`
+	Name        string    `sql:"type:varchar(255)" description:"名称" json:"name"`
+	Image       string    `sql:"type:varchar(255)" description:"图片" json:"image"`
 	Quantity    int       `json:"quantity" description:"数量"`
 	CreatedAt   time.Time
 }
