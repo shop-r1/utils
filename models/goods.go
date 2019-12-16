@@ -9,53 +9,69 @@ import (
 	"time"
 )
 
+type GoodsType int
+
+const (
+	GoodsTypeNormal   GoodsType = 0
+	GoodsTypeAssemble GoodsType = 1
+)
+
 type Goods struct {
 	gorm.Model
-	No                   string               `sql:"-" json:"id"`
-	TenantId             string               `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
-	CategoryId           string               `sql:"type:char(20);index" json:"category_id"`
-	ParentCategoryId     string               `sql:"type:char(20);index" json:"parent_category_id"`
-	BrandId              string               `sql:"type:char(20);index" json:"brand_id"`
-	Used                 bool                 `description:"领用" json:"used"`
-	GoodsInfoId          string               `sql:"type:char(20);index" json:"goods_info_id" description:"商品基础信息ID"`
-	GoodsInfo            GoodsInfo            `gorm:"save_associations:false" json:"goods_info" validate:"-"`
-	ShowCategory         ShowCategory         `gorm:"save_associations:false" json:"show_category" validate:"-"`
-	ShowCategoryId       string               `sql:"type:char(20);index" description:"显示分类ID" json:"show_category_id"`
-	ParentShowCategory   ShowCategory         `gorm:"save_associations:false" json:"parent_show_category" validate:"-"`
-	ParentShowCategoryId string               `sql:"type:char(20);index" description:"顶级显示分类ID" json:"parent_show_category_id"`
-	Alias                string               `sql:"type:varchar(255)" description:"别名" json:"alias"`
-	CommissionRmb        float64              `sql:"type:DECIMAL(10, 2)" description:"佣金(人民币)" json:"commission_rmb"`
-	BarCode              string               `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
-	Image                string               `sql:"type:varchar(255)" description:"图片" json:"image"`
-	Album                string               `sql:"type:text" description:"相册" json:"album"`
-	Albums               []string             `sql:"-" description:"相册(数组)" json:"albums"`
-	Video                string               `sql:"type:varchar(255)" description:"视频" json:"video"`
-	Content              string               `sql:"type:text" description:"详情内容" json:"content"`
-	Description          string               `sql:"type:text" description:"描述" json:"description"`
-	QualityPeriod        string               `sql:"type:varchar(50)" description:"保质期" json:"quality_period"`
-	Stage                []byte               `sql:"type:json" description:"阶段" json:"-"`
-	Stages               []int                `sql:"-" json:"stages"`
-	Show                 Status               `sql:"type:integer;default(1)" description:"状态 1 上架 2 下架" json:"show"`
-	Status               Status               `sql:"type:integer;default(1)" description:"状态 1 启用 2 禁用" json:"status"`
-	Specifications       []GoodsSpecification `gorm:"ForeignKey:GoodsId;save_associations:false" description:"规格关联" json:"specifications"`
-	Inventory            int                  `description:"库存" json:"inventory"`
-	NeedInventory        bool                 `description:"是否需要库存" json:"need_inventory"`
-	ClickNum             int                  `sql:"type:integer;default(0)" description:"点击数" json:"click_num"`
-	//PriceData            []byte                   `description:"列表价格快照" json:"-"`
-	//Price                map[Currency]float64     `sql:"-" description:"列表价格" json:"price"`
-	BuyNum             int                      `sql:"type:integer;default(0)" description:"购买数" json:"buy_num"`
-	SpecificationInfo  []byte                   `sql:"type:json" description:"规格选择参数" json:"-"`
-	SpecificationInfoS []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
-	HasSpecification   bool                     `description:"是否有属性" json:"has_specification"`
-	Warehouses         []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses" validate:"-"`
-	Metadata           []byte                   `description:"附加信息" json:"-"`
-	Meta               interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
-	Sort               int                      `description:"排序" json:"sort"`
-	Unit               string                   `sql:"type:varchar(20)" description:"包装单位" json:"unit"`
-	CustomPay          bool                     `description:"是否自定义支付方式" json:"custom_pay"`
-	PaymentIds         string                   `sql:"type:text" description:"可用的支付方式" json:"-"`
-	PaymentIdsArray    []string                 `sql:"-" json:"payment_ids"`
-	ToppedAt           time.Time                `description:"置顶时间"`
+	No                   string                   `sql:"-" json:"id"`
+	TenantId             string                   `gorm:"primary_key" sql:"type:char(20);index" description:"租户ID" json:"-" `
+	CategoryId           string                   `sql:"type:char(20);index" json:"category_id"`
+	ParentCategoryId     string                   `sql:"type:char(20);index" json:"parent_category_id"`
+	BrandId              string                   `sql:"type:char(20);index" json:"brand_id"`
+	Used                 bool                     `description:"领用" json:"used"`
+	GoodsInfoId          string                   `sql:"type:char(20);index" json:"goods_info_id" description:"商品基础信息ID"`
+	GoodsInfo            GoodsInfo                `gorm:"save_associations:false" json:"goods_info" validate:"-"`
+	ShowCategory         ShowCategory             `gorm:"save_associations:false" json:"show_category" validate:"-"`
+	ShowCategoryId       string                   `sql:"type:char(20);index" description:"显示分类ID" json:"show_category_id"`
+	ParentShowCategory   ShowCategory             `gorm:"save_associations:false" json:"parent_show_category" validate:"-"`
+	ParentShowCategoryId string                   `sql:"type:char(20);index" description:"顶级显示分类ID" json:"parent_show_category_id"`
+	Alias                string                   `sql:"type:varchar(255)" description:"别名" json:"alias"`
+	CommissionRmb        float64                  `sql:"type:DECIMAL(10, 2)" description:"佣金(人民币)" json:"commission_rmb"`
+	BarCode              string                   `sql:"type:varchar(100)" description:"条形码" json:"bar_code"`
+	Image                string                   `sql:"type:varchar(255)" description:"图片" json:"image"`
+	Album                string                   `sql:"type:text" description:"相册" json:"album"`
+	Albums               []string                 `sql:"-" description:"相册(数组)" json:"albums"`
+	Video                string                   `sql:"type:varchar(255)" description:"视频" json:"video"`
+	Content              string                   `sql:"type:text" description:"详情内容" json:"content"`
+	Description          string                   `sql:"type:text" description:"描述" json:"description"`
+	QualityPeriod        string                   `sql:"type:varchar(50)" description:"保质期" json:"quality_period"`
+	Stage                []byte                   `sql:"type:json" description:"阶段" json:"-"`
+	Stages               []int                    `sql:"-" json:"stages"`
+	Show                 Status                   `sql:"type:integer;default(1)" description:"状态 1 上架 2 下架" json:"show"`
+	Status               Status                   `sql:"type:integer;default(1)" description:"状态 1 启用 2 禁用" json:"status"`
+	Specifications       []GoodsSpecification     `gorm:"ForeignKey:GoodsId;save_associations:false" description:"规格关联" json:"specifications"`
+	Inventory            int                      `description:"库存" json:"inventory"`
+	NeedInventory        bool                     `description:"是否需要库存" json:"need_inventory"`
+	ClickNum             int                      `sql:"type:integer;default(0)" description:"点击数" json:"click_num"`
+	BuyNum               int                      `sql:"type:integer;default(0)" description:"购买数" json:"buy_num"`
+	SpecificationInfo    []byte                   `sql:"type:json" description:"规格选择参数" json:"-"`
+	SpecificationInfoS   []SpecificationInfo      `sql:"-" description:"规格选择参数" json:"specification_infos"`
+	HasSpecification     bool                     `description:"是否有属性" json:"has_specification"`
+	Warehouses           []GoodsShippingWarehouse `gorm:"ForeignKey:GoodsId;save_associations:false" description:"发货仓库关联" json:"warehouses" validate:"-"`
+	Metadata             []byte                   `description:"附加信息" json:"-"`
+	Meta                 interface{}              `sql:"-" description:"附加信息结构" json:"meta"`
+	Sort                 int                      `description:"排序" json:"sort"`
+	Unit                 string                   `sql:"type:varchar(20)" description:"包装单位" json:"unit"`
+	CustomPay            bool                     `description:"是否自定义支付方式" json:"custom_pay"`
+	PaymentIds           string                   `sql:"type:text" description:"可用的支付方式" json:"-"`
+	PaymentIdsArray      []string                 `sql:"-" json:"payment_ids"`
+	ToppedAt             time.Time                `description:"置顶时间"`
+	GoodsType            GoodsType                `description:"商品类型 0:常规商品 1:组合商品" json:"goods_type"`
+	Assembles            []GoodsAssemble          `gorm:"ForeignKey:GoodsId;save_associations:false" json:"assembles"`
+}
+
+type GoodsAssemble struct {
+	ID          uint      `gorm:"primary_key" json:"-"`
+	GoodsId     int       `sql:"type:integer;index" json:"goods_id" description:"商品ID"`
+	GoodsInfoId int       `sql:"type:integer;index" json:"goods_info_id" description:"商品基础信息ID"`
+	GoodsInfo   GoodsInfo `gorm:"save_associations:false" json:"goods_info" validate:"-"`
+	Quantity    int       `json:"quantity" description:"数量"`
+	CreatedAt   time.Time
 }
 
 type SearchKeyword struct {
@@ -209,14 +225,6 @@ func (g *Goods) BeforeSave() (err error) {
 	if len(g.SpecificationInfo) == 0 {
 		g.SpecificationInfo = []byte(`[]`)
 	}
-	//if g.HasSpecification {
-	//	g.SpecificationInfo, err = json.Marshal(g.SpecificationInfoS)
-	//	if err != nil {
-	//		return fmt.Errorf("规格参数json序列户错误: %v", err)
-	//	}
-	//} else {
-	//	g.SpecificationInfoS = nil
-	//}
 	if g.Meta != nil {
 		g.Metadata, _ = json.Marshal(g.Meta)
 	} else {
@@ -225,27 +233,33 @@ func (g *Goods) BeforeSave() (err error) {
 	return nil
 }
 
+func (g *Goods) AfterSave(db *gorm.DB) (err error) {
+	if g.GoodsType == GoodsTypeAssemble {
+		//组合商品, 保存关联数据
+		//1、删除所有关联
+		err = db.Where("goods_id = ?", g.ID).Delete(&GoodsAssemble{}).Error
+		if err != nil {
+			log.Error(err)
+			return err
+		}
+		//2、保存现有关联
+		for i, a := range g.Assembles {
+			a.GoodsId = int(g.ID)
+			err = db.Create(&a).Error
+			if err != nil {
+				log.Error(err)
+				return err
+			}
+			g.Assembles[i] = a
+		}
+	}
+	return nil
+}
+
 func (g *Goods) AfterFind() error {
 	g.transform()
 	return nil
 }
-
-//func (g *Goods) AfterSave(tx *gorm.DB) (err error) {
-//	g.transform()
-//	return nil
-//}
-
-//func (g *Goods) AfterCreate(tx *gorm.DB) (err error) {
-//	//err = g.saveLink(tx)
-//	//rb, _ := json.Marshal(g.SpecificationInfoS)
-//	//err = tx.Model(g).Update("specification_info", rb).Error
-//	//if err != nil {
-//	//	log.Error(err)
-//	//	return err
-//	//}
-//	//return err
-//	return nil
-//}
 
 func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
 	err = tx.Where("goods_id = ?", g.ID).Unscoped().Delete(&GoodsShippingWarehouse{}).Error
@@ -256,43 +270,9 @@ func (g *Goods) BeforeUpdate(tx *gorm.DB) (err error) {
 		log.Error(err)
 		return err
 	}
-	//g.Price = make(map[Currency]float64)
-	//for _, warehouse := range g.Warehouses {
-	//	if warehouse.DefaultSelect {
-	//		var currencies []Currency
-	//		err = tx.Model(&ShippingWarehouse{}).Where("id = ?", warehouse.WarehouseId).Pluck("currency", &currencies).Error
-	//		if err != nil {
-	//			log.Error(err)
-	//			return err
-	//		}
-	//		g.Price[currencies[0]] = warehouse.Price
-	//		break
-	//	}
-	//}
-	//for _, goodsSpecification := range g.Specifications {
-	//	if goodsSpecification.DefaultSelect {
-	//		//提前计算列表显示价格
-	//		for k, v := range g.Price {
-	//			g.Price[k] = v * (100 + goodsSpecification.Ratio) / 100
-	//		}
-	//		break
-	//	}
-	//}
 	g.unTransform()
-	//g.Stage, _ = json.Marshal(g.Stages)
-	//g.PriceData, _ = json.Marshal(g.Price)
-	//g.Album = strings.Join(g.Albums, ",")
 	return nil
 }
-
-//func (g *Goods) AfterUpdate(tx *gorm.DB) (err error) {
-//	err = g.saveLink(tx)
-//	if err != nil {
-//		log.Error(err)
-//		return err
-//	}
-//	return nil
-//}
 
 func (g *Goods) saveLink(tx *gorm.DB) (err error) {
 	//保存发货仓关联
@@ -319,18 +299,6 @@ func (g *Goods) saveLink(tx *gorm.DB) (err error) {
 		}
 	}
 	g.SpecificationInfoS = specificationInfos
-	//goodsSpecifications := make([]GoodsSpecification, 0)
-	//for i, specificationInfo := range g.SpecificationInfoS {
-	//	//整合结构
-	//	gs, err := (&specificationInfo).G生成规格记录(tx, g.TenantId, strconv.Itoa(int(g.ID)), specificationInfo.Item)
-	//	if err != nil {
-	//		log.Error(err)
-	//		return err
-	//	}
-	//	goodsSpecifications = append(goodsSpecifications, gs...)
-	//	g.SpecificationInfoS[i] = specificationInfo
-	//}
-
 	return nil
 }
 
@@ -347,9 +315,6 @@ func (g *Goods) transform() {
 	if len(g.Metadata) > 0 {
 		_ = json.Unmarshal(g.Metadata, &g.Meta)
 	}
-	//if len(g.PriceData) > 0 {
-	//	_ = json.Unmarshal(g.PriceData, &g.Price)
-	//}
 	if len(g.Stage) > 0 {
 		_ = json.Unmarshal(g.Stage, &g.Stages)
 	}
@@ -359,8 +324,6 @@ func (g *Goods) transform() {
 }
 
 func (g *Goods) unTransform() {
-	//g.SpecificationInfo, _ = json.Marshal(g.SpecificationInfoS)
-	//g.PriceData, _ = json.Marshal(g.Price)
 	g.Stage, _ = json.Marshal(g.Stages)
 	g.Album = strings.Join(g.Albums, ",")
 	g.PaymentIds = strings.Join(g.PaymentIdsArray, ",")
