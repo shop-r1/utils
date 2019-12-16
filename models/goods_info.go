@@ -29,6 +29,7 @@ type GoodsInfo struct {
 	PackRule         []byte     `sql:"type:json" description:"关联的物流规则ID" json:"-"`
 	PackRules        []PackRule `sql:"-" json:"pack_rules"`
 	Unit             string     `sql:"type:varchar(20)" description:"包装单位" json:"unit"`
+	GoodsType        GoodsType  `description:"商品类型 0:常规商品 1:组合商品" json:"goods_type"`
 }
 
 type SearchGoodsInfo struct {
