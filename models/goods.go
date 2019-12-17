@@ -66,14 +66,15 @@ type Goods struct {
 }
 
 type GoodsAssemble struct {
-	ID          uint      `gorm:"primary_key" json:"-"`
-	GoodsId     int       `sql:"type:integer;index" json:"goods_id" description:"商品ID"`
-	GoodsInfoId int       `sql:"type:integer;index" json:"goods_info_id" description:"商品基础信息ID"`
-	GoodsInfo   GoodsInfo `gorm:"save_associations:false" json:"goods_info" validate:"-"`
-	Name        string    `sql:"type:varchar(255)" description:"名称" json:"name"`
-	Image       string    `sql:"type:varchar(255)" description:"图片" json:"image"`
-	Quantity    int       `json:"quantity" description:"数量"`
-	CreatedAt   time.Time
+	ID                uint      `gorm:"primary_key" json:"-"`
+	GoodsId           int       `sql:"type:integer;index" json:"goods_id" description:"商品ID"`
+	GoodsInfoId       int       `sql:"type:integer;index" json:"-" description:"商品基础信息ID"`
+	GoodsInfoIdNumber string    `sql:"-" json:"goods_info_id" description:"商品基础信息ID"`
+	GoodsInfo         GoodsInfo `gorm:"save_associations:false" json:"goods_info" validate:"-"`
+	Name              string    `sql:"type:varchar(255)" description:"名称" json:"name"`
+	Image             string    `sql:"type:varchar(255)" description:"图片" json:"image"`
+	Quantity          int       `json:"quantity" description:"数量"`
+	CreatedAt         time.Time
 }
 
 type SearchKeyword struct {
@@ -247,6 +248,7 @@ func (g *Goods) AfterSave(db *gorm.DB) (err error) {
 		//2、保存现有关联
 		for i, a := range g.Assembles {
 			a.GoodsId = int(g.ID)
+			a.GoodsInfoId, _ = strconv.Atoi(a.GoodsInfoIdNumber)
 			err = db.Create(&a).Error
 			if err != nil {
 				log.Error(err)
@@ -344,4 +346,14 @@ func transformSpecification(arr []string, o GoodsSpecification) SpecificationInf
 		s.Specification = o
 	}
 	return s
+}
+
+func (e *GoodsAssemble) AfterFind() error {
+	e.GoodsInfoIdNumber = strconv.Itoa(e.GoodsInfoId)
+	return nil
+}
+
+func (e *GoodsAssemble) BeforeSave() error {
+	e.GoodsInfoId, _ = strconv.Atoi(e.GoodsInfoIdNumber)
+	return nil
 }
