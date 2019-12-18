@@ -65,6 +65,7 @@ type Order struct {
 type OrderActivity struct {
 	ActivityId string               `json:"activity_id"`
 	Name       string               `json:"name"`
+	Amount     int                  `json:"amount"`
 	Goods      []OrderActivityGoods `json:"goods"`
 }
 
