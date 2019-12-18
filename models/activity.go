@@ -55,7 +55,7 @@ type ExtendActivity struct {
 }
 
 type GiftGoods struct {
-	GoodsId  int    `description:"商品ID" json:"goods_id"`
+	GoodsId  string `description:"商品ID" json:"goods_id"`
 	Name     string `description:"名称" json:"name"`
 	Image    string `description:"图片" json:"image"`
 	Quantity int    `description:"数量" json:"quantity" `
