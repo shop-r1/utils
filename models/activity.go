@@ -47,10 +47,18 @@ const (
 )
 
 type ExtendActivity struct {
-	ExtendType     ExtendType `description:"参数类型" json:"extend_type"`
-	EnoughPrice    float64    `description:"满足金额" json:"enough_price"`
-	EnoughQuantity int        `description:"满足数量" json:"enough_quantity"`
-	Reduce         float64    `description:"减免金额" json:"reduce"`
+	ExtendType     ExtendType  `description:"参数类型" json:"extend_type"`
+	EnoughPrice    float64     `description:"满足金额" json:"enough_price"`
+	EnoughQuantity int         `description:"满足数量" json:"enough_quantity"`
+	Reduce         float64     `description:"减免金额" json:"reduce"`
+	GiftGoods      []GiftGoods `description:"赠品" json:"gift_goods"`
+}
+
+type GiftGoods struct {
+	GoodsId  int    `description:"商品ID" json:"goods_id"`
+	Name     string `description:"名称" json:"name"`
+	Image    string `description:"图片" json:"image"`
+	Quantity int    `description:"数量" json:"quantity" `
 }
 
 type ActivityLink struct {
