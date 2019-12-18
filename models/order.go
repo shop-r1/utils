@@ -58,7 +58,21 @@ type Order struct {
 	Description      string               `sql:"type:text" description:"后台备注" json:"description"`
 	GoodsName        string               `sql:"type:text" description:"所有商品名称(搜索用)" json:"goods_name"`
 	Channel          int                  `sql:"type:integer;index" description:"订单来源渠道 0:商城在线下单 1:后台下单" json:"channel"`
-	ActivityIds      string               `sql:"type:text" description:"参与的活动ID集" json:"activity_ids"`
+	Activities       []OrderActivity      `sql:"-" description:"活动数据" json:"activities"`
+	ActivitiesData   []byte               `sql:"type:json" description:"活动数据" json:"-"`
+}
+
+type OrderActivity struct {
+	ActivityId string               `json:"activity_id"`
+	Name       string               `json:"name"`
+	Goods      []OrderActivityGoods `json:"goods"`
+}
+
+type OrderActivityGoods struct {
+	GoodsId  string `json:"goods_id"`
+	Name     string `json:"name"`
+	Image    string `json:"image"`
+	Quantity int    `json:"quantity"`
 }
 
 type OrderGroup struct {
