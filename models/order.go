@@ -154,10 +154,12 @@ func (e *Order) transform() {
 	if e.PaymentIds != "" {
 		e.PaymentIdsArray = strings.Split(e.PaymentIds, ",")
 	}
+	_ = json.Unmarshal(e.ActivitiesData, &e.Activities)
 }
 
 func (e *Order) UnTransform() {
 	var rb []byte
+	var err error
 	if e.Consignee.No != "" || e.Consignee.Name != "" {
 		id, _ := strconv.Atoi(e.Consignee.No)
 		e.Consignee.ID = uint(id)
@@ -172,4 +174,12 @@ func (e *Order) UnTransform() {
 		e.SenderData = string(rb)
 	}
 	e.PaymentIds = strings.Join(e.PaymentIdsArray, ",")
+	if len(e.Activities) > 0 {
+		e.ActivitiesData, err = json.Marshal(e.Activities)
+		if err != nil {
+			e.ActivitiesData = []byte(`[]`)
+		}
+	} else {
+		e.ActivitiesData = []byte(`[]`)
+	}
 }
