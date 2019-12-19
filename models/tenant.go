@@ -20,7 +20,9 @@ type Tenant struct {
 	System         bool      `gorm:"type:boolean" description:"是否为租户系统用户" json:"system"`
 	Expired        time.Time `gorm:"index:idx_expired" description:"到期时间" json:"expired"`
 	Status         Status    `gorm:"default(1);index:idx_status" description:"状态: 1 启用, 2 禁用" json:"status"`
-	Domain         string    `gorm:"type:varchar(255);unique" description:"租户独立域名" json:"domain"`
+	Domain         string    `gorm:"type:varchar(255);unique" description:"租户独立域名0" json:"domain"`
+	Domain1        string    `gorm:"type:varchar(255);unique" description:"租户独立域名1" json:"domain"`
+	Domain2        string    `gorm:"type:varchar(255);unique" description:"租户独立域名2" json:"domain"`
 	GenerateSecret bool      `gorm:"-"`
 }
 
