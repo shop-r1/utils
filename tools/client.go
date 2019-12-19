@@ -129,6 +129,7 @@ const (
 	GoodsCheckInventory = "Goods.CheckInventory"
 	GoodsDelete         = "Goods.Delete"
 	GoodsSearch         = "Goods.Search"
+	GoodsList           = "Goods.List"
 	GoodsRead           = "Goods.Read"
 	GoodsBatchUse       = "Goods.BatchUse"
 	GoodsSearchKeyword  = "Goods.SearchKeyword"
