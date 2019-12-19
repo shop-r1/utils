@@ -222,6 +222,7 @@ const (
 	ActivityUpdate     = "Activity.Update"
 	ActivityDelete     = "Activity.Delete"
 	ActivityRead       = "Activity.Read"
+	ActivityReadApp    = "Activity.ReadApp"
 	ActivitySearch     = "Activity.Search"
 	ActivityEnableLink = "Activity.EnableLink"
 	ActivityGoodsLink  = "Activity.GoodsLink"
