@@ -62,11 +62,12 @@ type Goods struct {
 	PaymentIdsArray      []string                 `sql:"-" json:"payment_ids"`
 	ToppedAt             time.Time                `description:"置顶时间"`
 	GoodsType            GoodsType                `description:"商品类型 0:常规商品 1:组合商品" json:"goods_type"`
-	Assembles            []GoodsAssemble          `gorm:"ForeignKey:GoodsId;save_associations:false" json:"assembles"`
+	Assembles            []GoodsAssemble          `gorm:"ForeignKey:LinkId;save_associations:false" json:"assembles"`
 }
 
 type GoodsAssemble struct {
 	ID                uint      `gorm:"primary_key" json:"-"`
+	LinkId            int       `sql:"type:integer;index" json:"-" description:"关联商品ID"`
 	GoodsId           int       `sql:"type:integer;index" json:"-" description:"商品ID"`
 	GoodsIdNumber     string    `sql:"-" json:"goods_id" description:"商品ID"`
 	GoodsInfoId       int       `sql:"type:integer;index" json:"-" description:"商品基础信息ID"`
@@ -248,7 +249,8 @@ func (g *Goods) AfterSave(db *gorm.DB) (err error) {
 		}
 		//2、保存现有关联
 		for i, a := range g.Assembles {
-			a.GoodsId = int(g.ID)
+			a.LinkId = int(g.ID)
+			a.GoodsId, _ = strconv.Atoi(a.GoodsIdNumber)
 			a.GoodsInfoId, _ = strconv.Atoi(a.GoodsInfoIdNumber)
 			err = db.Create(&a).Error
 			if err != nil {
