@@ -67,7 +67,8 @@ type Goods struct {
 
 type GoodsAssemble struct {
 	ID                uint      `gorm:"primary_key" json:"-"`
-	GoodsId           int       `sql:"type:integer;index" json:"goods_id" description:"商品ID"`
+	GoodsId           int       `sql:"type:integer;index" json:"-" description:"商品ID"`
+	GoodsIdNumber     string    `sql:"-" json:"goods_id" description:"商品ID"`
 	GoodsInfoId       int       `sql:"type:integer;index" json:"-" description:"商品基础信息ID"`
 	GoodsInfoIdNumber string    `sql:"-" json:"goods_info_id" description:"商品基础信息ID"`
 	GoodsInfo         GoodsInfo `gorm:"save_associations:false" json:"goods_info" validate:"-"`
@@ -350,10 +351,12 @@ func transformSpecification(arr []string, o GoodsSpecification) SpecificationInf
 
 func (e *GoodsAssemble) AfterFind() error {
 	e.GoodsInfoIdNumber = strconv.Itoa(e.GoodsInfoId)
+	e.GoodsInfoIdNumber = strconv.Itoa(e.GoodsId)
 	return nil
 }
 
 func (e *GoodsAssemble) BeforeSave() error {
 	e.GoodsInfoId, _ = strconv.Atoi(e.GoodsInfoIdNumber)
+	e.GoodsId, _ = strconv.Atoi(e.GoodsIdNumber)
 	return nil
 }
