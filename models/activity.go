@@ -31,6 +31,8 @@ type Activity struct {
 	EndAt              time.Time      `sql:"index" description:"结束时间" json:"end_at"`
 	Sort               int            `description:"排序" json:"sort"`
 	ActivityType       ActivityType   `sql:"type:varchar(50);index" description:"活动类型" json:"activity_type"`
+	Metadata           []byte         `description:"附加信息" json:"-"`
+	Meta               interface{}    `sql:"-" description:"附加信息结构" json:"meta"`
 	Extend             ExtendActivity `sql:"-" description:"活动扩展字段" json:"extend"`
 	ExtendData         []byte         `sql:"type:json" description:"活动扩展数据字段" json:"-"`
 	MemberLevelIds     []string       `sql:"-" description:"可参加的客户等级ID集" json:"member_level_ids"`
