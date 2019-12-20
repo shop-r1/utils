@@ -47,7 +47,6 @@ type ShowCategoryGoods struct {
 	Description string  `sql:"type:text" description:"描述" json:"description"`
 	Sort        int     `description:"排序" json:"sort"`
 	Goods       []Goods `gorm:"ForeignKey:ShowCategoryId" json:"goods"`
-	PGoods      []Goods `gorm:"ForeignKey:ParentShowCategoryId" json:"p_goods"`
 }
 
 func (ShowCategoryGoods) TableName() string {
