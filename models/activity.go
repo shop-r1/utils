@@ -85,6 +85,11 @@ func (e *Activity) BeforeSave() (err error) {
 	if len(e.WarehouseIds) > 0 {
 		e.WarehouseIdsData = strings.Join(e.WarehouseIds, ",")
 	}
+	if e.Meta != nil {
+		e.Metadata, _ = json.Marshal(e.Meta)
+	} else {
+		e.Metadata = []byte(`{}`)
+	}
 	return err
 }
 
@@ -108,6 +113,9 @@ func (e *Activity) AfterSave(tx *gorm.DB) (err error) {
 
 func (e *Activity) AfterFind() (err error) {
 	e.No = strconv.Itoa(int(e.ID))
+	if len(e.Metadata) > 0 {
+		_ = json.Unmarshal(e.Metadata, &e.Meta)
+	}
 	err = json.Unmarshal(e.ExtendData, &e.Extend)
 	if err != nil {
 		return err
