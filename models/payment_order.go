@@ -40,6 +40,7 @@ type PaymentOrder struct {
 	VoucherImages    []string          `sql:"-" description:"付款凭证" json:"voucher_images"`
 	Remark           string            `sql:"type:text" description:"付款备注" json:"remark"`
 	Params           interface{}       `sql:"-" json:"params"`
+	AppId            string            `sql:"-" json:"app_id,omitempty"`
 }
 
 func (e *PaymentOrder) BeforeCreate() error {
