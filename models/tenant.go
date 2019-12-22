@@ -22,7 +22,7 @@ type Tenant struct {
 	Status         Status    `gorm:"default(1);index:idx_status" description:"状态: 1 启用, 2 禁用" json:"status"`
 	Domain         string    `gorm:"type:varchar(255);unique" description:"租户独立域名0" json:"domain"`
 	Domain1        string    `gorm:"type:varchar(255);unique" description:"租户独立域名1" json:"domain1"`
-	Domain2        string    `gorm:"type:varchar(255);unique" description:"租户独立域名2" json:"domain1"`
+	Domain2        string    `gorm:"type:varchar(255);unique" description:"租户独立域名2" json:"domain2"`
 	GenerateSecret bool      `gorm:"-"`
 }
 
