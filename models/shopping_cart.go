@@ -19,6 +19,7 @@ type ShoppingCart struct {
 	PackSpecification    int                    `sql:"type:integer;default(1)" description:"包装规格(默认1)" json:"pack_specification"`
 	Quantity             int                    `sql:"type:integer;default(1)" description:"数量" json:"quantity" validate:"required"`
 	Selected             bool                   `description:"选中" json:"selected"`
+	ReferralCode         string                 `sql:"type:varchar(50);index" description:"推荐码" json:"referral_code"`
 	CreatedAt            time.Time
 	UpdatedAt            time.Time
 }
