@@ -61,6 +61,7 @@ type Order struct {
 	Activities       []OrderActivity      `sql:"-" description:"活动数据" json:"activities"`
 	ActivitiesData   []byte               `sql:"type:json" description:"活动数据" json:"-"`
 	ReferralCode     string               `sql:"type:varchar(50);index" description:"推荐码" json:"referral_code"`
+	CommissionRmb    float64              `sql:"type:DECIMAL(10, 2)" description:"佣金总和(人民币)" json:"commission_rmb"`
 }
 
 type OrderActivity struct {
