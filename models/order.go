@@ -60,6 +60,7 @@ type Order struct {
 	Channel          int                  `sql:"type:integer;index" description:"订单来源渠道 0:商城在线下单 1:后台下单" json:"channel"`
 	Activities       []OrderActivity      `sql:"-" description:"活动数据" json:"activities"`
 	ActivitiesData   []byte               `sql:"type:json" description:"活动数据" json:"-"`
+	ReferralCode     string               `sql:"type:varchar(50);index" description:"推荐码" json:"referral_code"`
 }
 
 type OrderActivity struct {

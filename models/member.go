@@ -35,6 +35,8 @@ type Member struct {
 	Meta             interface{} `sql:"-" json:"meta"`
 	Address          string      `sql:"type:varchar(100)" description:"用户地址" json:"address"`
 	Sex              int         `json:"sex"` // 用户的性别, 值为1时是男性, 值为2时是女性, 值为0时是未知
+	ParentReferrerId string      `sql:"type:varchar(50);index" description:"推荐人父级ID" json:"parent_referrer_id"`
+	ParentReferrer   *Member     `gorm:"save_associations:false;ForeignKey:ParentReferrerId" json:"parent_referrer,omitempty" validate:"-"`
 }
 
 type SearchMember struct {
